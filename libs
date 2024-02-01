@@ -271,8 +271,8 @@
 				<file name="stax-api-1.0.1.jar" size="26514"/>
 				<file name="stax-api-1.0-2.jar" size="23346"/>
 				<file name="token-provider-1.0.1.jar" size="18763"/>
-				<file name="tools-1.8.0_65.jar" size="18209173"/>
-				<file name="tools-1.8.0.jar" size="18249222"/>
+				<file name="tools-1.8.0_65.jar" size="18209173" skip="true"/>
+				<file name="tools-1.8.0.jar" size="18249222" skip="true"/>
 				<file name="trino-jdbc-356.jar" size="6952549"/>
 				<file name="woodstox-core-5.0.3.jar" size="512742"/>
 				<file name="xalan-2.7.2.jar" size="3154938"/>
