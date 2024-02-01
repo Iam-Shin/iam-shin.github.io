@@ -221,7 +221,7 @@
 				<file name="lz4-1.3.0.jar" size="236880"/>
 				<file name="mail-1.4.5.jar" size="508143"/>
 				<file name="mariadb-java-client-1.5.5.jar" size="449439"/>
-				<file name="meta-etl-core-2.0.jar" size="38737"/>
+				<file name="meta-etl-core-2.0.jar" size="38737" skip="true"/>
 				<file name="metrics-core-2.2.0.jar" size="82123"/>
 				<file name="mssql-jdbc-6.1.0.jre8.jar" size="766093"/>
 				<file name="mybatis-3.4.0.jar" size="1595902"/>
