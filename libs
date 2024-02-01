@@ -194,7 +194,6 @@
 				<file name="junit-4.12.jar" size="314932"/>
 				<file name="kafka_2.11-0.10.0.1.jar" size="5151376"/>
 				<file name="kafka-clients-0.10.0.1.jar" size="746207"/>
-				<file name="KafkaMetricCollector.jar" size="26716"/>
 				<file name="kerb-admin-1.0.1.jar" size="80980"/>
 				<file name="kerb-client-1.0.1.jar" size="113017"/>
 				<file name="kerb-common-1.0.1.jar" size="65464"/>
@@ -234,11 +233,8 @@
 				<file name="netty-all-4.1.6.Final.jar" size="3533285"/>
 				<file name="nimbus-jose-jwt-3.1.2.jar" size="174639"/>
 				<file name="nimbus-jose-jwt-7.9.jar" size="338563"/>
-				<file name="NodeAliveCollector.jar" size="30831" skip="true"/>
-				<file name="NodeAliveCollector.jar_20221101" size="30685" skip="true"/>
 				<file name="oauth2-oidc-sdk-4.5.jar" size="244573"/>
 				<file name="paranamer-2.3.jar" size="29555"/>
-				<file name="PartitionManager.jar" size="21409" skip="true"/>
 				<file name="poi-4.0.1.jar" size="2718209"/>
 				<file name="poi-ooxml-4.0.1.jar" size="1766188"/>
 				<file name="poi-ooxml-schemas-4.0.1.jar" size="7771088"/>
