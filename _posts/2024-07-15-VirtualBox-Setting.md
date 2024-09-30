@@ -26,15 +26,15 @@ tags: [virtualbox, vm]
 ### T-cloudbiz 호스트 구성
 
 |자산 |호스트명   |모델명                    |SN     |OS           |계정정보            |공인IP           |스펙                      |비고  
-|SKT |메타트론팀 |Metatron-NN01	Dell R630 |8273R42 |CentOS 7.9  |root /  |175.126.58.201 |16 cores, 128 gb,    1tb |
-|SKT |메타트론팀 |Metatron-EN01	Dell R730 |5ZWSB22 |CentOS 7.9  |root /  |175.126.58.202 |48 cores,  64 gb,  215gb |
-|SKT |메타트론팀 |Metatron-DN01	Dell R730 |FJSV032 |CentOS 7.9  |root /  |175.126.58.203 |32 cores, 128 gb,  215gb |virtualBox 설치 하겠음.6/12
-|SKT |메타트론팀 |Metatron-DN04	Dell R730 |6VTGY42 |CentOS 7.9  |root /  |175.126.58.204 |32 cores, 128 gb,  215gb |메타트론 설치하겠음.
+|SKT |메타트론팀 |Mron-NN01	Dell R630 |8273R42 |CentOS 7.9  |root /  |175.126.58.201 |16 cores, 128 gb,    1tb |
+|SKT |메타트론팀 |Mron-EN01	Dell R730 |5ZWSB22 |CentOS 7.9  |root /  |175.126.58.202 |48 cores,  64 gb,  215gb |
+|SKT |메타트론팀 |Mron-DN01	Dell R730 |FJSV032 |CentOS 7.9  |root /  |175.126.58.203 |32 cores, 128 gb,  215gb |virtualBox 설치 하겠음.6/12
+|SKT |메타트론팀 |Mron-DN04	Dell R730 |6VTGY42 |CentOS 7.9  |root /  |175.126.58.204 |32 cores, 128 gb,  215gb |메타트론 설치하겠음.
 
 * 4대 모두 Intel® Xeon® 프로세서 E5-2600 v4 제품군
 * 4대 모두 CentOS Linux release 7.9.2009 (Core)
 * VirtualBox 호스트 cpu 요구사항중, SSE2 스펙이 있는데, 
-  Metatron-DN01 호스트에 설치된 Intel(R) Xeon(R) CPU E5-2640 v3 @ 2.60GHz 이 SSE2 스펙을 지원하는지 근거 불명.
+  Mron-DN01 호스트에 설치된 Intel(R) Xeon(R) CPU E5-2640 v3 @ 2.60GHz 이 SSE2 스펙을 지원하는지 근거 불명.
   [참조](https://ark.intel.com/content/www/kr/ko/ark/products/92984/intel-xeon-processor-e5-2640-v4-25m-cache-2-40-ghz.html)  
   ::  명령 세트 확장 Intel® AVX2
 
@@ -107,29 +107,29 @@ $> rpm -ivh --force --nodeps VirtualBox-7.0-7.0.18_162988_el7-1.x86_64.rpm
 
 ## 설치 작업 진행
 
-Metatron-DN01 호스트에 VirtualBox 7 설치하기로 결정.   
+Mron-DN01 호스트에 VirtualBox 7 설치하기로 결정.   
 사용자 생성 vboxadm  
 비번 
 
 ### 사용자 생성
 
 ```
-[root@metatron-dn01 ~]# adduser vboxadm
-[root@metatron-dn01 ~]# passwd vboxadm
-[root@metatron-dn01 ~]# vi /etc/group  <-- 아래와 같이 권한 편집  
+[root@mron-dn01 ~]# adduser vboxadm
+[root@mron-dn01 ~]# passwd vboxadm
+[root@mron-dn01 ~]# vi /etc/group  <-- 아래와 같이 권한 편집  
 vboxadm:x:1000:vboxadm,root   <-- su root 허용
 ```
 
 vboxadm 사용자 생성 했으나, 설치시 root 권한 요구
 ```
-[vboxadm@metatron-dn01 ~]$ yum install VirtualBox-7.0.x86_64
+[vboxadm@mron-dn01 ~]$ yum install VirtualBox-7.0.x86_64
 Loaded plugins: fastestmirror
 You need to be root to perform this command.
 ```
 
 vboxadm에게 sudo 권한 주기. __(vboxadm 보안 조심!!)__
 ```
-[root@metatron-dn01 vboxadm]# visudo  <-- sudoer 설정파일 편집
+[root@mron-dn01 vboxadm]# visudo  <-- sudoer 설정파일 편집
 vboxadm ALL=(ALL)       ALL  <-- 라인 추가
 ```
 
@@ -137,7 +137,7 @@ vboxadm ALL=(ALL)       ALL  <-- 라인 추가
 
 vboxadm 계정으로 virtualbox 7 설치
 ```
-[vboxadm@metatron-dn01 ~]$ sudo yum install VirtualBox-7.0.x86_64
+[vboxadm@mron-dn01 ~]$ sudo yum install VirtualBox-7.0.x86_64
 ```
 
 설치 log는 yum_install_virtualbox7.log 참조.
@@ -225,9 +225,9 @@ http://isoredirect.centos.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-2009.
 
 NetInstall 버전 다운로드
 ```
-[vboxadm@metatron-dn01 ~]$ pwd
+[vboxadm@mron-dn01 ~]$ pwd
 /home/vboxadm
-[vboxadm@metatron-dn01 ~]$ wget https://mirror.kakao.com/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-NetInstall-2009.iso
+[vboxadm@mron-dn01 ~]$ wget https://mirror.kakao.com/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-NetInstall-2009.iso
 Saving to: ‘CentOS-7-x86_64-NetInstall-2009.iso’
 
 100%[=========================================================================>] 602,931,200  110MB/s   in 5.3s
@@ -237,7 +237,7 @@ Saving to: ‘CentOS-7-x86_64-NetInstall-2009.iso’
 
 Minimal 버전 다운로드
 ```
-[vboxadm@metatron-dn01 ~]$ wget https://mirror.kakao.com/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-Minimal-2009.iso
+[vboxadm@mron-dn01 ~]$ wget https://mirror.kakao.com/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-Minimal-2009.iso
 Saving to: ‘CentOS-7-x86_64-Minimal-2009.iso’
 
 100%[=======================================================================>] 1,020,264,448  111MB/s   in 8.9s
@@ -271,7 +271,7 @@ VBoxManage list vms -l
 VBoxManage unregistervm dn01-vm1 --delete
 
 # 가상 머신 생성 2회차. (--basefolder 옵션과 생성된 Settings file 경로 주목.)
-[vboxadm@metatron-dn01 dn01-vm1]$ VBoxManage createvm --name $VM_NAME --basefolder=./VirtualBoxVMs --ostype "RedHat7_64" --register
+[vboxadm@mron-dn01 dn01-vm1]$ VBoxManage createvm --name $VM_NAME --basefolder=./VirtualBoxVMs --ostype "RedHat7_64" --register
 shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
 Virtual machine 'dn01-vm1' is created and registered.
 UUID: 31e9cdff-8abc-45cf-9fd6-309c84f4f8a5
@@ -283,24 +283,24 @@ VBoxManage unregistervm dn01-vm1 --delete
 
 # 가상 머신 생성 3회차. (--basefolder 옵션과 생성된 Settings file 경로 주목.) 
 # 생성에 성공하면, ~/VirtualBoxVMs 와 ~/.config 폴더가 생성됨. 
-[vboxadm@metatron-dn01 ~]$ VBoxManage createvm --name $VM_NAME --basefolder=/home/vboxadm/VirtualBoxVMs --ostype "RedHat7_64" --register
+[vboxadm@mron-dn01 ~]$ VBoxManage createvm --name $VM_NAME --basefolder=/home/vboxadm/VirtualBoxVMs --ostype "RedHat7_64" --register
 
 Virtual machine 'dn01-vm1' is created and registered.
 UUID: d97ea83e-5898-4050-8dfc-26adaa9927b0
 Settings file: '/home/vboxadm/VirtualBoxVMs/dn01-vm1/dn01-vm1.vbox'
 
 # 혹시 오류나면 ostype 변경. (7 없다고 투덜댐.)
-[vboxadm@metatron-dn01 ~]$ VBoxManage modifyvm $VM_NAME --ostype "RedHat_64"
+[vboxadm@mron-dn01 ~]$ VBoxManage modifyvm $VM_NAME --ostype "RedHat_64"
 
 
 # OK. 이대로 진행.
 
 # 메모리와 네트워크 설정
-[vboxadm@metatron-dn01 ~]$ VBoxManage modifyvm $VM_NAME --memory 24576 --nic1 nat
+[vboxadm@mron-dn01 ~]$ VBoxManage modifyvm $VM_NAME --memory 24576 --nic1 nat
 
 # 드라이브 설정-----start
 # 가상 하드 드라이브 생성
-[vboxadm@metatron-dn01 ~]$ VBoxManage createhd --filename /home/vboxadm/VirtualBoxVMs/$VM_NAME/$VM_NAME.vdi --size 40000
+[vboxadm@mron-dn01 ~]$ VBoxManage createhd --filename /home/vboxadm/VirtualBoxVMs/$VM_NAME/$VM_NAME.vdi --size 40000
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
 Medium created. UUID: 62ac5db3-ce83-4bc0-804a-5fbfb8e00841   --> 밑에서 이건 삭제
 
@@ -308,38 +308,38 @@ Medium created. UUID: 62ac5db3-ce83-4bc0-804a-5fbfb8e00841   --> 밑에서 이�
 vboxmanage closemedium disk <uuid> --delete
 
 # vm 설정 명령들
-[vboxadm@metatron-dn01 dn01-vm1]$ ls
+[vboxadm@mron-dn01 dn01-vm1]$ ls
 dn01-vm1.vbox  dn01-vm1.vbox-prev  dn01-vm1.vdi
-[vboxadm@metatron-dn01 dn01-vm1]$ rm -f dn01-vm1.vdi
-[vboxadm@metatron-dn01 dn01-vm1]$ VBoxManage createhd --filename /home/vboxadm/VirtualBoxVMs/$VM_NAME/$VM_NAME.vdi --size 40000
+[vboxadm@mron-dn01 dn01-vm1]$ rm -f dn01-vm1.vdi
+[vboxadm@mron-dn01 dn01-vm1]$ VBoxManage createhd --filename /home/vboxadm/VirtualBoxVMs/$VM_NAME/$VM_NAME.vdi --size 40000
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...NS_ERROR_INVALID_ARG
 VBoxManage: error: Failed to create medium
 VBoxManage: error: Cannot register the hard disk '/home/vboxadm/VirtualBoxVMs/dn01-vm1/dn01-vm1.vdi' {f5da0654-0c62-48ac-80c4-2c2b98636491} because a hard disk '/home/vboxadm/VirtualBoxVMs/dn01-vm1/dn01-vm1.vdi' with UUID {62ac5db3-ce83-4bc0-804a-5fbfb8e00841} already exists
 VBoxManage: error: Details: code NS_ERROR_INVALID_ARG (0x80070057), component VirtualBoxWrap, interface IVirtualBox
 VBoxManage: error: Context: "RTEXITCODE handleCreateMedium(HandlerArg*)" at line 630 of file VBoxManageDisk.cpp
-[vboxadm@metatron-dn01 dn01-vm1]$ vboxmanage closemedium disk 62ac5db3-ce83-4bc0-804a-5fbfb8e00841 --delete
+[vboxadm@mron-dn01 dn01-vm1]$ vboxmanage closemedium disk 62ac5db3-ce83-4bc0-804a-5fbfb8e00841 --delete
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
-[vboxadm@metatron-dn01 dn01-vm1]$ VBoxManage createhd --filename /home/vboxadm/VirtualBoxVMs/$VM_NAME/$VM_NAME.vdi --size 40000
+[vboxadm@mron-dn01 dn01-vm1]$ VBoxManage createhd --filename /home/vboxadm/VirtualBoxVMs/$VM_NAME/$VM_NAME.vdi --size 40000
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
 Medium created. UUID: f4e6b400-6579-4781-8e26-afb0f0a8302a
 
 
 
 # SATA 컨트롤러 추가
-[vboxadm@metatron-dn01 ~]$ VBoxManage storagectl $VM_NAME --name "SATA Controller" --add sata --controller IntelAHCI
+[vboxadm@mron-dn01 ~]$ VBoxManage storagectl $VM_NAME --name "SATA Controller" --add sata --controller IntelAHCI
 
 # 가상 하드 드라이브 연결
-[vboxadm@metatron-dn01 ~]$ VBoxManage storageattach $VM_NAME --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium /home/vboxadm/VirtualBoxVMs/$VM_NAME/$VM_NAME.vdi
+[vboxadm@mron-dn01 ~]$ VBoxManage storageattach $VM_NAME --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium /home/vboxadm/VirtualBoxVMs/$VM_NAME/$VM_NAME.vdi
 
 # IDE 컨트롤러 추가
-[vboxadm@metatron-dn01 ~]$ VBoxManage storagectl $VM_NAME --name "IDE Controller" --add ide
+[vboxadm@mron-dn01 ~]$ VBoxManage storagectl $VM_NAME --name "IDE Controller" --add ide
 
 # ISO 이미지 연결
-[vboxadm@metatron-dn01 ~]$ VBoxManage storageattach $VM_NAME --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium /home/vboxadm/CentOS-7-x86_64-NetInstall-2009.iso
+[vboxadm@mron-dn01 ~]$ VBoxManage storageattach $VM_NAME --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium /home/vboxadm/CentOS-7-x86_64-NetInstall-2009.iso
 # 드라이브 설정-----end
 
 # VBoxManage 무인 설치
-[vboxadm@metatron-dn01 ~]$ VBoxManage unattended install $VM_NAME --iso=/home/vboxadm/CentOS-7-x86_64-NetInstall-2009.iso --user=tbizbig --full-user-name=tbizbig --install-additions --time-zone=KST
+[vboxadm@mron-dn01 ~]$ VBoxManage unattended install $VM_NAME --iso=/home/vboxadm/CentOS-7-x86_64-NetInstall-2009.iso --user=tbizbig --full-user-name=tbizbig --install-additions --time-zone=KST
 # 오류 발생.
 VBoxManage: info: Preparing unattended installation of RedHat7_64 in machine 'dn01-vm1' (d97ea83e-5898-4050-8dfc-26adaa9927b0).
 VBoxManage: error: The supplied ISO file does not contain an OS currently supported for unattended installation
@@ -380,7 +380,7 @@ hostname : localhost.localdomain   -> 변경 dn01-vm1
 
 
 ```
-[vboxadm@metatron-dn01 ~]$ VBoxManage import /home/vboxadm/CentOS-7-x64.ova
+[vboxadm@mron-dn01 ~]$ VBoxManage import /home/vboxadm/CentOS-7-x64.ova
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
 Interpreting /home/vboxadm/CentOS-7-x64.ova...
 OK.
@@ -426,34 +426,34 @@ Password: Osimages123!"
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
 Successfully imported the appliance.
 
-[vboxadm@metatron-dn01 ~]$
-[vboxadm@metatron-dn01 ~]$ VBoxManage list vms
+[vboxadm@mron-dn01 ~]$
+[vboxadm@mron-dn01 ~]$ VBoxManage list vms
 "dn01-vm1" {d97ea83e-5898-4050-8dfc-26adaa9927b0}
 "CentOS-7-x64" {fb934577-6c9e-4d5e-875f-06405d8346a4}
-[vboxadm@metatron-dn01 ~]$ ls
+[vboxadm@mron-dn01 ~]$ ls
 CentOS-7-x64.ova  CentOS-7-x86_64-Minimal-2009.iso  CentOS-7-x86_64-NetInstall-2009.iso  VirtualBoxVMs  VirtualBox VMs
 
-[vboxadm@metatron-dn01 ~]$ cd "VirtualBox VMs"
-[vboxadm@metatron-dn01 VirtualBox VMs]$ ls
+[vboxadm@mron-dn01 ~]$ cd "VirtualBox VMs"
+[vboxadm@mron-dn01 VirtualBox VMs]$ ls
 CentOS-7-x64
-[vboxadm@metatron-dn01 VirtualBox VMs]$ cd CentOS-7-x64/
-[vboxadm@metatron-dn01 CentOS-7-x64]$ ls
+[vboxadm@mron-dn01 VirtualBox VMs]$ cd CentOS-7-x64/
+[vboxadm@mron-dn01 CentOS-7-x64]$ ls
 CentOS-7-x64-disk1.vmdk  CentOS-7-x64.vbox  CentOS-7-x64.vbox-prev
-[vboxadm@metatron-dn01 CentOS-7-x64]$ cd ..
-[vboxadm@metatron-dn01 VirtualBox VMs]$ ls
+[vboxadm@mron-dn01 CentOS-7-x64]$ cd ..
+[vboxadm@mron-dn01 VirtualBox VMs]$ ls
 CentOS-7-x64
-[vboxadm@metatron-dn01 VirtualBox VMs]$ cd ..
+[vboxadm@mron-dn01 VirtualBox VMs]$ cd ..
 
-[vboxadm@metatron-dn01 ~]$ VBoxManage startvm CentOS-7-x64
+[vboxadm@mron-dn01 ~]$ VBoxManage startvm CentOS-7-x64
 Waiting for VM "CentOS-7-x64" to power on...
 VBoxManage: error: The virtual machine 'CentOS-7-x64' has terminated unexpectedly during startup with exit code 1 (0x1)
 VBoxManage: error: Details: code NS_ERROR_FAILURE (0x80004005), component MachineWrap, interface IMachine
-[vboxadm@metatron-dn01 ~]$ VBoxManage startvm CentOS-7-x64 --type headless
+[vboxadm@mron-dn01 ~]$ VBoxManage startvm CentOS-7-x64 --type headless
 Waiting for VM "CentOS-7-x64" to power on...
 VM "CentOS-7-x64" has been successfully started.
-[vboxadm@metatron-dn01 ~]$
+[vboxadm@mron-dn01 ~]$
 
-[vboxadm@metatron-dn01 Logs]$ VBoxManage guestproperty get CentOS-7-x64 "/VirtualBox/GuestInfo/Net/0/V4/IP"
+[vboxadm@mron-dn01 Logs]$ VBoxManage guestproperty get CentOS-7-x64 "/VirtualBox/GuestInfo/Net/0/V4/IP"
 No value set!
 
 ```
@@ -494,9 +494,9 @@ https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=tawoo0&logNo
 
 dn01에서 실행.
 ```
-[root@metatron-dn01 home]# VBoxManage hostonlyifs create
+[root@mron-dn01 home]# VBoxManage hostonlyifs create
 
-[root@metatron-dn01 home]# VBoxManage list hostonlyifs -l
+[root@mron-dn01 home]# VBoxManage list hostonlyifs -l
 Name:            vboxnet0
 GUID:            786f6276-656e-4074-8000-0a0027000000
 DHCP:            Disabled
@@ -511,7 +511,7 @@ Status:          Down
 VBoxNetworkName: HostInterfaceNetworking-vboxnet0
 
 # CentOS-7-x64 상세 정보 확인. nic 여러개 나옴. 
-[vboxadm@metatron-dn01 home]$ VBoxManage showvminfo CentOS-7-x64
+[vboxadm@mron-dn01 home]$ VBoxManage showvminfo CentOS-7-x64
 ...
 NIC 1:                       MAC: 0800274ADF79, Attachment: Bridged Interface 'eno1', Cable connected: on, Trace: off (file: none), Type: 82540EM, Reported speed: 0 Mbps, Boot priority: 0, Promisc Policy: deny, Bandwidth group: none
 NIC 2:                       disabled
@@ -524,30 +524,30 @@ NIC 8:                       disabled
 ...
 
 # nic 2 를 hostonly 로 설정. 
-[root@metatron-dn01 home]# VBoxManage modifyvm CentOS-7-x64 --nic2 hostonly
+[root@mron-dn01 home]# VBoxManage modifyvm CentOS-7-x64 --nic2 hostonly
 
 # CentOS-7-x64 상세 정보 확인. nic 2 연결. 
-[vboxadm@metatron-dn01 home]$ VBoxManage showvminfo CentOS-7-x64
+[vboxadm@mron-dn01 home]$ VBoxManage showvminfo CentOS-7-x64
 NIC 2:                       MAC: 080027A345C9, Attachment: Host-only Interface '', Cable connected: on, Trace: off (file: none), Type: 82540EM, Reported speed: 0 Mbps, Boot priority: 0, Promisc Policy: deny, Bandwidth group: none
 
 # host의 hostonly 네트워크에 vm의 nic 2를 연결
-[vboxadm@metatron-dn01 home]$ VBoxManage modifyvm CentOS-7-x64 --hostonlyadapter2 eno2
+[vboxadm@mron-dn01 home]$ VBoxManage modifyvm CentOS-7-x64 --hostonlyadapter2 eno2
 VBoxManage: warning: Interface "eno2" is of type bridged
 
 # 시작
-[vboxadm@metatron-dn01 home]$ VBoxManage startvm CentOS-7-x64 --type headless
+[vboxadm@mron-dn01 home]$ VBoxManage startvm CentOS-7-x64 --type headless
 Waiting for VM "CentOS-7-x64" to power on...
 VM "CentOS-7-x64" has been successfully started.
 
-[vboxadm@metatron-dn01 home]$ VBoxManage list runningvms -l
+[vboxadm@mron-dn01 home]$ VBoxManage list runningvms -l
 
 
 #끄기 (상태 저장하고 끄기)
-[vboxadm@metatron-dn01 home]$  VBoxManage controlvm CentOS-7-x64 savestate
+[vboxadm@mron-dn01 home]$  VBoxManage controlvm CentOS-7-x64 savestate
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
 
 #끄기 (저장 안하고 끄기)
-[vboxadm@metatron-dn01 home]$  VBoxManage controlvm CentOS-7-x64 poweroff
+[vboxadm@mron-dn01 home]$  VBoxManage controlvm CentOS-7-x64 poweroff
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
 
 #등록된 vm을 끈 다음에. 지우고자 할때 (이렇게 하면, 기본폴더 하위에 있는 vb관련 폴더와 파일 다 지워짐.)
@@ -579,30 +579,30 @@ vbox123!
 
 - 기존 설정내용 지우고, 호스트의 host-only 네트워크 설정 하는 방법. (dhcp 서버 포함. 101~104)
 ```
-[vboxadm@metatron-dn01 ~]$ VBoxManage hostonlyif create
+[vboxadm@mron-dn01 ~]$ VBoxManage hostonlyif create
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
 Interface 'vboxnet1' was successfully created
-[vboxadm@metatron-dn01 ~]$ VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0
+[vboxadm@mron-dn01 ~]$ VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0
 
-[vboxadm@metatron-dn01 ~]$ VBoxManage dhcpserver add --ifname vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0 --lowerip 192.168.56.101 --upperip 192.168.56.200 --enable
+[vboxadm@mron-dn01 ~]$ VBoxManage dhcpserver add --ifname vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0 --lowerip 192.168.56.101 --upperip 192.168.56.200 --enable
 VBoxManage: error: DHCP server already exists 
-[vboxadm@metatron-dn01 ~]$ VBoxManage dhcpserver add --ifname vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0 --lowerip 192.168.56.101 --upperip 192.168.56.109 --enable
+[vboxadm@mron-dn01 ~]$ VBoxManage dhcpserver add --ifname vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0 --lowerip 192.168.56.101 --upperip 192.168.56.109 --enable
 VBoxManage: error: DHCP server already exists
-[vboxadm@metatron-dn01 ~]$ VBoxManage dhcpserver remove --ifname vboxnet0
+[vboxadm@mron-dn01 ~]$ VBoxManage dhcpserver remove --ifname vboxnet0
 
-[vboxadm@metatron-dn01 ~]$ VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0
-[vboxadm@metatron-dn01 ~]$ VBoxManage dhcpserver add --ifname vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0 --lowerip 192.168.56.101 --upperip 192.168.56.109 --enable
-[vboxadm@metatron-dn01 ~]$
+[vboxadm@mron-dn01 ~]$ VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0
+[vboxadm@mron-dn01 ~]$ VBoxManage dhcpserver add --ifname vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0 --lowerip 192.168.56.101 --upperip 192.168.56.109 --enable
+[vboxadm@mron-dn01 ~]$
 ```
 
 - 이번에는 호스트의 NAT Network 를 설정하는 방법  (dhcp 포함. 10~14)
 ```
 
-[vboxadm@metatron-dn01 ~]$ VBoxManage dhcpserver remove --netname DN01_NatNetwork
-[vboxadm@metatron-dn01 ~]$ VBoxManage natnetwork add --netname DN01_NatNetwork --network "10.0.2.0/24" --enable
-[vboxadm@metatron-dn01 ~]$ VBoxManage natnetwork modify --netname DN01_NatNetwork --dhcp on
-[vboxadm@metatron-dn01 ~]$ VBoxManage dhcpserver add --netname DN01_NatNetwork --ip 10.0.2.2 --netmask 255.255.255.0 --lowerip 10.0.2.11 --upperip 10.0.2.19 --enable
-[vboxadm@metatron-dn01 ~]$
+[vboxadm@mron-dn01 ~]$ VBoxManage dhcpserver remove --netname DN01_NatNetwork
+[vboxadm@mron-dn01 ~]$ VBoxManage natnetwork add --netname DN01_NatNetwork --network "10.0.2.0/24" --enable
+[vboxadm@mron-dn01 ~]$ VBoxManage natnetwork modify --netname DN01_NatNetwork --dhcp on
+[vboxadm@mron-dn01 ~]$ VBoxManage dhcpserver add --netname DN01_NatNetwork --ip 10.0.2.2 --netmask 255.255.255.0 --lowerip 10.0.2.11 --upperip 10.0.2.19 --enable
+[vboxadm@mron-dn01 ~]$
 ```
 
 - Nat Network 설정 정보 보기.
@@ -623,7 +623,7 @@ VBoxManage showvminfo vboxnet0
 
 - 설정 결과 보기. dhcp
 ```
-[vboxadm@metatron-dn01 ~]$ VBoxManage list dhcpservers
+[vboxadm@mron-dn01 ~]$ VBoxManage list dhcpservers
 NetworkName:    HostInterfaceNetworking-vboxnet0
 Dhcpd IP:       192.168.56.1
 LowerIPAddress: 192.168.56.101
@@ -655,13 +655,13 @@ Global Configuration:
         1/legacy: 255.255.255.0
 Groups:               None
 Individual Configs:   None
-[vboxadm@metatron-dn01 ~]$
+[vboxadm@mron-dn01 ~]$
 ```
 
 ssh 네트워크가 자주 끊어지는 현상. 확인중.
 
 ```
-[root@metatron-dn01 ~]# ps -ef | grep virtualbox
+[root@mron-dn01 ~]# ps -ef | grep virtualbox
 ...
 vboxadm  32200 32146  0 16:46 ?        00:00:00 /usr/lib/virtualbox/VBoxNetDHCP --comment HostInterfaceNetworking-vboxnet0 --config /home/vboxadm/.config/VirtualBox/HostInterfaceNetworking-vboxnet0-Dhcpd.config --log /home/vboxadm/.config/VirtualBox/HostInterfaceNetworking-vboxnet0-Dhcpd.log
 ...
@@ -690,16 +690,16 @@ VBoxManage dhcpserver add --ifname vboxnet0 --ip 192.168.56.1 --netmask 255.255.
 ```
 
 
-metatron-dn01 의 hosts 
+mron-dn01 의 hosts 
 ```
-[root@metatron-dn01 ~]# vi /etc/hosts
+[root@mron-dn01 ~]# vi /etc/hosts
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
-175.126.58.201  Metatron-NN01
-175.126.58.202  Metatron-EN01
-175.126.58.203  Metatron-DN01
-175.126.58.204  Metatron-DN04
+175.126.58.201  Mron-NN01
+175.126.58.202  Mron-EN01
+175.126.58.203  Mron-DN01
+175.126.58.204  Mron-DN04
 
 192.168.56.102  dn01-vm1
 192.168.56.103  dn01-vm2
@@ -710,23 +710,23 @@ metatron-dn01 의 hosts
 vm 4대 생성하고, 이미지에 호스트명 맞춰놓음.
 (네트워크 ip 고정ip으로 변경필요.) 
 ```
-[vboxadm@metatron-dn01 ~]$ ssh root@dn01-vm1
+[vboxadm@mron-dn01 ~]$ ssh root@dn01-vm1
 [root@dn01-vm1 ~]# exit
 logout
 Connection to dn01-vm1 closed.
-[vboxadm@metatron-dn01 ~]$ ssh root@dn01-vm2
+[vboxadm@mron-dn01 ~]$ ssh root@dn01-vm2
 [root@dn01-vm2 ~]# exit
 logout
 Connection to dn01-vm2 closed.
-[vboxadm@metatron-dn01 ~]$ ssh root@dn01-vm3
+[vboxadm@mron-dn01 ~]$ ssh root@dn01-vm3
 [root@dn01-vm3 ~]# exit
 logout
 Connection to dn01-vm3 closed.
-[vboxadm@metatron-dn01 ~]$ ssh root@dn01-vm4
+[vboxadm@mron-dn01 ~]$ ssh root@dn01-vm4
 [root@dn01-vm4 ~]# exit
 logout
 Connection to dn01-vm4 closed.
-[vboxadm@metatron-dn01 ~]$
+[vboxadm@mron-dn01 ~]$
 ```
 
 hostonlyifs 에 구성된 hostonly network의 dhcp 서버에 vm의 hostonly 연결 nic 카드 고정 ip를 설정한다. 
@@ -875,7 +875,7 @@ sudo ifup enp0s3
 
 현재 vbox 호스트의 설정 상태.
 ```
-[vboxadm@metatron-dn01 ~]$ VBoxManage list dhcpservers
+[vboxadm@mron-dn01 ~]$ VBoxManage list dhcpservers
 
 NetworkName:    NatNetwork1
 Dhcpd IP:       10.0.3.3
@@ -894,7 +894,7 @@ Global Configuration:
         6/legacy: 8.8.8.8          #6 - DNS Server
 Groups:               None
 Individual Configs:   None
-[vboxadm@metatron-dn01 ~]$
+[vboxadm@mron-dn01 ~]$
 ```
 
 아래 표를 작성하기 위한 명령
@@ -931,18 +931,18 @@ curl ifconfig.me
 [linux client 설치] (https://blog.naver.com/ncloud24/221443379824)  
 
 - 설치 dir   
-[root@metatron-dn01 ~]# cd /etc/openvpn   
+[root@mron-dn01 ~]# cd /etc/openvpn   
 - log dir  
-[root@metatron-dn01 openvpn]# cd /var/log/openvpn  
+[root@mron-dn01 openvpn]# cd /var/log/openvpn  
 - conf 파일 위치
-[root@metatron-dn01 openvpn]# ls /etc/openvpn/server.conf
+[root@mron-dn01 openvpn]# ls /etc/openvpn/server.conf
 
 작동확인.
 ```
-[root@metatron-dn01 openvpn]# ps aux | grep openvpn
+[root@mron-dn01 openvpn]# ps aux | grep openvpn
 root      1811  0.0  0.0 112812   976 pts/1    S+   15:13   0:00 grep --color=auto openvpn
 nobody   31147  0.0  0.0  77152  4112 ?        Ss   11:36   0:00 /usr/sbin/openvpn --status /run/openvpn-server/status-server.log --status-version 2 --suppress-timestamps --config /etc/openvpn/server.conf
-[root@metatron-dn01 openvpn]# vi /run/openvpn-server/status-server.log  ---> 없다...
+[root@mron-dn01 openvpn]# vi /run/openvpn-server/status-server.log  ---> 없다...
 ```
 
 설치과정. : openvpn_설치과정.md 참조.
