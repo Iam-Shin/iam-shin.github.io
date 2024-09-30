@@ -553,13 +553,11 @@ VM "CentOS-7-x64" has been successfully started.
 #등록된 vm을 끈 다음에. 지우고자 할때 (이렇게 하면, 기본폴더 하위에 있는 vb관련 폴더와 파일 다 지워짐.)
 VBoxManage unregistervm UUID1또는VMname --delete
 
-
 ```
 
 네트워크에 사용중인 ip 확인
 ```
 nmap -sP 192.168.1.0/24   --> 설치 필요.
-
 
 #ip-chk.sh 작성
 #!/bin/bash
@@ -569,16 +567,15 @@ done
 wait
 ```
 
-
-CentOS-7-x64-v2
-root
-vbox123!
+CentOS-7-x64-v2  
+root  
+vbox123!  
 
 
 빅데이터 기술에 나온 내용을 토대로, 재 설정. 
 
-- 기존 설정내용 지우고, 호스트의 host-only 네트워크 설정 하는 방법. (dhcp 서버 포함. 101~104)   
-```  
+- 기존 설정내용 지우고, 호스트의 host-only 네트워크 설정 하는 방법. (dhcp 서버 포함. 101~104)
+```
 [vboxadm@mron-dn01 ~]$ VBoxManage hostonlyif create
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
 Interface 'vboxnet1' was successfully created
