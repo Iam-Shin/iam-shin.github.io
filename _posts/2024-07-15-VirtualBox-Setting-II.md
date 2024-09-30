@@ -612,6 +612,7 @@ dr-xr-x---. 5 root root  196 Jun 28 16:20 ..
 ```
 
 2. ssh 공개키 배포
+
 ```
 ssh-copy-id root@dn01-vm2   ---> 복사할 target remote 호스트
 ssh-copy-id root@dn01-vm3
@@ -629,6 +630,7 @@ and check to make sure that only the key(s) you wanted were added.
 ```
 
 2-1. 위의 방법이 안될때
+
 ```
 # 공개 키 파일의 내용을 클립보드에 복사합니다:
 cat ~/.ssh/id_rsa.pub
@@ -642,6 +644,7 @@ chmod 700 ~/.ssh
 ```
 
 3. 모든 호스트에서 각자의 ssh키 생성하고, remote를 향해 ssh 공개키 배포작업 반복
+
 ```
 # 각자의 ssh 키 생성
 ssh-keygen -t rsa -b 4096 -C "root@dn01-vm2"
@@ -659,6 +662,7 @@ ssh-copy-id root@dn01-vm4
 ```
 
 4. 접속 테스트
+
 ```
 [root@dn01-vm3 ~]# ssh root@dn01-vm1
 [root@dn01-vm1 ~]# 
