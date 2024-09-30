@@ -17,7 +17,7 @@ ip주소 : 172.23.251.73
 hostname : localhost.localdomain   -> 변경 dn01-vm1
 
 
-```shell
+```
 [vboxadm@mron-dn01 ~]$ VBoxManage import /home/vboxadm/CentOS-7-x64.ova
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
 Interpreting /home/vboxadm/CentOS-7-x64.ova...
