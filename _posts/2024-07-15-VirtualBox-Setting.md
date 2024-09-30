@@ -113,7 +113,7 @@ Mron-DN01 호스트에 VirtualBox 7 설치하기로 결정.
 
 ### 사용자 생성
 
-```
+```shell
 [root@mron-dn01 ~]# adduser vboxadm
 [root@mron-dn01 ~]# passwd vboxadm
 [root@mron-dn01 ~]# vi /etc/group  <-- 아래와 같이 권한 편집  
@@ -121,14 +121,14 @@ vboxadm:x:1000:vboxadm,root   <-- su root 허용
 ```
 
 vboxadm 사용자 생성 했으나, 설치시 root 권한 요구
-```
+```shell
 [vboxadm@mron-dn01 ~]$ yum install VirtualBox-7.0.x86_64
 Loaded plugins: fastestmirror
 You need to be root to perform this command.
 ```
 
 vboxadm에게 sudo 권한 주기. __(vboxadm 보안 조심!!)__
-```
+```shell
 [root@mron-dn01 vboxadm]# visudo  <-- sudoer 설정파일 편집
 vboxadm ALL=(ALL)       ALL  <-- 라인 추가
 ```
@@ -136,7 +136,7 @@ vboxadm ALL=(ALL)       ALL  <-- 라인 추가
 ### virtualbox 7 설치
 
 vboxadm 계정으로 virtualbox 7 설치
-```
+```shell
 [vboxadm@mron-dn01 ~]$ sudo yum install VirtualBox-7.0.x86_64
 ```
 
@@ -224,7 +224,7 @@ http://isoredirect.centos.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-2009.
 ### CentOS 다운로드
 
 NetInstall 버전 다운로드
-```
+```shell
 [vboxadm@mron-dn01 ~]$ pwd
 /home/vboxadm
 [vboxadm@mron-dn01 ~]$ wget https://mirror.kakao.com/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-NetInstall-2009.iso
@@ -236,7 +236,7 @@ Saving to: ‘CentOS-7-x86_64-NetInstall-2009.iso’
 ```
 
 Minimal 버전 다운로드
-```
+```shell
 [vboxadm@mron-dn01 ~]$ wget https://mirror.kakao.com/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-Minimal-2009.iso
 Saving to: ‘CentOS-7-x86_64-Minimal-2009.iso’
 
@@ -255,7 +255,7 @@ Saving to: ‘CentOS-7-x86_64-Minimal-2009.iso’
 
 설치 명령 (Sample 1.)  
 [참고 : 3.2. Unattended Guest Installation](https://docs.oracle.com/en/virtualization/virtualbox/6.0/user/basic-unattended.html)
-```
+```shell
 VM_NAME="dn01-vm1"
 
 # 가상 머신 생성 - 기본폴더 지정 안했더니, "VirtualBox VMs" 이렇게 만드네.. ㅜㅜ
@@ -379,7 +379,7 @@ ip주소 : 172.23.251.73
 hostname : localhost.localdomain   -> 변경 dn01-vm1
 
 
-```
+```shell
 [vboxadm@mron-dn01 ~]$ VBoxManage import /home/vboxadm/CentOS-7-x64.ova
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
 Interpreting /home/vboxadm/CentOS-7-x64.ova...
@@ -474,7 +474,7 @@ Windows11의 GUI 환경에서, 다운받은 게스트 centos7을 접속하여
 dn01 에서 import 하자. 
 
 호스트명 변경 localdomain.localhost -> dn01-vm1
-```
+```shell
 #CentOS 7
 [root@localhost ~]# hostnamectl set-hostname dn01-vm1
 [root@localhost ~]# yum install net-tools
@@ -483,7 +483,7 @@ dn01 에서 import 하자.
 호스트 전용 네트웍 설정
 참고. https://blog.naver.com/tequini/220977723865
 https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=tawoo0&logNo=221606425141
-```
+```shell
 [root@dn01-vm1 ~]# cd /etc/sysconfig/network-scripts/
 [root@dn01-vm1 ~]# cp ifcfg-ens160 ifcfg-enp0s8
 [root@dn01-vm1 ~]# vi ifcfg-enp0s8
@@ -493,7 +493,7 @@ https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=tawoo0&logNo
 
 
 dn01에서 실행.
-```
+```shell
 [root@mron-dn01 home]# VBoxManage hostonlyifs create
 
 [root@mron-dn01 home]# VBoxManage list hostonlyifs -l
@@ -556,7 +556,7 @@ VBoxManage unregistervm UUID1또는VMname --delete
 ```
 
 네트워크에 사용중인 ip 확인
-```
+```shell
 nmap -sP 192.168.1.0/24   --> 설치 필요.
 
 #ip-chk.sh 작성
@@ -575,7 +575,7 @@ vbox123!
 빅데이터 기술에 나온 내용을 토대로, 재 설정. 
 
 - 기존 설정내용 지우고, 호스트의 host-only 네트워크 설정 하는 방법. (dhcp 서버 포함. 101~104)
-```
+```shell
 [vboxadm@mron-dn01 ~]$ VBoxManage hostonlyif create
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
 Interface 'vboxnet1' was successfully created
@@ -593,7 +593,7 @@ VBoxManage: error: DHCP server already exists
 ```   
 
 - 이번에는 호스트의 NAT Network 를 설정하는 방법  (dhcp 포함. 10~14)   
-```   
+```shell
 [vboxadm@mron-dn01 ~]$ VBoxManage dhcpserver remove --netname DN01_NatNetwork
 [vboxadm@mron-dn01 ~]$ VBoxManage natnetwork add --netname DN01_NatNetwork --network "10.0.2.0/24" --enable
 [vboxadm@mron-dn01 ~]$ VBoxManage natnetwork modify --netname DN01_NatNetwork --dhcp on
@@ -602,7 +602,7 @@ VBoxManage: error: DHCP server already exists
 ```   
 
 - Nat Network 설정 정보 보기.   
-```   
+```shell   
 VBoxManage list natnets
 # 또는	
 VBoxManage natnetwork list --netname <network-name>
@@ -610,7 +610,7 @@ VBoxManage natnetwork list --netname DN01_NatNetwork
 ```   
 
 - host-only 네크워크 설정 정보 보기.
-```   
+```shell   
 VBoxManage list hostonlyifs
 # 또는
 VBoxManage showvminfo <interface-name>
@@ -618,7 +618,7 @@ VBoxManage showvminfo vboxnet0
 ```
 
 - 설정 결과 보기. dhcp   
-```   
+```shell   
 [vboxadm@mron-dn01 ~]$ VBoxManage list dhcpservers
 NetworkName:    HostInterfaceNetworking-vboxnet0
 Dhcpd IP:       192.168.56.1
@@ -656,7 +656,7 @@ Individual Configs:   None
 
 ssh 네트워크가 자주 끊어지는 현상. 확인중.
 
-```
+```shell
 [root@mron-dn01 ~]# ps -ef | grep virtualbox
 ...
 vboxadm  32200 32146  0 16:46 ?        00:00:00 /usr/lib/virtualbox/VBoxNetDHCP --comment HostInterfaceNetworking-vboxnet0 --config /home/vboxadm/.config/VirtualBox/HostInterfaceNetworking-vboxnet0-Dhcpd.config --log /home/vboxadm/.config/VirtualBox/HostInterfaceNetworking-vboxnet0-Dhcpd.log
@@ -679,7 +679,6 @@ vi /home/vboxadm/.config/VirtualBox/HostInterfaceNetworking-vboxnet0-Dhcpd.lease
 
 # expiration="600" --> 600초. 10분?  너무 짧다. 
 
-
 # dhcpserver 설정 지우고 다시 잡아야함. 30일=2,592,000초
 VBoxManage dhcpserver add --ifname vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0 --lowerip 192.168.56.101 --upperip 192.168.56.104 --lease-time 3600 --enable
 
@@ -687,7 +686,7 @@ VBoxManage dhcpserver add --ifname vboxnet0 --ip 192.168.56.1 --netmask 255.255.
 
 
 mron-dn01 의 hosts 
-```
+```shell
 [root@mron-dn01 ~]# vi /etc/hosts
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
@@ -705,7 +704,7 @@ mron-dn01 의 hosts
 
 vm 4대 생성하고, 이미지에 호스트명 맞춰놓음.
 (네트워크 ip 고정ip으로 변경필요.) 
-```
+```shell
 [vboxadm@mron-dn01 ~]$ ssh root@dn01-vm1
 [root@dn01-vm1 ~]# exit
 logout
@@ -726,7 +725,7 @@ Connection to dn01-vm4 closed.
 ```
 
 hostonlyifs 에 구성된 hostonly network의 dhcp 서버에 vm의 hostonly 연결 nic 카드 고정 ip를 설정한다. 
-```
+```shell
 VBoxManage dhcpserver modify --ifname vboxnet0 --mac-address=080027682496 --fixed-address=192.168.56.102
 VBoxManage dhcpserver modify --ifname vboxnet0 --mac-address=080027ac772d --fixed-address=192.168.56.103
 VBoxManage dhcpserver modify --ifname vboxnet0 --mac-address=080027f73c55 --fixed-address=192.168.56.104
