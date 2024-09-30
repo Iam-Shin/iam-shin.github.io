@@ -257,7 +257,8 @@ VBoxManage showvminfo <interface-name>
 VBoxManage showvminfo vboxnet0
 ```
 
-- 설정 결과 보기. dhcp.  
+- 설정 결과 보기. dhcp.
+
 ```shell
 [vboxadm@mron-dn01 ~]$ VBoxManage list dhcpservers
 NetworkName:    HostInterfaceNetworking-vboxnet0
