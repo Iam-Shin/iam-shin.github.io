@@ -300,7 +300,7 @@ dn01-vm1 에서 ansible로 작업함.
 
 
 ### ansible로 vm 3대에 openvpn 설치. (결과적으로는 ansible로 설치 안됨.)
-- openvpn 설치
+1. openvpn 설치  
 ```
 ansible -i /etc/ansible/hosts vm-all -m shell -a 'ls /root/dn01-vpn.ovpn'     --> 다 있음.
 ansible -i /etc/ansible/hosts vm-all -m shell -a 'yum list installed | grep -Hi openvpn'    ---> vm1만 설치되있음.
@@ -315,7 +315,7 @@ ansible -i /etc/ansible/hosts vm-all -m shell -a 'ls /etc/openvpn/dn01-vpn.ovpn'
 openvpn 설치할때 오류 났었는데, epel-release 설치 안되있어서, repository 없어서 그랬던거임. epel-release 먼저 설치.
 >> 오류 No package openvpn available.Error: Nothing to donon-zero return code
 
-- openvpn 실행
+2. openvpn 실행
 ```
 openvpn --config /etc/openvpn/dn01-vm1.ovpn   <--- 이렇게 실행해야 비번 넣을수 있다. 
 touch openvpn-client-start.sh
@@ -324,7 +324,7 @@ ps -ef | grep openvpn-client-start.sh
 ps -ef | grep open
 ```
  
-- openvpn 종료
+3. openvpn 종료
 ```
 ps -ef | grep openvpn
 kill -9 <pid>
