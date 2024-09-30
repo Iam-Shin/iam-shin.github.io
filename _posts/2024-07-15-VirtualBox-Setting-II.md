@@ -17,7 +17,7 @@ ip주소 : 172.23.251.73
 hostname : localhost.localdomain   -> 변경 dn01-vm1
 
 
-```
+```shell
 [vboxadm@mron-dn01 ~]$ VBoxManage import /home/vboxadm/CentOS-7-x64.ova
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
 Interpreting /home/vboxadm/CentOS-7-x64.ova...
@@ -213,6 +213,7 @@ vbox123!
 빅데이터 기술에 나온 내용을 토대로, 재 설정. 
 
 - 기존 설정내용 지우고, 호스트의 host-only 네트워크 설정 하는 방법. dhcp 서버 포함. 101~104.
+
 ```shell  
 [vboxadm@mron-dn01 ~]$ VBoxManage hostonlyif create
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
