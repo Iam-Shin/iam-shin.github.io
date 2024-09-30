@@ -300,7 +300,8 @@ dn01-vm1 에서 ansible로 작업함.
 
 
 ### ansible로 vm 3대에 openvpn 설치. (결과적으로는 ansible로 설치 안됨.)
-1. openvpn 설치  
+1. openvpn 설치
+   
 ```
 ansible -i /etc/ansible/hosts vm-all -m shell -a 'ls /root/dn01-vpn.ovpn'     --> 다 있음.
 ansible -i /etc/ansible/hosts vm-all -m shell -a 'yum list installed | grep -Hi openvpn'    ---> vm1만 설치되있음.
@@ -316,6 +317,7 @@ openvpn 설치할때 오류 났었는데, epel-release 설치 안되있어서, r
 >> 오류 No package openvpn available.Error: Nothing to donon-zero return code
 
 2. openvpn 실행
+   
 ```
 openvpn --config /etc/openvpn/dn01-vm1.ovpn   <--- 이렇게 실행해야 비번 넣을수 있다. 
 touch openvpn-client-start.sh
@@ -325,6 +327,7 @@ ps -ef | grep open
 ```
  
 3. openvpn 종료
+   
 ```
 ps -ef | grep openvpn
 kill -9 <pid>
@@ -334,6 +337,7 @@ kill -9 <pid>
 ### 각 vm에 부팅시 openvpn 자동실행되어 접속 되도록 파일생성, 설정변경. 
 
 서버에 openvpn-plugin-auth-pam.so 모듈이 설치되어 있음. 
+
 ```
 [root@Mron-dn01 openvpn]# ls /usr/lib64/openvpn/plugins/openvpn-plugin-auth-pam.so
 /usr/lib64/openvpn/plugins/openvpn-plugin-auth-pam.so
@@ -341,6 +345,7 @@ kill -9 <pid>
 
 
 client 에서 dn01-vm1.ovpn 파일 신규 생성
+
 ```
 # vi /etc/openvpn/dn01-vm1.ovpn
 client
@@ -363,6 +368,7 @@ verb 3
 ```
 
 client에서 auth.txt 설정
+
 ```
 # vi /etc/openvpn/auth.txt
 vboxadm
@@ -370,6 +376,7 @@ vboxadm
 ```
 
 서버의 ca.crt 인증서 복사
+
 ```
 [root@Mron-dn01 openvpn]# scp /etc/openvpn/ca.crt root@dn01-vm1:/etc/openvpn/ca.crt
 root@dn01-vm1's password:
@@ -388,6 +395,7 @@ ca.crt                                                                          
 
 
 client.ovpn 템플릿 파일 복사.
+
 ```
 [root@Mron-dn01 openvpn]# scp /etc/openvpn/client-template.txt root@dn01-vm1:/etc/openvpn/dn01-vm1.ovpn
 root@dn01-vm1's password:
