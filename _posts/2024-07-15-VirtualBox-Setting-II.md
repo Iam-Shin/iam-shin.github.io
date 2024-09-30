@@ -212,8 +212,8 @@ vbox123!
 
 빅데이터 기술에 나온 내용을 토대로, 재 설정. 
 
-- 기존 설정내용 지우고, 호스트의 host-only 네트워크 설정 하는 방법. dhcp 서버 포함. 101~104.  
-```shell
+- 기존 설정내용 지우고, 호스트의 host-only 네트워크 설정 하는 방법. dhcp 서버 포함. 101~104.
+```shell  
 [vboxadm@mron-dn01 ~]$ VBoxManage hostonlyif create
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
 Interface 'vboxnet1' was successfully created
@@ -230,8 +230,8 @@ VBoxManage: error: DHCP server already exists
 [vboxadm@mron-dn01 ~]$
 ```
 
-- 이번에는 호스트의 NAT Network 를 설정하는 방법.  dhcp 포함. 10~14.  
-```shell
+- 이번에는 호스트의 NAT Network 를 설정하는 방법.  dhcp 포함. 10~14.
+```shell  
 [vboxadm@mron-dn01 ~]$ VBoxManage dhcpserver remove --netname DN01_NatNetwork
 [vboxadm@mron-dn01 ~]$ VBoxManage natnetwork add --netname DN01_NatNetwork --network "10.0.2.0/24" --enable
 [vboxadm@mron-dn01 ~]$ VBoxManage natnetwork modify --netname DN01_NatNetwork --dhcp on
@@ -240,7 +240,7 @@ VBoxManage: error: DHCP server already exists
 ```
 
 - Nat Network 설정 정보 보기.   
-```shell
+```shell  
 VBoxManage list natnets
 # 또는	
 VBoxManage natnetwork list --netname <network-name>
@@ -528,8 +528,7 @@ Individual Configs:   None
 [root@dn01-vm1 network-scripts]# nmcli connection show; ip addr;
 ```
 
-|GUEST OS	|NAME                |UUID                                  |TYPE            |DEVICE	|IP				|MAC				|HOST-OS NET   
-|			|               	 |                      	            |            	 |			|				|					| 
+|GUEST OS	|NAME                |UUID                                  |TYPE            |DEVICE	|IP				|MAC				|HOST-OS NET 
 |dn01-vm1	|Wired connection 1  |e636b5e7-4f10-3989-8f26-3c33b7e20664  |802-3-ethernet  |enp0s3	|10.0.3.11		|08:00:27:9A:A8:6B	|NatNetwork1   
 |dn01-vm1	|Wired connection 3  |8d146403-ba63-3562-aae7-bddec7bf69d7  |802-3-ethernet  |enp0s8	|192.168.56.102	|08:00:27:68:24:96	|vboxnet0      
 |dn01-vm2	|Wired connection 1  |1e4ea849-8e20-3e95-8b2a-a14c9ab51338  |802-3-ethernet  |enp0s3	|10.0.3.12		|08:00:27:3f:d4:c1	|NatNetwork1   
