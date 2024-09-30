@@ -619,7 +619,7 @@ VBoxManage showvminfo <interface-name>
 VBoxManage showvminfo vboxnet0
 ```
 
-- 설정 결과 보기. dhcp   
+- 설정 결과 보기. dhcp.  
 ```shell
 [vboxadm@mron-dn01 ~]$ VBoxManage list dhcpservers
 NetworkName:    HostInterfaceNetworking-vboxnet0
@@ -656,7 +656,7 @@ Individual Configs:   None
 [vboxadm@mron-dn01 ~]$
 ```
 
-ssh 네트워크가 자주 끊어지는 현상. 확인중.
+ssh 네트워크가 자주 끊어지는 현상. 확인중.  
 
 ```shell
 [root@mron-dn01 ~]# ps -ef | grep virtualbox
@@ -686,7 +686,7 @@ VBoxManage dhcpserver add --ifname vboxnet0 --ip 192.168.56.1 --netmask 255.255.
 ```
 
 
-mron-dn01 의 hosts 
+mron-dn01 의 hosts  
 ```shell
 [root@mron-dn01 ~]# vi /etc/hosts
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
@@ -703,8 +703,7 @@ mron-dn01 의 hosts
 192.168.56.105  dn01-vm4
 ```
 
-vm 4대 생성하고, 이미지에 호스트명 맞춰놓음.
-(네트워크 ip 고정ip으로 변경필요.) 
+vm 4대 생성하고, 이미지에 호스트명 맞춰놓음. (네트워크 ip 고정ip으로 변경필요.)  
 ```shell
 [vboxadm@mron-dn01 ~]$ ssh root@dn01-vm1
 [root@dn01-vm1 ~]# exit
@@ -725,7 +724,7 @@ Connection to dn01-vm4 closed.
 [vboxadm@mron-dn01 ~]$
 ```
 
-hostonlyifs 에 구성된 hostonly network의 dhcp 서버에 vm의 hostonly 연결 nic 카드 고정 ip를 설정한다. 
+hostonlyifs 에 구성된 hostonly network의 dhcp 서버에 vm의 hostonly 연결 nic 카드 고정 ip를 설정한다.  
 ```shell
 VBoxManage dhcpserver modify --ifname vboxnet0 --mac-address=080027682496 --fixed-address=192.168.56.102
 VBoxManage dhcpserver modify --ifname vboxnet0 --mac-address=080027ac772d --fixed-address=192.168.56.103
@@ -735,23 +734,19 @@ VBoxManage dhcpserver modify --ifname vboxnet0 --mac-address=08002758af28 --fixe
 
 VBoxManage controlvm dn01-vm1 reset
 
-
-
 --------------------------------------------------------
 
-1. NAT Network 생성
-먼저, NAT Network를 생성합니다. 예를 들어, NatNetwork1이라는 이름의 NAT Network를 생성하려면 다음 명령어를 사용합니다:
-
+1. NAT Network 생성  
+먼저, NAT Network를 생성합니다. 예를 들어, NatNetwork1이라는 이름의 NAT Network를 생성하려면 다음 명령어를 사용합니다:  
 
 ```bash
 VBoxManage natnetwork add --netname NatNetwork1 --network "10.0.3.0/24" --enable
 VBoxManage natnetwork start --netname NatNetwork1
 ```
-이 명령어는 NatNetwork1이라는 이름의 NAT Network를 10.0.3.0/24 네트워크 대역으로 생성하고 활성화합니다. (자동으로 DHCP 설정하고, dhcp 서버 만드는것 같다.)
+이 명령어는 NatNetwork1이라는 이름의 NAT Network를 10.0.3.0/24 네트워크 대역으로 생성하고 활성화합니다. (자동으로 DHCP 설정하고, dhcp 서버 만드는것 같다.)  
 
-2. VM의 네트워크 어댑터 설정 변경
-이제 각 VM의 네트워크 어댑터를 NAT Network로 변경합니다. 예를 들어, VM1, VM2, VM3, VM4 네 대의 VM이 있다고 가정하겠습니다. 각 VM에 대해 다음 명령어를 실행합니다:
-
+2. VM의 네트워크 어댑터 설정 변경  
+이제 각 VM의 네트워크 어댑터를 NAT Network로 변경합니다. 예를 들어, VM1, VM2, VM3, VM4 네 대의 VM이 있다고 가정하겠습니다. 각 VM에 대해 다음 명령어를 실행합니다:  
 
 ```bash
 VBoxManage modifyvm "dn01-vm1" --nic1 natnetwork --nat-network1 "NatNetwork1"
@@ -763,22 +758,21 @@ VBoxManage modifyvm "dn01-vm4" --nic1 natnetwork --nat-network1 "NatNetwork1"
 
 ----------------------------------------------------------
 
+VBoxManage 7 버전에서는 --dhcp-option이 제거된 것으로 보입니다.  
+대신, VBoxManage dhcpserver 명령어를 사용하여 DHCP 서버 설정을 변경할 수 있습니다. 이를 통해 특정 MAC 주소에 대해 고정 IP를 설정할 수 있습니다.  
 
-
-VBoxManage 7 버전에서는 --dhcp-option이 제거된 것으로 보입니다. 
-대신, VBoxManage dhcpserver 명령어를 사용하여 DHCP 서버 설정을 변경할 수 있습니다. 이를 통해 특정 MAC 주소에 대해 고정 IP를 설정할 수 있습니다.
-
-NAT Network 설정 변경 방법
-NAT Network 생성:
-먼저, NAT Network를 생성합니다. 예를 들어, NatNetwork1이라는 이름의 NAT Network를 생성합니다.
+NAT Network 설정 변경 방법  
+NAT Network 생성:  
+먼저, NAT Network를 생성합니다. 예를 들어, NatNetwork1이라는 이름의 NAT Network를 생성합니다.  
 
 ```bash
 VBoxManage natnetwork add --netname NatNetwork1 --network "10.0.3.0/24" --enable
 VBoxManage natnetwork start --netname NatNetwork1
 ```
-DHCP 서버 설정:
-NAT Network의 DHCP 서버를 설정합니다.
-그런데, 아래 명령 안했는데, VBoxManage list dhcpservers 로 확인해보면 이미 dhcp가 설정되있다.
+
+DHCP 서버 설정:  
+NAT Network의 DHCP 서버를 설정합니다.  
+그런데, 아래 명령 안했는데, VBoxManage list dhcpservers 로 확인해보면 이미 dhcp가 설정되있다.  
 
 ```bash
 VBoxManage dhcpserver add --netname NatNetwork1 --ip 10.0.3.3 --netmask 255.255.255.0 --lowerip 10.0.3.4 --upperip 10.0.3.254 --enable
