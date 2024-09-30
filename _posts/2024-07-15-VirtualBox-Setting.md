@@ -574,7 +574,7 @@ vbox123!
 
 빅데이터 기술에 나온 내용을 토대로, 재 설정. 
 
-- 기존 설정내용 지우고, 호스트의 host-only 네트워크 설정 하는 방법. (dhcp 서버 포함. 101~104)
+- 기존 설정내용 지우고, 호스트의 host-only 네트워크 설정 하는 방법. (dhcp 서버 포함. 101~104).   
 ```shell
 [vboxadm@mron-dn01 ~]$ VBoxManage hostonlyif create
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
@@ -590,9 +590,9 @@ VBoxManage: error: DHCP server already exists
 [vboxadm@mron-dn01 ~]$ VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0
 [vboxadm@mron-dn01 ~]$ VBoxManage dhcpserver add --ifname vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0 --lowerip 192.168.56.101 --upperip 192.168.56.109 --enable
 [vboxadm@mron-dn01 ~]$
-```   
+```
 
-- 이번에는 호스트의 NAT Network 를 설정하는 방법  (dhcp 포함. 10~14)   
+- 이번에는 호스트의 NAT Network 를 설정하는 방법  (dhcp 포함. 10~14).   
 ```shell
 [vboxadm@mron-dn01 ~]$ VBoxManage dhcpserver remove --netname DN01_NatNetwork
 [vboxadm@mron-dn01 ~]$ VBoxManage natnetwork add --netname DN01_NatNetwork --network "10.0.2.0/24" --enable
@@ -681,7 +681,6 @@ vi /home/vboxadm/.config/VirtualBox/HostInterfaceNetworking-vboxnet0-Dhcpd.lease
 
 # dhcpserver 설정 지우고 다시 잡아야함. 30일=2,592,000초
 VBoxManage dhcpserver add --ifname vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0 --lowerip 192.168.56.101 --upperip 192.168.56.104 --lease-time 3600 --enable
-
 ```
 
 
