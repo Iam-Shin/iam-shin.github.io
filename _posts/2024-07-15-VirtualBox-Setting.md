@@ -26,10 +26,10 @@ tags: [virtualbox, vm]
 
 |자산 |호스트명   |모델명                    |SN     |OS           |계정정보            |공인IP           |스펙                      |비고
 |     |         |                     |       |             |                 |               |                         |
-|SKT |메타트론팀 |Metatron-NN01	Dell R630 |8273R42 |CentOS 7.9  |root / apxk19!@# |175.126.58.201 |16 cores, 128 gb,    1tb |
-|SKT |메타트론팀 |Metatron-EN01	Dell R730 |5ZWSB22 |CentOS 7.9  |root / apxk19!@# |175.126.58.202 |48 cores,  64 gb,  215gb |
-|SKT |메타트론팀 |Metatron-DN01	Dell R730 |FJSV032 |CentOS 7.9  |root / apxk19!@# |175.126.58.203 |32 cores, 128 gb,  215gb |virtualBox 설치 하겠음.6/12
-|SKT |메타트론팀 |Metatron-DN04	Dell R730 |6VTGY42 |CentOS 7.9  |root / apxk19!@# |175.126.58.204 |32 cores, 128 gb,  215gb |메타트론 설치하겠음.
+|SKT |메타트론팀 |Metatron-NN01	Dell R630 |8273R42 |CentOS 7.9  |root /  |175.126.58.201 |16 cores, 128 gb,    1tb |
+|SKT |메타트론팀 |Metatron-EN01	Dell R730 |5ZWSB22 |CentOS 7.9  |root /  |175.126.58.202 |48 cores,  64 gb,  215gb |
+|SKT |메타트론팀 |Metatron-DN01	Dell R730 |FJSV032 |CentOS 7.9  |root /  |175.126.58.203 |32 cores, 128 gb,  215gb |virtualBox 설치 하겠음.6/12
+|SKT |메타트론팀 |Metatron-DN04	Dell R730 |6VTGY42 |CentOS 7.9  |root /  |175.126.58.204 |32 cores, 128 gb,  215gb |메타트론 설치하겠음.
 
 * 4대 모두 Intel® Xeon® 프로세서 E5-2600 v4 제품군
 * 4대 모두 CentOS Linux release 7.9.2009 (Core)
