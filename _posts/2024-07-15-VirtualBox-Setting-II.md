@@ -10,8 +10,8 @@ tags: [virtualbox, vm]
 # 가상머신 설치 (minimal로 install된 CentOS-7 가상머신 이미지를 import 하는 방법)
 
 ### 다운로드 받은 ova 파일 import  
-다운로드 : https://sourceforge.net/projects/osimages/  
-자세한 내용은 다음을 참조하십시오. https://en.wikipedia.org/wiki/Open_Virtualization_Format#Industry_support   
+다운로드 : [sourceforge](https://sourceforge.net/projects/osimages/)  
+자세한 내용은 다음을 참조하십시오. [wikipedia](https://en.wikipedia.org/wiki/Open_Virtualization_Format#Industry_support)   
 사용자 : root / Osimages123!  
 ip주소 : 172.23.251.73
 hostname : localhost.localdomain   -> 변경 dn01-vm1
@@ -118,9 +118,9 @@ dn01 에서 import 하자.
 [root@localhost ~]# yum install net-tools
 ```
 
-호스트 전용 네트웍 설정
-참고. https://blog.naver.com/tequini/220977723865
-https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=tawoo0&logNo=221606425141
+호스트 전용 네트웍 설정  
+[참고1.](https://blog.naver.com/tequini/220977723865)  
+[참고2.](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=tawoo0&logNo=221606425141)  
 ```shell
 [root@dn01-vm1 ~]# cd /etc/sysconfig/network-scripts/
 [root@dn01-vm1 ~]# cp ifcfg-ens160 ifcfg-enp0s8
