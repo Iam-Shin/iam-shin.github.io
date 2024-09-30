@@ -593,35 +593,35 @@ VBoxManage: error: DHCP server already exists
 [vboxadm@mron-dn01 ~]$ VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0
 [vboxadm@mron-dn01 ~]$ VBoxManage dhcpserver add --ifname vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0 --lowerip 192.168.56.101 --upperip 192.168.56.109 --enable
 [vboxadm@mron-dn01 ~]$
-```
+```   
 
-- 이번에는 호스트의 NAT Network 를 설정하는 방법  (dhcp 포함. 10~14)
-```
+- 이번에는 호스트의 NAT Network 를 설정하는 방법  (dhcp 포함. 10~14)   
+```   
 [vboxadm@mron-dn01 ~]$ VBoxManage dhcpserver remove --netname DN01_NatNetwork
 [vboxadm@mron-dn01 ~]$ VBoxManage natnetwork add --netname DN01_NatNetwork --network "10.0.2.0/24" --enable
 [vboxadm@mron-dn01 ~]$ VBoxManage natnetwork modify --netname DN01_NatNetwork --dhcp on
 [vboxadm@mron-dn01 ~]$ VBoxManage dhcpserver add --netname DN01_NatNetwork --ip 10.0.2.2 --netmask 255.255.255.0 --lowerip 10.0.2.11 --upperip 10.0.2.19 --enable
 [vboxadm@mron-dn01 ~]$
-```
+```   
 
-- Nat Network 설정 정보 보기.
-```
+- Nat Network 설정 정보 보기.   
+```   
 VBoxManage list natnets
 # 또는	
 VBoxManage natnetwork list --netname <network-name>
 VBoxManage natnetwork list --netname DN01_NatNetwork
-```
+```   
 
 - host-only 네크워크 설정 정보 보기.
-```
+```   
 VBoxManage list hostonlyifs
 # 또는
 VBoxManage showvminfo <interface-name>
 VBoxManage showvminfo vboxnet0
 ```
 
-- 설정 결과 보기. dhcp
-```
+- 설정 결과 보기. dhcp   
+```   
 [vboxadm@mron-dn01 ~]$ VBoxManage list dhcpservers
 NetworkName:    HostInterfaceNetworking-vboxnet0
 Dhcpd IP:       192.168.56.1
