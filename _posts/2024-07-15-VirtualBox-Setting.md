@@ -20,12 +20,12 @@ tags: [virtualbox, vm]
 방화벽 해제 요청을 하였으나, 작업이 지연됨.  
 
 그래서 4대중 1대에 virtual box를 설치하고,  
-그 안에서 클러스터를 구축하고자 함.  
+그 안에서 클러스터를 구축하라고 지시 받음. 
+황망하고, 경황이 없고, 착찹한 심정.
 
 ### T-cloudbiz 호스트 구성
 
-|자산 |호스트명   |모델명                    |SN     |OS           |계정정보            |공인IP           |스펙                      |비고
-|     |         |                     |       |             |                 |               |                         |
+|자산 |호스트명   |모델명                    |SN     |OS           |계정정보            |공인IP           |스펙                      |비고  
 |SKT |메타트론팀 |Metatron-NN01	Dell R630 |8273R42 |CentOS 7.9  |root /  |175.126.58.201 |16 cores, 128 gb,    1tb |
 |SKT |메타트론팀 |Metatron-EN01	Dell R730 |5ZWSB22 |CentOS 7.9  |root /  |175.126.58.202 |48 cores,  64 gb,  215gb |
 |SKT |메타트론팀 |Metatron-DN01	Dell R730 |FJSV032 |CentOS 7.9  |root /  |175.126.58.203 |32 cores, 128 gb,  215gb |virtualBox 설치 하겠음.6/12
@@ -109,7 +109,7 @@ $> rpm -ivh --force --nodeps VirtualBox-7.0-7.0.18_162988_el7-1.x86_64.rpm
 
 Metatron-DN01 호스트에 VirtualBox 7 설치하기로 결정.   
 사용자 생성 vboxadm  
-비번 vbox123!
+비번 
 
 ### 사용자 생성
 
