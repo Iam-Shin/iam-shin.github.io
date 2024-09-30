@@ -19,7 +19,7 @@ conf 파일 위치
 [root@Mron-dn01 openvpn]# ls /etc/openvpn/server.conf
 
 작동확인.
-```
+```shell
 [root@Mron-dn01 openvpn]# ps aux | grep openvpn
 root      1811  0.0  0.0 112812   976 pts/1    S+   15:13   0:00 grep --color=auto openvpn
 nobody   31147  0.0  0.0  77152  4112 ?        Ss   11:36   0:00 /usr/sbin/openvpn --status /run/openvpn-server/status-server.log --status-version 2 --suppress-timestamps --config /etc/openvpn/server.conf
@@ -108,7 +108,7 @@ Download the .ovpn file and import it in your OpenVPN client.
 ```
 
 추가적으로 설정파일에 경로 확인후 수정필요 (꼭 확인할것!!)
-```
+```shell
 # vi /etc/openvpn/server.conf
 
 tls-crypt /etc/openvpn/tls-crypt.key
@@ -120,7 +120,7 @@ management localhost 7505                  <--- 추가. 접속 확인용
 ```
 
 ip 할당 테이블 파일 수정 ipp.txt
-```
+```shell
 # vi /etc/openvpn/ipp.txt
 dn01-vm1,10.8.0.2
 dn01-vm2,10.8.0.3
@@ -129,13 +129,13 @@ dn01-vm4,10.8.0.5
 ```
 
 server.conf  수정
-```
+```shell
 # vi /etc/openvpn/server.conf 
 ifconfig-pool-persist /etc/openvpn/ipp.txt   <-- 지정.
 ```
 
 클라이언트 접속 확인할때는 
-```
+```shell
 # telnet localhost 7505
 status
 ```
@@ -153,7 +153,7 @@ kill -9
 
 
 프로세스 실행되었고, 포트 대기 확인되었지만, 접속 안됨. 
-```
+```shell
 [root@Mron-dn01 log]# ps -ef | grep openvpn
 nobody    2591  1125  0 16:03 pts/1    00:00:00 /usr/sbin/openvpn --status /run/openvpn-server/status-server.log --status-version 2 --suppress-timestamps --config /etc/openvpn/server.conf
 root      2614  1125  0 16:04 pts/1    00:00:00 grep --color=auto openvpn
@@ -171,7 +171,7 @@ udp        0      0 0.0.0.0:18649           0.0.0.0:*                           
 ```
 
 11949 방화벽 열었음.
-```
+```shell
 [root@Mron-dn01 openvpn-server]# firewall-cmd --add-port=11949/udp --permanent
 success
 [root@Mron-dn01 ~]# firewall-cmd --add-port=11949/tcp --permanent
@@ -184,7 +184,7 @@ success
 
 nmap 으로 확인결과. 175.126.58.203 에 대해 udp 포트 11949가 열려있지 않으므로, 외부에서 접속 불가능함.  
 ---> 11949포트에 대한 udp 프로토콜 방화벽 해제를 요청해야함.(그냥 tcp로 하기로 결정. 밑에 기술)
-```
+```shell
 [vboxadm@Mron-dn01 ~]$ nmap 175.126.58.203
 Starting Nmap 6.40 ( http://nmap.org ) at 2024-06-27 16:24 KST
 Nmap scan report for Mron-DN01 (175.126.58.203)
@@ -208,8 +208,8 @@ import메뉴에 들어가서, 이 파일을 선택해 줘야 한다.
 
 
 ### dn01-vm1에 클라이언트 설치
-```
 
+```shell
 # yum list installed | grep <해당하는 패키지명>
 
 # yum install openvpn
@@ -229,7 +229,7 @@ ps -ef | grep open
 
 
 vpn 연결된 후 10.8.0.2 아이피 있음. 
-```
+```shell
 [root@dn01-vm1 ~]# ifconfig
 enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         inet 10.0.3.11  netmask 255.255.255.0  broadcast 10.0.3.255
@@ -302,7 +302,7 @@ dn01-vm1 에서 ansible로 작업함.
 ### ansible로 vm 3대에 openvpn 설치. (결과적으로는 ansible로 설치 안됨.)
 1. openvpn 설치
    
-```
+```shell
 ansible -i /etc/ansible/hosts vm-all -m shell -a 'ls /root/dn01-vpn.ovpn'     --> 다 있음.
 ansible -i /etc/ansible/hosts vm-all -m shell -a 'yum list installed | grep -Hi openvpn'    ---> vm1만 설치되있음.
 ansible -i /etc/ansible/hosts vm-234 -m shell -a 'yum install -y epel-release'
@@ -318,7 +318,7 @@ openvpn 설치할때 오류 났었는데, epel-release 설치 안되있어서, r
 
 2. openvpn 실행
    
-```
+```shell
 openvpn --config /etc/openvpn/dn01-vm1.ovpn   <--- 이렇게 실행해야 비번 넣을수 있다. 
 touch openvpn-client-start.sh
 vi openvpn-client-start.sh    <--- openvpn --config /etc/openvpn/dn01-vm1.ovpn --daemon     --> 이렇게 했더니 비번 입력을 못해서 접속 안되네
@@ -346,7 +346,7 @@ kill -9 <pid>
 
 client 에서 dn01-vm1.ovpn 파일 신규 생성
 
-```
+```shell
 # vi /etc/openvpn/dn01-vm1.ovpn
 client
 dev tun
@@ -377,7 +377,7 @@ vboxadm
 
 서버의 ca.crt 인증서 복사
 
-```
+```shell
 [root@Mron-dn01 openvpn]# scp /etc/openvpn/ca.crt root@dn01-vm1:/etc/openvpn/ca.crt
 root@dn01-vm1's password:
 ca.crt                                                                                         100%  668   694.3KB/s   00:00
@@ -396,7 +396,7 @@ ca.crt                                                                          
 
 client.ovpn 템플릿 파일 복사.
 
-```
+```shell
 [root@Mron-dn01 openvpn]# scp /etc/openvpn/client-template.txt root@dn01-vm1:/etc/openvpn/dn01-vm1.ovpn
 root@dn01-vm1's password:
 client-template.txt                                                                            100%  490   567.6KB/s   00:00
