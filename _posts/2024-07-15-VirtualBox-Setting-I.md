@@ -21,15 +21,15 @@ tags: [virtualbox, vm]
 
 그래서 4대중 1대에 virtual box를 설치하고,  
 그 안에서 클러스터를 구축하라고 지시 받음.   
-황망하고, 경황이 없고, 착찹한 심정.  
+황망하고, 황당하고, 착찹한 심정.  
 
 ### T-cloudbiz 호스트 구성
 
 |자산 |호스트명   |모델명                    |SN     |OS           |계정정보            |공인IP           |스펙                      |비고  
-|SKT |메타트론팀 |Mron-NN01	Dell R630 |8273R42 |CentOS 7.9  |root /  |175.126.58.201 |16 cores, 128 gb,    1tb |
-|SKT |메타트론팀 |Mron-EN01	Dell R730 |5ZWSB22 |CentOS 7.9  |root /  |175.126.58.202 |48 cores,  64 gb,  215gb |
-|SKT |메타트론팀 |Mron-DN01	Dell R730 |FJSV032 |CentOS 7.9  |root /  |175.126.58.203 |32 cores, 128 gb,  215gb |virtualBox 설치 하겠음.6/12
-|SKT |메타트론팀 |Mron-DN04	Dell R730 |6VTGY42 |CentOS 7.9  |root /  |175.126.58.204 |32 cores, 128 gb,  215gb |메타트론 설치하겠음.
+|SKT |엠론팀 |Mron-NN01	Dell R630 |8273R42 |CentOS 7.9  |root /  |175.126.58.201 |16 cores, 128 gb,    1tb |
+|SKT |엠론팀 |Mron-EN01	Dell R730 |5ZWSB22 |CentOS 7.9  |root /  |175.126.58.202 |48 cores,  64 gb,  215gb |
+|SKT |엠론팀 |Mron-DN01	Dell R730 |FJSV032 |CentOS 7.9  |root /  |175.126.58.203 |32 cores, 128 gb,  215gb |virtualBox 설치 하겠음.6/12
+|SKT |엠론팀 |Mron-DN04	Dell R730 |6VTGY42 |CentOS 7.9  |root /  |175.126.58.204 |32 cores, 128 gb,  215gb |엠론 설치하겠음.
 
 * 4대 모두 Intel® Xeon® 프로세서 E5-2600 v4 제품군
 * 4대 모두 CentOS Linux release 7.9.2009 (Core)
