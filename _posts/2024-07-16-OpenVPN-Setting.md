@@ -6,11 +6,11 @@ categories: [infra]
 tags: [openvpn, vpn]
 ---
 
-## 외부 pc에서 vm에 직접 접속하기 위한 vpn 설치.  
+## 외부 pc에서 vm에 직접 접속하기 위한 vpn 설치.   
 
-[서버설치] (https://itrooms.tistory.com/1040)  
-[win client 설치] (https://dejavuqa.tistory.com/244)  
-[linux client 설치] (https://blog.naver.com/ncloud24/221443379824)  
+[서버설치](https://itrooms.tistory.com/1040)  
+[win client 설치](https://dejavuqa.tistory.com/244)  
+[linux client 설치](https://blog.naver.com/ncloud24/221443379824)  
 
 설치 dir   
 [root@Mron-dn01 ~]# cd /etc/openvpn   
