@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "Ambari Bigtop Hadoop Install"
-date: 2024-07-19 12:00:00 +0900
-categories: [openvpn, vpn]
-tags: [openvpn, vpn]
+date: 2024-08-12 12:00:00 +0900
+categories: [bigdata]
+tags: [hadoop, ambari, bigtop]
 ---
 
 # bigtop + ambari 조합으로 hadoop ecosystem 관리.
