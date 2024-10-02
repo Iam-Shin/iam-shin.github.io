@@ -2,7 +2,7 @@
 layout: post
 title: "VirtualBox Setting I"
 date: 2024-07-15 12:00:00 +0900
-categories: [virtualbox, vm]
+categories: [infra]
 tags: [virtualbox, vm]
 ---
 
