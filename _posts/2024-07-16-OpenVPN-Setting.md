@@ -2,7 +2,7 @@
 layout: post
 title: "OpenVPN Setting"
 date: 2024-07-19 12:00:00 +0900
-categories: [openvpn, vpn]
+categories: [infra]
 tags: [openvpn, vpn]
 ---
 
