@@ -6,11 +6,7 @@ categories: [infra]
 tags: [virtualbox, vm]
 ---
 
-
-
 # VirtualBox 설치 및 VM host 클라우드 구성
-
-----------------
 
 ## 가상화 설치전 준비
 
