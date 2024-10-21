@@ -86,7 +86,7 @@ zookeeper                      3.5.9
 ### 3. centOs 7 기본설정 
 - 사용자 계정 권한 변경 (sudo를 비번없이 실행하기위함.) 
 - 하둡관련계정(=ambari) sudo 권한 설정.
-```
+```  
 // t-doop 4개 호스트 모두 각각 수정. (root계정)
 # visudo
 ======================================================
@@ -123,10 +123,10 @@ zookeeper       ALL=(ALL)       ALL
 이후. ambari 계정으로 작업한다.
 # su ambari
 $
-```
+```  
 
 - wheel 그룹에 하둡관련계정(=ambari, hdfs, ... 등등 위에서 추가한 계정) 추가
-```
+```  
 // t-doop 4개 호스트 모두 각각 수정. (ambari계정)
 $ sudo vi /etc/group
 wheel:x:10:ambari,ambari-qa,mapred,hdfs,yarn,spark,hive,kafka,tez,trino,zookeeper
@@ -136,10 +136,10 @@ wheel:x:10:ambari,ambari-qa,mapred,hdfs,yarn,spark,hive,kafka,tez,trino,zookeepe
 # 아래 내용 추가.----------------------
 # hadoop 그룹을 추가하고, 그룹에 속할 계정 미리 추가.
 hadoop:x:1002:ambari,ambari-qa,mapred,hdfs,yarn,spark,hive,kafka,tez,trino,zookeeper,hadmin,huser
-```
+```  
 
 - hdfs 일반계정 생성. - 관리자와 사용자 분리하여 각각 계정 생성.
-```
+```  
 // ambari@mron-en01 에서, ansible로 한번에 생성. (이하 ansible 명령은 ambari@mron-en01 계정으로 실행)
 $ sudo ansible -i /etc/ansible/hosts all -m shell -a 'sudo useradd hadmin'
 $ sudo ansible -i /etc/ansible/hosts all -m shell -a 'sudo useradd huser'
@@ -148,10 +148,10 @@ $ sudo ansible -i /etc/ansible/hosts all -m shell -a 'sudo useradd huser'
 // t-doop 4개 호스트 모두 각각 수정. (ambari계정)
 $ sudo useradd hadmin
 $ sudo useradd huser
-```
+```  
 
 - yum 기본설정 및 패키지 설치.
-```
+```  
 // 이건 ansible 안되넹...
 $ sudo ansible -i /etc/ansible/hosts all -m shell -a 'sudo yum update -y'
 $ sudo ansible -i /etc/ansible/hosts all -m shell -a 'sudo yum install epel-release -y'
@@ -165,25 +165,25 @@ $ sudo yum check-update            # 패키지 목록은 확인하고 최신상�
 $ sudo yum install epel-release    # epel repo 활성화
 $ sudo yum install yum-utils       # yum 확장도구 설치
 $ sudo yum-complete-transaction    # 정상확인
-```
+``` 
 
 - 네트워크 설정 변경 - 호스트전용 네트워크 고정ip화 (skip)  
 - 호스트명 변경, 호스트 파일 변경 (skip)  
 - ssh 설정 변경.- 암호화키는 가상머신 복제후. (skip)  
 - 방화벽 설정변경
-```
+```  
 // t-doop 4개 호스트 모두 요청에 의해 신매니저님이 해제 해주심.
 $ sudo ansible -i /etc/ansible/hosts all -m shell -a 'sudo systemctl status firewalld'
-```
-- ntp 설정
-```
+```  
+- ntp 설정  
+```  
 $ sudo ansible -i /etc/ansible/hosts all -m shell -a 'sudo yum -y install ntp'
 $ sudo ansible -i /etc/ansible/hosts all -m shell -a 'sudo systemctl enable ntpd;sudo systemctl enable chronyd;sudo systemctl start ntpd;sudo systemctl start chronyd;sudo systemctl status ntpd;timedatectl set-ntp y;timedatectl;'
-```
+```  
 
 - SELinux 설정 해제(접근제어) - 민감한건데 필수인것 같아서 고침.
 호스트간 접근제어 보안 정책을 비활성화 시켜서 원활한 진행.
-```
+```  
 // t-doop 4개 호스트 모두 실행.
 
 $ sudo ansible -i /etc/ansible/hosts all -m shell -a 'sestatus'   # 상태확인. 4개호스트 모두 활성화네.
@@ -207,7 +207,7 @@ $ sudo ansible -i /etc/ansible/hosts all -m shell -a 'sestatus'   # 확인.
 
 permissions   # 활성이지만강제아님 상태
 # disabled는 재부팅 해야되는것 같고, permissions도 괜찮겠다...
-```
+```  
 
 - mask(권한박탈) - 민감한것 같아서 (skip)  
 - 절전모드 해제, 시스템자원 제한 설정, locale 설정 - 민감한것 같아서 (skip)  
