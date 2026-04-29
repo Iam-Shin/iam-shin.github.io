@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>URL Navigator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 5px;
+    }
+    .controls {
+      position: absolute;
+      top: 10px;
+      right: 5px;
+      display: flex;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+    }
+
+    .controls.collapsed {
+      width: auto;
+      padding: 10px;
+    }
+
+    .controls.collapsed > *:not(.control-item) {
+      display: none;
+    }
+
+    input[type="text"] {
+      width: 200px;
+      padding: 5px;
+      text-align: right;
+    }
+    button {
+      padding: 5px 8px;
+      font-size: 16px;
+    }
+    .preview {
+      width: 100%;
+      height: 98vh;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls" id="controls">
+    <button id="hideshow" class="control-item">▶</button>
+    <input type="text" id="urlInput" placeholder="Enter URL" />
+    <button id="btnClear">Clear</button>
+    <input type="number" id="sec" placeholder="초" min="1" value="4" style="width: 30px;" />
+    <button id="slide">OFF</button>
+    <button id="btnFirst">«</button>
+    <button id="btnPrev">‹</button>
+    <button id="btnNext">›</button>
+    <button id="btnLast">»</button>
+<!--    <input type="number" id="page" placeholder="장" min="1" value="12" style="width: 30px;" />-->
+    <input list="page-options" id="page" placeholder="장" value="12" style="width: 60px;" />
+    <datalist id="page-options">
+      <option value="12">
+      <option value="120">
+    </datalist>
+  </div>
+  <iframe id="previewFrame" class="preview"></iframe>
+</body>
+
+<script>
+  const urlInput = document.getElementById('urlInput');
+  const previewFrame = document.getElementById('previewFrame');
+
+  // 이미지 확장자 판별용 정규표현식
+  const imageExtensions = /\.(jpg|jpeg|png|gif|bmp|webp)$/i;
+
+  function loadURL(url) {
+    urlInput.value = url;
+
+    if (imageExtensions.test(url)) {
+      // 이미지일 경우: iframe에 비율 유지하며 맞추는 HTML 삽입
+      const html = `
+        <html>
+          <head>
+            <style>
+              body, html {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #f0f0f0;
+              }
+              img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+              }
+            </style>
+          </head>
+          <body>
+            <img src="${url}" alt="Image Preview">
+          </body>
+        </html>
+      `;
+      // iframe에 직접 HTML 주입 (Blob 방식)
+      const blob = new Blob([html], { type: 'text/html' });
+      const blobURL = URL.createObjectURL(blob);
+      previewFrame.src = blobURL;
+    } else {
+      // 일반 URL일 경우 그대로 로드
+      previewFrame.src = url;
+    }
+  }
+
+  function findNthLastNumberMatch(url, nth = 1) {
+    const regex = /\d+/g;
+    const matches = [...url.matchAll(regex)];
+    if (matches.length >= nth) {
+      const match = matches[matches.length - nth];
+      return {
+        number: match[0],
+        start: match.index,
+        end: match.index + match[0].length
+      };
+    }
+    return null;
+  }
+
+  function modifyURL(nthLast, delta) {
+    const currentURL = urlInput.value;
+    const matchInfo = findNthLastNumberMatch(currentURL, nthLast);
+
+    const pageInput = document.getElementById('page');
+    const rPage = parseInt(pageInput.value,10);
+
+    if (!matchInfo) {
+      //alert('URL에 숫자가 부족합니다.');
+      loadURL(url);
+      return;
+    }
+
+    let oldNumber = parseInt(matchInfo.number);
+    let newNumber = oldNumber + delta;
+    if (nthLast == 1 && delta ==  1 && newNumber == rPage+1) newNumber = 1;
+    if (nthLast == 1 && delta == -1 && newNumber ==  0) newNumber = rPage;
+    if (newNumber < 0) {
+      //alert('0보다 작을 수 없습니다.');
+      loadURL(url);
+      return;
+    }
+
+    const newURL =
+      currentURL.slice(0, matchInfo.start) +
+      newNumber +
+      currentURL.slice(matchInfo.end);
+
+    if(nthLast == 1 && oldNumber == rPage && newNumber == 1){
+      urlInput.value = newURL;
+      modifyURL(2, +1);
+      return;
+    }else if(nthLast == 1 && oldNumber == 1 && newNumber == rPage){
+      urlInput.value = newURL;
+      modifyURL(2, -1);
+      return;
+    }
+
+    loadURL(newURL);
+  }
+
+  // 이벤트 연결
+  document.getElementById('btnFirst').addEventListener('click', () => modifyURL(2, -1)); // <<
+  document.getElementById('btnPrev').addEventListener('click', () => modifyURL(1, -1));  // <
+  document.getElementById('btnNext').addEventListener('click', () => modifyURL(1, +1));  // >
+  document.getElementById('btnLast').addEventListener('click', () => modifyURL(2, +1));  // >>
+  document.getElementById('btnClear').addEventListener('click', () => {
+    urlInput.value = '';
+    previewFrame.src = 'about:blank'; // iframe 초기화
+  });
+
+  // 수동 입력 시 로딩
+  urlInput.addEventListener('change', () => {
+    const url = urlInput.value;
+    loadURL(url);
+  });
+let slideTimer = null;
+let isSlideRunning = false;
+
+document.getElementById('slide').addEventListener('click', () => {
+  const btn = document.getElementById('slide');
+  const secInput = document.getElementById('sec');
+  const delay = parseInt(secInput.value, 10) * 1000;
+
+  if (btn.textContent === 'OFF') {
+    btn.textContent = 'ON';
+    isSlideRunning = true;
+
+    // 최초 1회 호출
+    runWithDelay(delay);
+  } else {
+    btn.textContent = 'OFF';
+    isSlideRunning = false;
+    if (slideTimer) {
+      clearTimeout(slideTimer);
+      slideTimer = null;
+    }
+  }
+});
+
+function runWithDelay(delay) {
+  if (!isSlideRunning) return;
+
+  // URL 변경 실행
+  modifyURL(1, +1);
+
+  // iframe 로딩 완료 후 다음 타이머 설정
+  const frame = document.getElementById('previewFrame');
+  frame.onload = () => {
+    if (!isSlideRunning) return; // 중간에 OFF 됐을 수도 있으므로 확인
+    slideTimer = setTimeout(() => runWithDelay(delay), delay);
+  };
+}
+
+  // ▶/◀ 버튼 클릭 시 controls 토글
+  const hideshowBtn = document.getElementById('hideshow');
+  const controlsDiv = document.getElementById('controls');
+
+  hideshowBtn.addEventListener('click', () => {
+    const isCollapsed = controlsDiv.classList.toggle('collapsed');
+    hideshowBtn.textContent = isCollapsed ? '◀' : '▶';
+  });
+
+  const pageInput = document.getElementById('page');
+  const rPage = parseInt(pageInput.value, 10);
+</script>
+
+</html>

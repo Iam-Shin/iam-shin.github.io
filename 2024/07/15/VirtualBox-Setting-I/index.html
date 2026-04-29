@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>VirtualBox Setting I | 나는 신(Shin)이다</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="VirtualBox 설치 및 VM host 클라우드 구성가상화 설치전 준비이걸 하는 이유배정받은 4대의 머신이 있는데, 이들간의 네트웍이 열려있지 않음.방화벽 해제 요청을 하였으나, 작업이 지연됨.   그래서 4대중 1대에 virtual box를 설치하고,그 안에서 클러스터를 구축하라고 지시 받음.황망하고, 황당하고, 착찹한 심정.   T-cloudbiz">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VirtualBox Setting I">
+<meta property="og:url" content="https://iam-shin.github.io/2024/07/15/VirtualBox-Setting-I/index.html">
+<meta property="og:site_name" content="나는 신(Shin)이다">
+<meta property="og:description" content="VirtualBox 설치 및 VM host 클라우드 구성가상화 설치전 준비이걸 하는 이유배정받은 4대의 머신이 있는데, 이들간의 네트웍이 열려있지 않음.방화벽 해제 요청을 하였으나, 작업이 지연됨.   그래서 4대중 1대에 virtual box를 설치하고,그 안에서 클러스터를 구축하라고 지시 받음.황망하고, 황당하고, 착찹한 심정.   T-cloudbiz">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-15T03:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-29T09:03:54.709Z">
+<meta property="article:author" content="實踐老將">
+<meta property="article:tag" content="virtualbox">
+<meta property="article:tag" content="vm">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="나는 신(Shin)이다" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">나는 신(Shin)이다</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">닥치고 기록 -實踐老將-</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://iam-shin.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-VirtualBox-Setting-I" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/07/15/VirtualBox-Setting-I/" class="article-date">
+  <time class="dt-published" datetime="2024-07-15T03:00:00.000Z" itemprop="datePublished">2024-07-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/infra/">infra</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      VirtualBox Setting I
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="VirtualBox-설치-및-VM-host-클라우드-구성"><a href="#VirtualBox-설치-및-VM-host-클라우드-구성" class="headerlink" title="VirtualBox 설치 및 VM host 클라우드 구성"></a>VirtualBox 설치 및 VM host 클라우드 구성</h1><h2 id="가상화-설치전-준비"><a href="#가상화-설치전-준비" class="headerlink" title="가상화 설치전 준비"></a>가상화 설치전 준비</h2><h3 id="이걸-하는-이유"><a href="#이걸-하는-이유" class="headerlink" title="이걸 하는 이유"></a>이걸 하는 이유</h3><p>배정받은 4대의 머신이 있는데, 이들간의 네트웍이 열려있지 않음.<br>방화벽 해제 요청을 하였으나, 작업이 지연됨.  </p>
+<p>그래서 4대중 1대에 virtual box를 설치하고,<br>그 안에서 클러스터를 구축하라고 지시 받음.<br>황망하고, 황당하고, 착찹한 심정.  </p>
+<h3 id="T-cloudbiz-호스트-구성"><a href="#T-cloudbiz-호스트-구성" class="headerlink" title="T-cloudbiz 호스트 구성"></a>T-cloudbiz 호스트 구성</h3><p>|자산 |호스트명   |모델명                    |SN     |OS           |계정정보            |공인IP           |스펙                      |비고<br>|- |엠론팀 |Mron-NN01	Dell R630 |8273R42 |CentOS 7.9  |root &#x2F;  |192.16858.201 |16 cores, 128 gb,    1tb |<br>|- |엠론팀 |Mron-EN01	Dell R730 |5ZWSB22 |CentOS 7.9  |root &#x2F;  |192.16858.202 |48 cores,  64 gb,  215gb |<br>|- |엠론팀 |Mron-DN01	Dell R730 |FJSV032 |CentOS 7.9  |root &#x2F;  |192.16858.203 |32 cores, 128 gb,  215gb |virtualBox 설치 하겠음.6&#x2F;12<br>|- |엠론팀 |Mron-DN04	Dell R730 |6VTGY42 |CentOS 7.9  |root &#x2F;  |192.16858.204 |32 cores, 128 gb,  215gb |엠론 설치하겠음.</p>
+<ul>
+<li><p>4대 모두 Intel® Xeon® 프로세서 E5-2600 v4 제품군</p>
+</li>
+<li><p>4대 모두 CentOS Linux release 7.9.2009 (Core)</p>
+</li>
+<li><p>VirtualBox 호스트 cpu 요구사항중, SSE2 스펙이 있는데,<br>Mron-DN01 호스트에 설치된 Intel(R) Xeon(R) CPU E5-2640 v3 @ 2.60GHz 이 SSE2 스펙을 지원하는지 근거 불명.<br><a target="_blank" rel="noopener" href="https://ark.intel.com/content/www/kr/ko/ark/products/92984/intel-xeon-processor-e5-2640-v4-25m-cache-2-40-ghz.html">참조</a><br>::  명령 세트 확장 Intel® AVX2</p>
+<blockquote>
+<p>AVX2가 SSE2를 포함하거나, 반대로 SSE2가 AVX2를 포함하는 것은 아닙니다. 이들은 각각 독립적인 명령어 세트 확장으로, 서로 다른 기능과 성능을 제공합니다. 그러나, AVX2는 SSE2보다 더 많은 연산을 수행할 수 있으며, 이로 인해 일부 애플리케이션에서는 AVX2가 SSE2보다 더 높은 성능을 제공할 수 있습니다.<br><a target="_blank" rel="noopener" href="https://community.intel.com/t5/Intel-ISA-Extensions/SSE2-to-AVX2-performance-question/td-p/1101418?profile.language=ko">참고</a></p>
+</blockquote>
+</li>
+</ul>
+<h3 id="VirtualBox-클러스터-구성후-설치해야되는-프로그램-순서-참고"><a href="#VirtualBox-클러스터-구성후-설치해야되는-프로그램-순서-참고" class="headerlink" title="VirtualBox 클러스터 구성후, 설치해야되는 프로그램 (순서 참고.)"></a>VirtualBox 클러스터 구성후, 설치해야되는 프로그램 (순서 참고.)</h3><p> 설치시 Bigtop 참고.   </p>
+<ul>
+<li>Hadoop (HDFS, Yarn, MR)</li>
+<li>Hive + MariaDB</li>
+<li>Tez</li>
+<li>Trino</li>
+<li>Impala</li>
+<li>Kafka</li>
+<li>Zookeeper  </li>
+<li>각 restAPI 작동 여부 확인.</li>
+</ul>
+<h3 id="VirtualBox-클러스터-구성시-게스트-배치-계획"><a href="#VirtualBox-클러스터-구성시-게스트-배치-계획" class="headerlink" title="VirtualBox 클러스터 구성시 게스트 배치 계획."></a>VirtualBox 클러스터 구성시 게스트 배치 계획.</h3><ul>
+<li>Host OS 사양 : CPU 32 cores, RAM 128 gb, HDD 215gb</li>
+<li>4대의 Guest VM 생성 예정</li>
+<li>각 VM당 cpu 6 Core, RAM 24 gb, HDD 20 gb 예정</li>
+</ul>
+<h3 id="VirtualBox-설치"><a href="#VirtualBox-설치" class="headerlink" title="VirtualBox 설치"></a>VirtualBox 설치</h3><ul>
+<li>yum 설치. 추가 패키지 설치 오류로 실패했음.</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Users of Oracle Linux / RHEL can add ​the Oracle Linux repo file to /etc/yum.repos.d/.</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">&gt; wget https://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">&gt; <span class="built_in">mv</span> virtualbox.repo /etc/yum.repos.d/</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">&gt; yum repolist</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">&gt; yum search VirtualBox</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">&gt; yum install VirtualBox-7.0.x86_64</span> </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>설치파일 다운로드 설치</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">download <span class="built_in">link</span> : VirtualBox <span class="keyword">for</span> Oracle Linux 7/Red Hat Enterprise Linux 7/CentOS 7</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">&gt; wget https://download.virtualbox.org/virtualbox/7.0.18/VirtualBox-7.0-7.0.18_162988_el7-1.x86_64.rpm</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">&gt; rpm -ivh VirtualBox-7.0-7.0.18_162988_el7-1.x86_64.rpm</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">호환성 의존성 무시 강제 설치</span> </span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">&gt; rpm -ivh --force --nodeps VirtualBox-7.0-7.0.18_162988_el7-1.x86_64.rpm</span>   </span><br></pre></td></tr></table></figure>
+
+<h3 id="VirtualBox-라이센스"><a href="#VirtualBox-라이센스" class="headerlink" title="VirtualBox 라이센스"></a>VirtualBox 라이센스</h3><p><a target="_blank" rel="noopener" href="https://www.virtualbox.org/wiki/GPLv3">VirtualBox 공식 라이센스 안내</a> :: VirtutalBox는 GPL v3 정책 준수.<br><a target="_blank" rel="noopener" href="https://www.gnu.org/licenses/quick-guide-gplv3.html">GPL v3 정책 가이드</a></p>
+<h3 id="VirtualBox-확장팩"><a href="#VirtualBox-확장팩" class="headerlink" title="VirtualBox 확장팩"></a>VirtualBox 확장팩</h3><p><a target="_blank" rel="noopener" href="https://docs.oracle.com/en/virtualization/virtualbox/6.0/user/intro-installing.html">원문</a>  </p>
+<ul>
+<li><p>가상 USB 2.0(EHCI) 장치. 섹션 3.11.1, “USB 설정”을 참조하십시오.  </p>
+</li>
+<li><p>가상 USB 3.0(xHCI) 장치. 섹션 3.11.1, “USB 설정”을 참조하십시오.  </p>
+</li>
+<li><p>VirtualBox 원격 데스크톱 프로토콜(VRDP) 지원. 원격 디스플레이(VRDP 지원)를 참조하십시오.  </p>
+</li>
+<li><p>호스트 웹캠 패스스루. 웹캠 패스스루 를 참조하십시오.  </p>
+</li>
+<li><p>인텔 PXE 부팅 ROM.  </p>
+</li>
+<li><p>Linux 호스트에서 PCI 패스스루를 실험적으로 지원합니다. PCI 패스스루를 참조하십시오.  </p>
+</li>
+<li><p>AES 알고리즘을 사용한 디스크 이미지 암호화. 디스크 이미지 암호화를 참조하십시오.  </p>
+</li>
+<li><p>결론 : 확장팩 없어도 됨.</p>
+</li>
+</ul>
+<h2 id="설치-작업-진행"><a href="#설치-작업-진행" class="headerlink" title="설치 작업 진행"></a>설치 작업 진행</h2><p>Mron-DN01 호스트에 VirtualBox 7 설치하기로 결정.<br>사용자 생성 vboxadm<br>비번 </p>
+<h3 id="사용자-생성"><a href="#사용자-생성" class="headerlink" title="사용자 생성"></a>사용자 생성</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@mron-dn01 ~]# adduser vboxadm</span><br><span class="line">[root@mron-dn01 ~]# passwd vboxadm</span><br><span class="line">[root@mron-dn01 ~]# vi /etc/group  &lt;-- 아래와 같이 권한 편집  </span><br><span class="line">vboxadm:x:1000:vboxadm,root   &lt;-- su root 허용</span><br></pre></td></tr></table></figure>
+
+<p>vboxadm 사용자 생성 했으나, 설치시 root 권한 요구</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[vboxadm@mron-dn01 ~]$ yum install VirtualBox-7.0.x86_64</span><br><span class="line">Loaded plugins: fastestmirror</span><br><span class="line">You need to be root to perform this command.</span><br></pre></td></tr></table></figure>
+
+<p>vboxadm에게 sudo 권한 주기. <strong>(vboxadm 보안 조심!!)</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@mron-dn01 vboxadm]# visudo  &lt;-- sudoer 설정파일 편집</span><br><span class="line">vboxadm ALL=(ALL)       ALL  &lt;-- 라인 추가</span><br></pre></td></tr></table></figure>
+
+<h3 id="virtualbox-7-설치"><a href="#virtualbox-7-설치" class="headerlink" title="virtualbox 7 설치"></a>virtualbox 7 설치</h3><p>vboxadm 계정으로 virtualbox 7 설치</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[vboxadm@mron-dn01 ~]$ sudo yum install VirtualBox-7.0.x86_64</span><br></pre></td></tr></table></figure>
+
+<p>설치 log는 yum_install_virtualbox7.log 참조.</p>
+<h3 id="VirtualBoxMng"><a href="#VirtualBoxMng" class="headerlink" title="VirtualBoxMng"></a>VirtualBoxMng</h3><p>VirtualBox 명령어 라인 인터페이스. </p>
+<p>Guide doc url : (<a target="_blank" rel="noopener" href="https://www.virtualbox.org/manual/ch08.html#vboxmanage-intro">https://www.virtualbox.org/manual/ch08.html#vboxmanage-intro</a>)<br>pdf download : (<a target="_blank" rel="noopener" href="https://download.virtualbox.org/virtualbox/7.0.18/UserManual.pdf">https://download.virtualbox.org/virtualbox/7.0.18/UserManual.pdf</a>)</p>
+<blockquote>
+<p>Oracle VM VirtualBox command-line interface. </p>
+<p><strong>Synopsis</strong><br>VBoxManage [-V | –version] [–dump-build-type] [-q | –nologo]<br>[–settingspw&#x3D;password] [–settingspwfile&#x3D;pw-file] [@response-file]<br>[[help] subcommand]  </p>
+<p><strong>Description</strong><br>The VBoxManage command is the command-line interface (CLI) for the Oracle VM VirtualBox<br>software. The CLI supports all the features that are available with the Oracle VM VirtualBox<br>graphical user interface (GUI). In addition, you can use the VBoxManage command to manage<br>the features of the virtualization engine that cannot be managed by the GUI.<br>Each time you invoke the VBoxManage command, only one command is executed. Note that<br>some VBoxManage subcommands invoke several subcommands.<br>Run the VBoxManage command from the command line of the host operating system (OS) to<br>control Oracle VM VirtualBox software.<br>The VBoxManage command is stored in the following locations on the host system: </p>
+<p>VBoxManage 명령은 Oracle VM VirtualBox 소프트웨어용 CLI(명령줄 인터페이스)입니다.<br>CLI는 Oracle VM VirtualBox GUI(그래픽 사용자 인터페이스)에서 사용할 수 있는 모든 기능을 지원합니다.<br>또한 VBoxManage 명령을 사용하여 GUI에서 관리할 수 없는 가상화 엔진의 기능을 관리할 수 있습니다.<br>VBoxManage 명령을 호출할 때마다 하나의 명령만 실행됩니다. 일부 VBoxManage 부속 명령은 여러 부속 명령을 호출합니다.<br>호스트 운영 체제(OS)의 명령줄에서 VBoxManage 명령을 실행하여 Oracle VM VirtualBox 소프트웨어를 제어합니다.<br>VBoxManage 명령은 호스트 시스템의 다음 위치에 저장됩니다:  </p>
+<p>• Linux: &#x2F;usr&#x2F;bin&#x2F;VBoxManage<br>• Mac OS X: &#x2F;Applications&#x2F;VirtualBox.app&#x2F;Contents&#x2F;MacOS&#x2F;VBoxManage<br>• Oracle Solaris: &#x2F;opt&#x2F;VirtualBox&#x2F;bin&#x2F;VBoxManage<br>• Windows: C:\Program Files\Oracle\VirtualBox\VBoxManage.exe  </p>
+<p>In addition to managing virtual machines (VMs) with this CLI or the GUI, you can use the<br>VBoxHeadless CLI to manage VMs remotely.<br>The VBoxManage command performs particular tasks by using subcommands, such as list,<br>createvm, and startvm. See the associated information for each VBoxManage subcommand.<br>If required, specify the VM by its name or by its Universally Unique Identifier (UUID).<br>Use the VBoxManage list vms command to obtain information about all currently registered<br>VMs, including the VM names and associated UUIDs.<br>Note that you must enclose the entire VM name in double quotes if it contains spaces. </p>
+<p>이 CLI 또는 GUI를 사용하여 VM(가상 머신)을 관리하는 것 외에도 VBoxHeadless CLI를 사용하여 VM을 원격으로 관리할 수 있습니다.<br>VBoxManage 명령은 list, createvm 및 startvm과 같은 하위 명령을 사용하여 특정 작업을 수행합니다.<br>각 VBoxManage 하위 명령에 대한 연관된 정보를 참조하십시오.<br>필요한 경우 이름 또는 UUID(Universally Unique Identifier)로 VM을 지정합니다.<br>VBoxManage list vms 명령을 사용하여 VM 이름 및 연결된 UUID를 포함하여 현재 등록된 모든 VM에 대한 정보를 가져옵니다.<br>공백이 포함된 경우 전체 VM 이름을 큰따옴표로 묶어야 합니다.  </p>
+</blockquote>
+<p>그런데 갑자기 베이그런트가 등장함…</p>
+<h3 id="베이그런트-개념"><a href="#베이그런트-개념" class="headerlink" title="베이그런트 개념"></a>베이그런트 개념</h3><p>CentOS 가상화 솔루션 Vagrant 공식 홈페이지<br><a target="_blank" rel="noopener" href="https://app.vagrantup.com/centos/boxes/7">https://app.vagrantup.com/centos/boxes/7</a></p>
+<p>Vagrant 참고 블로그<br><a target="_blank" rel="noopener" href="https://www.44bits.io/ko/post/vagrant-tutorial">https://www.44bits.io/ko/post/vagrant-tutorial</a><br><a target="_blank" rel="noopener" href="https://cafe-jun12.tistory.com/33">https://cafe-jun12.tistory.com/33</a></p>
+<p>베이그런트는 독립적으로 사용되는 도구가 아니며, 가상 머신을 생성하거나 조작하는 기능을 직접 제공하지는 않습니다.<br>베이그런트에는 프로바이더라는 개념이 있어서 버추얼박스VirtualBox, VMWare, 도커Docker, Hyper-V와 같은 도구들을 가상 머신을 관리하는 도구로 조합해서 사용할 수 있습니다.*</p>
+<p>일단 베이그런트는 무시하고 VirtualBox만으로 해 본다. </p>
+<h2 id="Guest-OS-설치"><a href="#Guest-OS-설치" class="headerlink" title="Guest OS 설치"></a>Guest OS 설치</h2><p>CentOS 이미지 다운로드 공식 홈페이지<br><a target="_blank" rel="noopener" href="https://wiki.centos.org/Download.html">https://wiki.centos.org/Download.html</a><br><a target="_blank" rel="noopener" href="https://www.centos.org/download/">https://www.centos.org/download/</a><br><a target="_blank" rel="noopener" href="http://isoredirect.centos.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-2009.iso">http://isoredirect.centos.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-2009.iso</a>  </p>
+<h3 id="CentOS-다운로드"><a href="#CentOS-다운로드" class="headerlink" title="CentOS 다운로드"></a>CentOS 다운로드</h3><p>NetInstall 버전 다운로드</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[vboxadm@mron-dn01 ~]$ pwd</span><br><span class="line">/home/vboxadm</span><br><span class="line">[vboxadm@mron-dn01 ~]$ wget https://mirror.kakao.com/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-NetInstall-2009.iso</span><br><span class="line">Saving to: ‘CentOS-7-x86_64-NetInstall-2009.iso’</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">100%</span><span class="language-bash">[=========================================================================&gt;] 602,931,200  110MB/s   <span class="keyword">in</span> 5.3s</span></span><br><span class="line"></span><br><span class="line">2024-06-17 14:00:15 (108 MB/s) - ‘CentOS-7-x86_64-NetInstall-2009.iso’ saved [602931200/602931200]</span><br></pre></td></tr></table></figure>
+
+<p>Minimal 버전 다운로드</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[vboxadm@mron-dn01 ~]$ wget https://mirror.kakao.com/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-Minimal-2009.iso</span><br><span class="line">Saving to: ‘CentOS-7-x86_64-Minimal-2009.iso’</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">100%</span><span class="language-bash">[=======================================================================&gt;] 1,020,264,448  111MB/s   <span class="keyword">in</span> 8.9s</span></span><br><span class="line"></span><br><span class="line">2024-06-17 14:01:14 (109 MB/s) - ‘CentOS-7-x86_64-Minimal-2009.iso’ saved [1020264448/1020264448]</span><br></pre></td></tr></table></figure>
+
+<h1 id="가상머신-설치-CentOS-7-설치-디스크를-cli에서-로딩할수-없어서-실패한-방법"><a href="#가상머신-설치-CentOS-7-설치-디스크를-cli에서-로딩할수-없어서-실패한-방법" class="headerlink" title="가상머신 설치 (CentOS-7 설치 디스크를 cli에서 로딩할수 없어서 실패한 방법)"></a>가상머신 설치 (CentOS-7 설치 디스크를 cli에서 로딩할수 없어서 실패한 방법)</h1><h3 id="VirtualBox-클러스터-구성시-게스트-배치-계획-1"><a href="#VirtualBox-클러스터-구성시-게스트-배치-계획-1" class="headerlink" title="VirtualBox 클러스터 구성시 게스트 배치 계획."></a>VirtualBox 클러스터 구성시 게스트 배치 계획.</h3><ul>
+<li>Host OS 사양 : CPU 32 cores, RAM 128 gb, HDD 215gb</li>
+<li>4대의 Guest VM 생성 예정</li>
+<li>각 VM당 cpu 6 Core, RAM 24 gb, HDD 20 gb 예정</li>
+</ul>
+<p>설치 명령 (Sample 1.)<br><a target="_blank" rel="noopener" href="https://docs.oracle.com/en/virtualization/virtualbox/6.0/user/basic-unattended.html">참고 : 3.2. Unattended Guest Installation</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line">VM_NAME=&quot;dn01-vm1&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">가상 머신 생성 - 기본폴더 지정 안했더니, <span class="string">&quot;VirtualBox VMs&quot;</span> 이렇게 만드네.. ㅜㅜ</span></span><br><span class="line">VBoxManage createvm --name $VM_NAME --ostype &quot;RedHat7_64&quot; --register</span><br><span class="line">Virtual machine &#x27;dn01-vm1&#x27; is created and registered.</span><br><span class="line">UUID: 76b8a345-aafb-4d3d-aa6b-21657d8beca4</span><br><span class="line">Settings file: &#x27;/home/vboxadm/VirtualBoxVMs/dn01-vm1/dn01-vm1.vbox&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">생성된 가상머신 조회</span></span><br><span class="line">VBoxManage list vms -l</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">가상머신 삭제</span></span><br><span class="line">VBoxManage unregistervm dn01-vm1 --delete</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">가상 머신 생성 2회차. (--basefolder 옵션과 생성된 Settings file 경로 주목.)</span></span><br><span class="line">[vboxadm@mron-dn01 dn01-vm1]$ VBoxManage createvm --name $VM_NAME --basefolder=./VirtualBoxVMs --ostype &quot;RedHat7_64&quot; --register</span><br><span class="line">shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory</span><br><span class="line">Virtual machine &#x27;dn01-vm1&#x27; is created and registered.</span><br><span class="line">UUID: 31e9cdff-8abc-45cf-9fd6-309c84f4f8a5</span><br><span class="line">Settings file: &#x27;/home/vboxadm/.config/VirtualBox/VirtualBoxVMs/dn01-vm1/dn01-vm1.vbox&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">가상머신 삭제 2회차.</span></span><br><span class="line">VBoxManage unregistervm dn01-vm1 --delete</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">가상 머신 생성 3회차. (--basefolder 옵션과 생성된 Settings file 경로 주목.)</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">생성에 성공하면, ~/VirtualBoxVMs 와 ~/.config 폴더가 생성됨.</span> </span><br><span class="line">[vboxadm@mron-dn01 ~]$ VBoxManage createvm --name $VM_NAME --basefolder=/home/vboxadm/VirtualBoxVMs --ostype &quot;RedHat7_64&quot; --register</span><br><span class="line"></span><br><span class="line">Virtual machine &#x27;dn01-vm1&#x27; is created and registered.</span><br><span class="line">UUID: d97ea83e-5898-4050-8dfc-26adaa9927b0</span><br><span class="line">Settings file: &#x27;/home/vboxadm/VirtualBoxVMs/dn01-vm1/dn01-vm1.vbox&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">혹시 오류나면 ostype 변경. (7 없다고 투덜댐.)</span></span><br><span class="line">[vboxadm@mron-dn01 ~]$ VBoxManage modifyvm $VM_NAME --ostype &quot;RedHat_64&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">OK. 이대로 진행.</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">메모리와 네트워크 설정</span></span><br><span class="line">[vboxadm@mron-dn01 ~]$ VBoxManage modifyvm $VM_NAME --memory 24576 --nic1 nat</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">드라이브 설정-----start</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">가상 하드 드라이브 생성</span></span><br><span class="line">[vboxadm@mron-dn01 ~]$ VBoxManage createhd --filename /home/vboxadm/VirtualBoxVMs/$VM_NAME/$VM_NAME.vdi --size 40000</span><br><span class="line"><span class="meta prompt_">0%</span><span class="language-bash">...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%</span></span><br><span class="line">Medium created. UUID: 62ac5db3-ce83-4bc0-804a-5fbfb8e00841   --&gt; 밑에서 이건 삭제</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">가상 하드 드라이브 삭제</span></span><br><span class="line">vboxmanage closemedium disk &lt;uuid&gt; --delete</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">vm 설정 명령들</span></span><br><span class="line">[vboxadm@mron-dn01 dn01-vm1]$ ls</span><br><span class="line">dn01-vm1.vbox  dn01-vm1.vbox-prev  dn01-vm1.vdi</span><br><span class="line">[vboxadm@mron-dn01 dn01-vm1]$ rm -f dn01-vm1.vdi</span><br><span class="line">[vboxadm@mron-dn01 dn01-vm1]$ VBoxManage createhd --filename /home/vboxadm/VirtualBoxVMs/$VM_NAME/$VM_NAME.vdi --size 40000</span><br><span class="line"><span class="meta prompt_">0%</span><span class="language-bash">...10%...20%...30%...40%...50%...60%...70%...80%...90%...NS_ERROR_INVALID_ARG</span></span><br><span class="line">VBoxManage: error: Failed to create medium</span><br><span class="line">VBoxManage: error: Cannot register the hard disk &#x27;/home/vboxadm/VirtualBoxVMs/dn01-vm1/dn01-vm1.vdi&#x27; &#123;f5da0654-0c62-48ac-80c4-2c2b98636491&#125; because a hard disk &#x27;/home/vboxadm/VirtualBoxVMs/dn01-vm1/dn01-vm1.vdi&#x27; with UUID &#123;62ac5db3-ce83-4bc0-804a-5fbfb8e00841&#125; already exists</span><br><span class="line">VBoxManage: error: Details: code NS_ERROR_INVALID_ARG (0x80070057), component VirtualBoxWrap, interface IVirtualBox</span><br><span class="line">VBoxManage: error: Context: &quot;RTEXITCODE handleCreateMedium(HandlerArg*)&quot; at line 630 of file VBoxManageDisk.cpp</span><br><span class="line">[vboxadm@mron-dn01 dn01-vm1]$ vboxmanage closemedium disk 62ac5db3-ce83-4bc0-804a-5fbfb8e00841 --delete</span><br><span class="line"><span class="meta prompt_">0%</span><span class="language-bash">...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%</span></span><br><span class="line">[vboxadm@mron-dn01 dn01-vm1]$ VBoxManage createhd --filename /home/vboxadm/VirtualBoxVMs/$VM_NAME/$VM_NAME.vdi --size 40000</span><br><span class="line"><span class="meta prompt_">0%</span><span class="language-bash">...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%</span></span><br><span class="line">Medium created. UUID: f4e6b400-6579-4781-8e26-afb0f0a8302a</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">SATA 컨트롤러 추가</span></span><br><span class="line">[vboxadm@mron-dn01 ~]$ VBoxManage storagectl $VM_NAME --name &quot;SATA Controller&quot; --add sata --controller IntelAHCI</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">가상 하드 드라이브 연결</span></span><br><span class="line">[vboxadm@mron-dn01 ~]$ VBoxManage storageattach $VM_NAME --storagectl &quot;SATA Controller&quot; --port 0 --device 0 --type hdd --medium /home/vboxadm/VirtualBoxVMs/$VM_NAME/$VM_NAME.vdi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">IDE 컨트롤러 추가</span></span><br><span class="line">[vboxadm@mron-dn01 ~]$ VBoxManage storagectl $VM_NAME --name &quot;IDE Controller&quot; --add ide</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ISO 이미지 연결</span></span><br><span class="line">[vboxadm@mron-dn01 ~]$ VBoxManage storageattach $VM_NAME --storagectl &quot;IDE Controller&quot; --port 0 --device 0 --type dvddrive --medium /home/vboxadm/CentOS-7-x86_64-NetInstall-2009.iso</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">드라이브 설정-----end</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">VBoxManage 무인 설치</span></span><br><span class="line">[vboxadm@mron-dn01 ~]$ VBoxManage unattended install $VM_NAME --iso=/home/vboxadm/CentOS-7-x86_64-NetInstall-2009.iso --user=tbizbig --full-user-name=tbizbig --install-additions --time-zone=KST</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">오류 발생.</span></span><br><span class="line">VBoxManage: info: Preparing unattended installation of RedHat7_64 in machine &#x27;dn01-vm1&#x27; (d97ea83e-5898-4050-8dfc-26adaa9927b0).</span><br><span class="line">VBoxManage: error: The supplied ISO file does not contain an OS currently supported for unattended installation</span><br><span class="line">VBoxManage: error: Details: code NS_ERROR_FAILURE (0x80004005), component UnattendedWrap, interface IUnattended, callee nsISupports</span><br><span class="line">VBoxManage: error: Context: &quot;Prepare()&quot; at line 2359 of file VBoxManageMisc.cpp</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">자동설치 기능을 지원하지 않는다는거네... 그냥 곧바로 startvm 해야하나 봄.</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">가상 머신 시작</span></span><br><span class="line">VBoxManage startvm $VM_NAME --type headless</span><br><span class="line"></span><br><span class="line">Waiting for VM &quot;dn01-vm1&quot; to power on...</span><br><span class="line">VM &quot;dn01-vm1&quot; has been successfully started.</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">헐... 순식간에 성공이라는데...? 그다음에 뭐 하지? guest os 내부는 설치도 안했는데...</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>결국 이 방법은 실패.<br>CentOS의 install iso 를 VM 에 드라이브 형태로 인식시킨후, start 하더라도,<br>Xwindow 없이 터미널 CLI 에서는<br>설치 프로세스에 진입하기 위한 GUI 초기화면을 로딩하지 못한다. </p>
+<p>방법.  </p>
+<ol>
+<li><p>GUI 환경이 제공되는 host OS 에서 VirtualBox를 설치하여 CentOS의 vm을 생성하고, export 하여<br>그 ova 파일을 t-cloudbiz 환경으로 copy 하여 import 하는 방법.  </p>
+</li>
+<li><p>초기 설치 완료된 CentOS vm 의 ova 파일을 제공하는 repository 사이트에서, 다운로드 받아서,<br>t-cloudbiz 환경에서 import 하는 방법. (다음 단계는 이 방법으로 실행함.)</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://iam-shin.github.io/2024/07/15/VirtualBox-Setting-I/" data-id="cuidCiVcsE7iMnGnx5m_Wm87b" data-title="VirtualBox Setting I" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/virtualbox/" rel="tag">virtualbox</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vm/" rel="tag">vm</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/07/15/VirtualBox-Setting-II/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          VirtualBox Setting II
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/07/04/Bigtop-Sandbox/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Bigtop Sandbox</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Health/">Health</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/infra/">infra</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Health/" rel="tag">Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSG/" rel="tag">SSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ambari/" rel="tag">ambari</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigtop/" rel="tag">bigtop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openvpn/" rel="tag">openvpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sandbox/" rel="tag">sandbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/" rel="tag">virtualbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vm/" rel="tag">vm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/" rel="tag">vpn</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Effective-Java-3Ed/" style="font-size: 17.5px;">Effective-Java-3Ed</a> <a href="/tags/Health/" style="font-size: 20px;">Health</a> <a href="/tags/SSG/" style="font-size: 10px;">SSG</a> <a href="/tags/ambari/" style="font-size: 10px;">ambari</a> <a href="/tags/bigtop/" style="font-size: 12.5px;">bigtop</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hadoop/" style="font-size: 12.5px;">hadoop</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/openvpn/" style="font-size: 10px;">openvpn</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/sandbox/" style="font-size: 10px;">sandbox</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/virtualbox/" style="font-size: 12.5px;">virtualbox</a> <a href="/tags/vm/" style="font-size: 12.5px;">vm</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">April 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">March 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/04/29/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/29/item63_%EB%AC%B8%EC%9E%90%EC%97%B4%EC%97%B0%EA%B2%B0%EC%9D%80%EB%8A%90%EB%A6%AC%EB%8B%88%EC%A3%BC%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item63.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/25/item59_%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC%EB%A5%BC%EC%9D%B5%ED%9E%88%EA%B3%A0%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item59.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/24/item58_%EC%A0%84%ED%86%B5%EC%A0%81%EC%9D%B8for%EB%AC%B8%EB%B3%B4%EB%8B%A4%EB%8A%94for-each%EB%AC%B8%EC%9D%84%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item58.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/23/item57_%EC%A7%80%EC%97%AD%EB%B3%80%EC%88%98%EC%9D%98%EB%B2%94%EC%9C%84%EB%A5%BC%EC%B5%9C%EC%86%8C%ED%99%94%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item57.</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 實踐老將<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

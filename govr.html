@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>URL Navigator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 5px;
+      background : black;
+    }
+
+    .controls {
+      position: absolute;
+      top: 10px;
+      right: 5px;
+      display: flex;
+      gap: 6px;
+      background: rgba(64, 64, 64, 0.95);
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      transition: width 0.3s ease, padding 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .controls.collapsed {
+      width: auto;
+      padding: 10px;
+    }
+
+    .controls.collapsed > *:not(.control-item) {
+      display: none;
+    }
+
+    input[type="text"] {
+      width: 200px;
+      padding: 5px;
+      text-align: right;
+    }
+
+    button {
+      padding: 5px 8px;
+      font-size: 16px;
+      background: rgba(64, 64, 64, 0.95);
+    }
+
+    .wrapper {
+      width: 98vw;
+      height: 98vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;  /* 가로 2칸 */
+      grid-template-rows: 1fr;         /* 세로 1줄 */
+      background : black;
+    }
+
+    .cell {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #000;
+      background : black;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+<div class="controls" id="controls">
+  <button id="hideshow" class="control-item">▶</button>
+  <input type="text" id="urlInput" placeholder="Enter URL" />
+  <button id="btnClear">Clear</button>
+  <input type="number" id="sec" placeholder="초" min="1" value="4" style="width: 30px;" />
+  <button id="slide">OFF</button>
+  <button id="btnFirst">«</button>
+  <button id="btnPrev">‹</button>
+  <button id="btnNext">›</button>
+  <button id="btnLast">»</button>
+<!--  <input type="number" id="page" placeholder="장" min="1" value="12" style="width: 30px;" />-->
+  <input list="page-options" id="page" placeholder="장" value="12" style="width: 60px;" />
+  <datalist id="page-options">
+    <option value="12">
+    <option value="120">
+  </datalist>
+  <button id="zoomIn">+</button>
+  <button id="zoomOut">-</button>
+</div>
+
+<div class="wrapper">
+  <div class="cell"><iframe  id="previewFrame1" src=""></iframe></div>
+  <div class="cell"><iframe  id="previewFrame2" src=""></iframe></div>
+</div>
+</body>
+
+<script>
+  const urlInput = document.getElementById('urlInput');
+  const previewFrames = [
+    document.getElementById('previewFrame1'),
+    document.getElementById('previewFrame2')
+  ];
+
+  let scale = 1.0;
+
+  function updateFrameScale() {
+    previewFrames.forEach(frame => {
+      frame.style.transform = `scale(${scale})`;
+    });
+  }
+
+  document.getElementById('zoomIn').addEventListener('click', () => {
+    scale = Math.min(2.0, scale + 0.05);
+    updateFrameScale();
+  });
+
+  document.getElementById('zoomOut').addEventListener('click', () => {
+    scale = Math.max(0.2, scale - 0.05);
+    updateFrameScale();
+  });
+
+  const imageExtensions = /\.(jpg|jpeg|png|gif|bmp|webp)$/i;
+
+  function loadURL(url) {
+    urlInput.value = url;
+
+    if (imageExtensions.test(url)) {
+      const html = `
+        <html><head><style>
+          body, html {
+            margin: 0; padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: black;
+          }
+          img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+          }
+        </style></head><body>
+          <img src="${url}" alt="Image Preview">
+        </body></html>
+      `;
+      const blob = new Blob([html], { type: 'text/html' });
+      const blobURL = URL.createObjectURL(blob);
+      previewFrames.forEach(frame => frame.src = blobURL);
+    } else {
+      previewFrames.forEach(frame => frame.src = url);
+    }
+  }
+
+  function findNthLastNumberMatch(url, nth = 1) {
+    const regex = /\d+/g;
+    const matches = [...url.matchAll(regex)];
+    if (matches.length >= nth) {
+      const match = matches[matches.length - nth];
+      return {
+        number: match[0],
+        start: match.index,
+        end: match.index + match[0].length
+      };
+    }
+    return null;
+  }
+
+  function modifyURL(nthLast, delta) {
+    const currentURL = urlInput.value;
+    const matchInfo = findNthLastNumberMatch(currentURL, nthLast);
+
+    const pageInput = document.getElementById('page');
+    const rPage = parseInt(pageInput.value, 10);
+
+    if (!matchInfo) {
+      loadURL(currentURL);
+      return;
+    }
+
+    let oldNumber = parseInt(matchInfo.number);
+    let newNumber = oldNumber + delta;
+    if (nthLast == 1 && delta == 1 && newNumber == rPage + 1) newNumber = 1;
+    if (nthLast == 1 && delta == -1 && newNumber == 0) newNumber = rPage;
+
+    const newURL = currentURL.slice(0, matchInfo.start) + newNumber + currentURL.slice(matchInfo.end);
+
+    if (nthLast == 1 && oldNumber == rPage && newNumber == 1) {
+      urlInput.value = newURL;
+      modifyURL(2, +1);
+      return;
+    } else if (nthLast == 1 && oldNumber == 1 && newNumber == rPage) {
+      urlInput.value = newURL;
+      modifyURL(2, -1);
+      return;
+    }
+
+    loadURL(newURL);
+  }
+
+  // 버튼 이벤트
+  document.getElementById('btnFirst').addEventListener('click', () => modifyURL(2, -1));
+  document.getElementById('btnPrev').addEventListener('click', () => modifyURL(1, -1));
+  document.getElementById('btnNext').addEventListener('click', () => modifyURL(1, +1));
+  document.getElementById('btnLast').addEventListener('click', () => modifyURL(2, +1));
+  document.getElementById('btnClear').addEventListener('click', () => {
+    urlInput.value = '';
+    previewFrames.forEach(frame => frame.src = 'about:blank');
+  });
+
+  urlInput.addEventListener('change', () => {
+    const url = urlInput.value;
+    loadURL(url);
+  });
+
+  let slideTimer = null;
+  let isSlideRunning = false;
+
+  document.getElementById('slide').addEventListener('click', () => {
+    const btn = document.getElementById('slide');
+    const secInput = document.getElementById('sec');
+    const delay = parseInt(secInput.value, 10) * 1000;
+
+    if (btn.textContent === 'OFF') {
+      btn.textContent = 'ON';
+      isSlideRunning = true;
+      runWithDelay(delay);
+    } else {
+      btn.textContent = 'OFF';
+      isSlideRunning = false;
+      if (slideTimer) {
+        clearTimeout(slideTimer);
+        slideTimer = null;
+      }
+    }
+  });
+
+  function runWithDelay(delay) {
+    if (!isSlideRunning) return;
+    modifyURL(1, +1);
+    previewFrames[0].onload = () => {
+      if (!isSlideRunning) return;
+      slideTimer = setTimeout(() => runWithDelay(delay), delay);
+    };
+  }
+
+  // ▶/◀ 버튼 클릭 시 controls 토글
+  const hideshowBtn = document.getElementById('hideshow');
+  const controlsDiv = document.getElementById('controls');
+
+  hideshowBtn.addEventListener('click', () => {
+    const isCollapsed = controlsDiv.classList.toggle('collapsed');
+    hideshowBtn.textContent = isCollapsed ? '◀' : '▶';
+  });
+
+  const pageInput = document.getElementById('page');
+  const rPage = parseInt(pageInput.value, 10);
+</script>
+</html>

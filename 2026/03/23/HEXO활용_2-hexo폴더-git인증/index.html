@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>HEXO활용_2 hexo폴더 git인증 | 나는 신(Shin)이다</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Hexo 배포는 로컬 환경에 이미 GitHub 계정 인증(Git Authentication)이 완료되어 있다는 점을 전제로 하고 시작합니다.  이 글은 git 인증과정에 대한 설명입니다.          Hexo의 hexo-deployer-git 플러그인은 내부적으로 로컬에 설치된 git 명령어를 사용하기 때문에, 로컬 터미널에서 GitHub로 git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HEXO활용_2 hexo폴더 git인증">
+<meta property="og:url" content="https://iam-shin.github.io/2026/03/23/HEXO%ED%99%9C%EC%9A%A9_2-hexo%ED%8F%B4%EB%8D%94-git%EC%9D%B8%EC%A6%9D/index.html">
+<meta property="og:site_name" content="나는 신(Shin)이다">
+<meta property="og:description" content="Hexo 배포는 로컬 환경에 이미 GitHub 계정 인증(Git Authentication)이 완료되어 있다는 점을 전제로 하고 시작합니다.  이 글은 git 인증과정에 대한 설명입니다.          Hexo의 hexo-deployer-git 플러그인은 내부적으로 로컬에 설치된 git 명령어를 사용하기 때문에, 로컬 터미널에서 GitHub로 git">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-03-23T04:50:16.000Z">
+<meta property="article:modified_time" content="2026-04-29T09:03:54.702Z">
+<meta property="article:author" content="實踐老將">
+<meta property="article:tag" content="hexo">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="나는 신(Shin)이다" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">나는 신(Shin)이다</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">닥치고 기록 -實踐老將-</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://iam-shin.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-HEXO활용_2-hexo폴더-git인증" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/03/23/HEXO%ED%99%9C%EC%9A%A9_2-hexo%ED%8F%B4%EB%8D%94-git%EC%9D%B8%EC%A6%9D/" class="article-date">
+  <time class="dt-published" datetime="2026-03-23T04:50:16.000Z" itemprop="datePublished">2026-03-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      HEXO활용_2 hexo폴더 git인증
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>  Hexo 배포는 로컬 환경에 이미 GitHub 계정 인증(Git Authentication)이 완료되어 있다는 점을 전제로 하고 시작합니다.<br>  이 글은 git 인증과정에 대한 설명입니다.       </p>
+<p>  Hexo의 <code>hexo-deployer-git</code> 플러그인은 내부적으로 로컬에 설치된 git 명령어를 사용하기 때문에, 로컬 터미널에서 GitHub로 git push를 할 수 있는 상태여야 배포가 성공합니다.                                                                                                                                  </p>
+<p>  배포 전에 확인하거나 진행해야 할 인증 과정은 다음과 같습니다.                                                                                       </p>
+<ol>
+<li>Git 사용자 정보 설정 (최초 1회)<br>  로컬 PC에서 누가 커밋을 하는지 알려주는 설정입니다. 터미널(PowerShell 등)에서 다음 명령어를 실행합니다.</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 git config --global user.name &quot;Your Name&quot;</span><br><span class="line">2 git config --global user.email &quot;your-email@example.com&quot;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>GitHub 인증 방식 선택 (가장 중요)<br>  현재 GitHub는 보안상의 이유로 일반 비밀번호 로그인을 허용하지 않습니다. 다음 중 하나를 선택해야 합니다.</li>
+</ol>
+<ul>
+<li>방법 A: GitHub CLI 사용 (가장 추천 - 윈도우 사용자)<ol>
+<li>gh auth login 명령어를 실행합니다.</li>
+<li>화면의 지시에 따라 브라우저에서 로그인하고 인증 코드를 입력하면 자동으로 로컬 환경에 인증 토큰이 저장됩니다.</li>
+</ol>
+</li>
+<li>방법 B: PAT (Personal Access Token) 사용<ol>
+<li>GitHub 설정에서 토큰을 발급받습니다.</li>
+<li><code>_config.yml</code>의 repo 주소에 토큰을 포함시키거나, 첫 배포 시 뜨는 로그인 창(Git Credential Manager)에 토큰을 입력합니다.</li>
+</ol>
+</li>
+<li>방법 C: SSH Key 등록<ol>
+<li>로컬에서 SSH 키를 생성하고, 공개키(.pub)를 GitHub 계정에 등록합니다.</li>
+<li><code>_config.yml</code>의 repo 주소를 <code>git@github.com:사용자/저장소.git</code> 형식으로 사용합니다.</li>
+</ol>
+</li>
+</ul>
+<ol start="3">
+<li>인증이 되어 있는지 확인하는 법<br>  터미널에서 아래 명령어를 입력했을 때, 본인의 GitHub 닉네임이 나오면 성공입니다.</li>
+</ol>
+<ul>
+<li>SSH 사용 시: <code>ssh -T git@github.com</code></li>
+<li>GitHub CLI 사용 시: <code>gh auth status</code></li>
+</ul>
+<ol start="4">
+<li>윈도우 환경의 특징<br>  윈도우에는 보통 Git Credential Manager가 설치되어 있어, 처음 hexo deploy를 실행할 때 브라우저 로그인 창이 팝업으로 뜨기도 합니다. 거기서 로그인을 한번만 성공하면 그 이후부터는 자동으로 인증이 유지됩니다.</li>
+</ol>
+<hr>
+<p>  결론적으로:<br>  배포를 시작하기 전에 “내가 이 컴퓨터의 터미널에서 GitHub 저장소로 파일을 올릴 권한이 있는가?”를 먼저 해결해야 합니다.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://iam-shin.github.io/2026/03/23/HEXO%ED%99%9C%EC%9A%A9_2-hexo%ED%8F%B4%EB%8D%94-git%EC%9D%B8%EC%A6%9D/" data-id="cuidxO61u8sh5f1JWk2woRmnM" data-title="HEXO활용_2 hexo폴더 git인증" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2026/03/23/HEXO%ED%99%9C%EC%9A%A9_3-git%EB%B0%B0%ED%8F%AC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          HEXO활용_3 git배포
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/03/23/HEXO%ED%99%9C%EC%9A%A9_1-%EB%A1%9C%EC%BB%AC%EC%84%A4%EC%B9%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">HEXO활용_1 로컬설치</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Health/">Health</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/infra/">infra</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Health/" rel="tag">Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSG/" rel="tag">SSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ambari/" rel="tag">ambari</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigtop/" rel="tag">bigtop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openvpn/" rel="tag">openvpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sandbox/" rel="tag">sandbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/" rel="tag">virtualbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vm/" rel="tag">vm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/" rel="tag">vpn</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Effective-Java-3Ed/" style="font-size: 17.5px;">Effective-Java-3Ed</a> <a href="/tags/Health/" style="font-size: 20px;">Health</a> <a href="/tags/SSG/" style="font-size: 10px;">SSG</a> <a href="/tags/ambari/" style="font-size: 10px;">ambari</a> <a href="/tags/bigtop/" style="font-size: 12.5px;">bigtop</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hadoop/" style="font-size: 12.5px;">hadoop</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/openvpn/" style="font-size: 10px;">openvpn</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/sandbox/" style="font-size: 10px;">sandbox</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/virtualbox/" style="font-size: 12.5px;">virtualbox</a> <a href="/tags/vm/" style="font-size: 12.5px;">vm</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">April 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">March 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/04/29/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/29/item63_%EB%AC%B8%EC%9E%90%EC%97%B4%EC%97%B0%EA%B2%B0%EC%9D%80%EB%8A%90%EB%A6%AC%EB%8B%88%EC%A3%BC%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item63.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/25/item59_%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC%EB%A5%BC%EC%9D%B5%ED%9E%88%EA%B3%A0%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item59.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/24/item58_%EC%A0%84%ED%86%B5%EC%A0%81%EC%9D%B8for%EB%AC%B8%EB%B3%B4%EB%8B%A4%EB%8A%94for-each%EB%AC%B8%EC%9D%84%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item58.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/04/23/item57_%EC%A7%80%EC%97%AD%EB%B3%80%EC%88%98%EC%9D%98%EB%B2%94%EC%9C%84%EB%A5%BC%EC%B5%9C%EC%86%8C%ED%99%94%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item57.</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 實踐老將<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
