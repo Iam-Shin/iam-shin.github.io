@@ -75,6 +75,86 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-HEXO활용_2-hexo폴더-git인증" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/03/23/HEXO%ED%99%9C%EC%9A%A9_2-hexo%ED%8F%B4%EB%8D%94-git%EC%9D%B8%EC%A6%9D/" class="article-date">
+  <time class="dt-published" datetime="2026-03-23T04:50:16.000Z" itemprop="datePublished">2026-03-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2026/03/23/HEXO%ED%99%9C%EC%9A%A9_2-hexo%ED%8F%B4%EB%8D%94-git%EC%9D%B8%EC%A6%9D/">HEXO활용_2 hexo폴더 git인증</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>  Hexo 배포는 로컬 환경에 이미 GitHub 계정 인증(Git Authentication)이 완료되어 있다는 점을 전제로 하고 시작합니다.<br>  이 글은 git 인증과정에 대한 설명입니다.       </p>
+<p>  Hexo의 <code>hexo-deployer-git</code> 플러그인은 내부적으로 로컬에 설치된 git 명령어를 사용하기 때문에, 로컬 터미널에서 GitHub로 git push를 할 수 있는 상태여야 배포가 성공합니다.                                                                                                                                  </p>
+<p>  배포 전에 확인하거나 진행해야 할 인증 과정은 다음과 같습니다.                                                                                       </p>
+<ol>
+<li>Git 사용자 정보 설정 (최초 1회)<br>  로컬 PC에서 누가 커밋을 하는지 알려주는 설정입니다. 터미널(PowerShell 등)에서 다음 명령어를 실행합니다.</li>
+</ol>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 git config --global user.name &quot;Your Name&quot;</span><br><span class="line">2 git config --global user.email &quot;your-email@example.com&quot;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>GitHub 인증 방식 선택 (가장 중요)<br>  현재 GitHub는 보안상의 이유로 일반 비밀번호 로그인을 허용하지 않습니다. 다음 중 하나를 선택해야 합니다.</li>
+</ol>
+<ul>
+<li>방법 A: GitHub CLI 사용 (가장 추천 - 윈도우 사용자)<ol>
+<li>gh auth login 명령어를 실행합니다.</li>
+<li>화면의 지시에 따라 브라우저에서 로그인하고 인증 코드를 입력하면 자동으로 로컬 환경에 인증 토큰이 저장됩니다.</li>
+</ol>
+</li>
+<li>방법 B: PAT (Personal Access Token) 사용<ol>
+<li>GitHub 설정에서 토큰을 발급받습니다.</li>
+<li><code>_config.yml</code>의 repo 주소에 토큰을 포함시키거나, 첫 배포 시 뜨는 로그인 창(Git Credential Manager)에 토큰을 입력합니다.</li>
+</ol>
+</li>
+<li>방법 C: SSH Key 등록<ol>
+<li>로컬에서 SSH 키를 생성하고, 공개키(.pub)를 GitHub 계정에 등록합니다.</li>
+<li><code>_config.yml</code>의 repo 주소를 <code>git@github.com:사용자/저장소.git</code> 형식으로 사용합니다.</li>
+</ol>
+</li>
+</ul>
+<ol start="3">
+<li>인증이 되어 있는지 확인하는 법<br>  터미널에서 아래 명령어를 입력했을 때, 본인의 GitHub 닉네임이 나오면 성공입니다.</li>
+</ol>
+<ul>
+<li>SSH 사용 시: <code>ssh -T git@github.com</code></li>
+<li>GitHub CLI 사용 시: <code>gh auth status</code></li>
+</ul>
+<ol start="4">
+<li>윈도우 환경의 특징<br>  윈도우에는 보통 Git Credential Manager가 설치되어 있어, 처음 hexo deploy를 실행할 때 브라우저 로그인 창이 팝업으로 뜨기도 합니다. 거기서 로그인을 한번만 성공하면 그 이후부터는 자동으로 인증이 유지됩니다.</li>
+</ol>
+<hr>
+<p>  결론적으로:<br>  배포를 시작하기 전에 “내가 이 컴퓨터의 터미널에서 GitHub 저장소로 파일을 올릴 권한이 있는가?”를 먼저 해결해야 합니다.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://iam-shin.github.io/2026/03/23/HEXO%ED%99%9C%EC%9A%A9_2-hexo%ED%8F%B4%EB%8D%94-git%EC%9D%B8%EC%A6%9D/" data-id="cuidxO61u8sh5f1JWk2woRmnM" data-title="HEXO활용_2 hexo폴더 git인증" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-HEXO활용_1-로컬설치" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2026/03/23/HEXO%ED%99%9C%EC%9A%A9_1-%EB%A1%9C%EC%BB%AC%EC%84%A4%EC%B9%98/" class="article-date">
@@ -1403,141 +1483,6 @@
 
 
   
-    <article id="post-신체-측정" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/10/02/%EC%8B%A0%EC%B2%B4-%EC%B8%A1%EC%A0%95/" class="article-date">
-  <time class="dt-published" datetime="2024-10-02T03:00:00.000Z" itemprop="datePublished">2024-10-02</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Health/">Health</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/10/02/%EC%8B%A0%EC%B2%B4-%EC%B8%A1%EC%A0%95/">신체 측정</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h3 id="1RM-One-Repetition-Maximum-이란"><a href="#1RM-One-Repetition-Maximum-이란" class="headerlink" title="1RM(One Repetition Maximum)이란?"></a>1RM(One Repetition Maximum)이란?</h3><p>1RM이란  </p>
-<p>“한 번만 들어올릴 수 있는 최대 중량(최대 1회 반복 무게)”<br>를 의미합니다.  </p>
-<p>즉,<br>내가 완벽한 자세로 딱 1회만 들어올릴 수 있는 최고 무게<br>더 이상 2회째는 불가능한, 정확히 ‘최대 1회’ 가능한 무게<br>보통 웨이트 트레이닝에서 자신의 근력 수준&#x2F;운동 강도 설정 기준으로 사용  </p>
-<p>✔️ 예시<br>벤치프레스에서 60kg을 1회만 성공적으로 들었다면, 내 벤치프레스 1RM은 60kg<br>스쿼트에서 80kg 1회 성공 &#x3D; 스쿼트 1RM은 80kg  </p>
-<p>1RM 활용<br>운동 처방&#x2F;루틴 설계시 1RM의 %로 운동강도 설정   </p>
-<ul>
-<li>초보&#x2F;근지구력: 1RM의 40 ~ 60%로 12 ~ 20회 반복    </li>
-<li>근비대(근육 키우기): 1RM의 65 ~ 80%로 8 ~ 12회 반복  </li>
-<li>순수 근력 향상: 1RM의 85 ~ 95%로 1 ~ 6회 반복</li>
-</ul>
-<p>안전: 실제로 1RM 측정은 부상 위험이 있어,<br>보통은 ‘5 ~ 10회 반복 가능한 무게’로 예측 계산(간접법)하는 경우가 많음  </p>
-<pre><code>간단한 1RM 예측 공식(Brzycki 공식)
-1RM=중량1.0278−0.0278×반복횟수
-1RM= 1.0278−0.0278×반복횟수
-중량  
-</code></pre>
-<pre><code>예) 40kg을 10회 반복 가능 →
-1𝑅𝑀=40 
-1.0278−0.0278×10≈53.3𝑘𝑔
-1RM= 1.0278−0.0278×10
-40​
- ≈53.3kg
-</code></pre>
-<p>정리<br>1RM &#x3D; “내가 한 번만 들어올릴 수 있는 최고 무게”<br>운동강도·목표별 프로그램 설계의 기준<br>초보자는 안전상 직접 측정보다는 예측공식, 간접 측정 권장  </p>
-<hr>
-<p>당신의 정보는<br>성별: 남성<br>키: 171cm<br>현재 체중: 79kg<br>입니다.   </p>
-<p>이 기준으로 대표적인 신체 측정 지수와 한국 및 국제 권장 적정값을 아래에 안내합니다.  </p>
-<ol>
-<li>BMI (체질량지수)</li>
-</ol>
-<pre><code>계산식:
-BMI=체중(kg)[신장(m)] 2
-BMI= [신장(m)] 2
- 
-체중(kg) 
-
-계산:79(1.71)2=79
-2.9241≈27.0(1.71) 2
- 79 = 2.9241
-79 ≈27.0
-</code></pre>
-<ol>
-<li>분류 기준 (WHO&#x2F;대한비만학회 기준)</li>
-</ol>
-<ul>
-<li>18.5 미만: 저체중  </li>
-<li>18.5 ~ 22.9: 정상  </li>
-<li>23.0 ~ 24.9: 과체중 (위험체중)  </li>
-<li>25.0 ~ 29.9: 비만 1단계  </li>
-<li>30.0 이상: 비만 2단계<br>→ 현재 BMI 27.0 &#x3D; 비만 1단계</li>
-</ul>
-<ol start="2">
-<li>적정 체지방률<br>중년 남성(50대) 기준:</li>
-</ol>
-<ul>
-<li>표준: 15 ~ 23%   </li>
-<li>경도비만: 23 ~ 28%   </li>
-<li>비만: 28% 이상   </li>
-<li>운동&#x2F;건강목표 적정: 13 ~ 20%</li>
-</ul>
-<p>※ 대부분의 50대 남성은 17~20%대가 ‘건강+외관상 이상적’으로 평가됨  </p>
-<ol start="3">
-<li><p>적정 허리둘레<br>남성 위험기준: 90cm (35.4인치) 이상 시 복부비만<br>적정 목표: 85cm 미만  </p>
-</li>
-<li><p>적정 체중 (표준체중)<br>계산식(대한비만학회):</p>
-</li>
-</ol>
-<pre><code>표준체중(kg)
-=
-(
-키(m)
-×
-키(m)
-)
-×
-22
-표준체중(kg)=(키(m)×키(m))×22
-
-계산:
-1.71×1.71×22=2.9241×22≈64.3kg
-</code></pre>
-<p>적정체중 권장범위:<br>64 ~ 70kg (근육량 충분히 유지시 70kg까지도 건강범위)  </p>
-<ol start="5">
-<li><p>기타 참고지표<br>기초대사량(대략):<br>50대 남성, 79kg 기준<br>→ 약 1,550 ~ 1,650kcal&#x2F;일 (운동, 근육량에 따라 변동)  </p>
-</li>
-<li><p>체수분&#x2F;근육량&#x2F;내장지방 등은<br>체성분 측정기(InBody 등) 활용 시 확인 가능</p>
-</li>
-</ol>
-<p>💡 정리<br>현재 BMI: 27.0 (비만 1단계)  </p>
-<p>적정 체지방률: 15 ~ 23%<br>(목표: 18 ~ 20% 내외)  </p>
-<p>적정 체중: 64 ~ 70kg<br>허리둘레: 85cm 미만 목표<br>체중감량 목표(70kg 미만)는 건강상 충분히 권장!  </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://iam-shin.github.io/2024/10/02/%EC%8B%A0%EC%B2%B4-%EC%B8%A1%EC%A0%95/" data-id="cuidV4posoA1nU_U0Qw7e3Q_M" data-title="신체 측정" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Health/" rel="tag">Health</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
     <article id="post-인간은-무엇인가" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2024/10/02/%EC%9D%B8%EA%B0%84%EC%9D%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80/" class="article-date">
@@ -1607,7 +1552,6 @@ BMI= [신장(m)] 2
   <div style="margin: 0 0 0 20%; color:#000; background-color: #ffeb33; padding: 5px 10px; border-radius: 5px;">그렇다면, 네가 말하는 생물학적 그릇으로서의 차이를 극복하기 위해, 현재 시간, 식사여부,  전후 사건의 인과관계, 연령별 호르몬 변화에 따른 인간의 행동/사고 변화의 통계량 등등을 보조적 수단으로 주입해 준다면, 비슷하게 행동하도록 설계할 수 있지 않을까</div>
 </p>
 
-  <div style="margin: 0 20% 0 0; color:#000; background-color: #eee; padding: 5px 10px; border-radius: 5px;">흥미로운 사고실험이네요! 결론부터 말씀드리면, AI와 인간은 '동일한 입력'을 받더라도 '출력(결과)'은 다를 가능성이 매우 높습니다. 
 <p align="left">✦Gemini
   <div style="margin: 0 20% 0 0; color:#000; background-color: #eee; padding: 5px 10px; border-radius: 5px;">그렇게 변수를 촘촘하게 설계한다면, 겉으로 보이는 행동의 일치율은 비약적으로 높아질 것입니다. 말씀하신 요소들은 사실상 인간의 '상태 값'을 수치화하는 시도이기 때문입니다.
 하지만 그럼에도 불구하고 '완전한 동일성'에 도달하기 어려운 결정적인 지점들이 남습니다. 
@@ -1775,7 +1719,7 @@ BMI= [신장(m)] 2
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Health/">Health</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/infra/">infra</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Health/">Health</a></li></ul>
     </div>
   </div>
 
@@ -1785,7 +1729,7 @@ BMI= [신장(m)] 2
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Health/" rel="tag">Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSG/" rel="tag">SSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ambari/" rel="tag">ambari</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigtop/" rel="tag">bigtop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openvpn/" rel="tag">openvpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sandbox/" rel="tag">sandbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/" rel="tag">virtualbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vm/" rel="tag">vm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/" rel="tag">vpn</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Health/" rel="tag">Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSG/" rel="tag">SSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li></ul>
     </div>
   </div>
 
@@ -1795,7 +1739,7 @@ BMI= [신장(m)] 2
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Effective-Java-3Ed/" style="font-size: 17.5px;">Effective-Java-3Ed</a> <a href="/tags/Health/" style="font-size: 20px;">Health</a> <a href="/tags/SSG/" style="font-size: 10px;">SSG</a> <a href="/tags/ambari/" style="font-size: 10px;">ambari</a> <a href="/tags/bigtop/" style="font-size: 12.5px;">bigtop</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hadoop/" style="font-size: 12.5px;">hadoop</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/openvpn/" style="font-size: 10px;">openvpn</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/sandbox/" style="font-size: 10px;">sandbox</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/virtualbox/" style="font-size: 12.5px;">virtualbox</a> <a href="/tags/vm/" style="font-size: 12.5px;">vm</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+      <a href="/tags/Effective-Java-3Ed/" style="font-size: 16.67px;">Effective-Java-3Ed</a> <a href="/tags/Health/" style="font-size: 20px;">Health</a> <a href="/tags/SSG/" style="font-size: 10px;">SSG</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a>
     </div>
   </div>
 
@@ -1804,7 +1748,7 @@ BMI= [신장(m)] 2
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">April 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">March 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">April 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">March 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li></ul>
     </div>
   </div>
 
