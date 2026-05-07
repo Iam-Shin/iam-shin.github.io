@@ -4,19 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>식사 솔루션 1 | 나는 신(Shin)이다</title>
+  <title>Effective Java 3Ed. item10. | 나는 신(Shin)이다</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="🍽️ 식사솔루션11. 핵심 식습관 변화 5가지 아침 가볍게라도 꼭 먹기    하루의 혈당 변동, 폭식 방지   샐러드+삶은 달걀, 견과류, 무가당 두유 등   점심·저녁 식사량 ‘거꾸로’ 배분    점심: 평소대로   저녁: 평소의 60~70% (탄수화물 줄이기)   저녁 7시 이후 고칼로리 간식 완전 금지    과자, 아이스크림, 빵, 음료 등 제외">
+  <meta name="description" content="아이템 12. toString을 항상 재정의하라- Object 의 기본 toString은 단순히 클래스명@16진수해시코드 형태다. 읽기 쉽고 유용한 정보를 보여주도록 재정의 하자 phoneNUmber라면 ‘phoneNumber: Henry&#x3D;010-1234-5678’  - Collection 또는 정보량이 많을경우 Summary 를 보여주는것도 좋다">
 <meta property="og:type" content="article">
-<meta property="og:title" content="식사 솔루션 1">
-<meta property="og:url" content="https://iam-shin.github.io/2024/10/02/%EC%8B%9D%EC%82%AC-%EC%86%94%EB%A3%A8%EC%85%98-1/index.html">
+<meta property="og:title" content="Effective Java 3Ed. item10.">
+<meta property="og:url" content="https://iam-shin.github.io/2026/05/07/item12_toString%EC%9D%84%ED%95%AD%EC%83%81%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/index.html">
 <meta property="og:site_name" content="나는 신(Shin)이다">
-<meta property="og:description" content="🍽️ 식사솔루션11. 핵심 식습관 변화 5가지 아침 가볍게라도 꼭 먹기    하루의 혈당 변동, 폭식 방지   샐러드+삶은 달걀, 견과류, 무가당 두유 등   점심·저녁 식사량 ‘거꾸로’ 배분    점심: 평소대로   저녁: 평소의 60~70% (탄수화물 줄이기)   저녁 7시 이후 고칼로리 간식 완전 금지    과자, 아이스크림, 빵, 음료 등 제외">
+<meta property="og:description" content="아이템 12. toString을 항상 재정의하라- Object 의 기본 toString은 단순히 클래스명@16진수해시코드 형태다. 읽기 쉽고 유용한 정보를 보여주도록 재정의 하자 phoneNUmber라면 ‘phoneNumber: Henry&#x3D;010-1234-5678’  - Collection 또는 정보량이 많을경우 Summary 를 보여주는것도 좋다">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-10-02T03:00:00.000Z">
-<meta property="article:modified_time" content="2026-04-29T09:03:54.902Z">
+<meta property="article:published_time" content="2026-05-07T13:10:15.000Z">
+<meta property="article:modified_time" content="2026-05-07T15:10:04.302Z">
 <meta property="article:author" content="實踐老將">
-<meta property="article:tag" content="Health">
+<meta property="article:tag" content="Effective-Java-3Ed">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="나는 신(Shin)이다" type="application/atom+xml">
@@ -78,16 +78,12 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-식사-솔루션-1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-item12_toString을항상재정의하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2024/10/02/%EC%8B%9D%EC%82%AC-%EC%86%94%EB%A3%A8%EC%85%98-1/" class="article-date">
-  <time class="dt-published" datetime="2024-10-02T03:00:00.000Z" itemprop="datePublished">2024-10-02</time>
+    <a href="/2026/05/07/item12_toString%EC%9D%84%ED%95%AD%EC%83%81%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/" class="article-date">
+  <time class="dt-published" datetime="2026-05-07T13:10:15.000Z" itemprop="datePublished">2026-05-07</time>
 </a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Health/">Health</a>
-  </div>
-
   </div>
   <div class="article-inner">
     
@@ -96,7 +92,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      식사 솔루션 1
+      Effective Java 3Ed. item10.
     </h1>
   
 
@@ -104,88 +100,30 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="🍽️-식사솔루션1"><a href="#🍽️-식사솔루션1" class="headerlink" title="🍽️ 식사솔루션1"></a>🍽️ 식사솔루션1</h1><h2 id="1-핵심-식습관-변화-5가지"><a href="#1-핵심-식습관-변화-5가지" class="headerlink" title="1. 핵심 식습관 변화 5가지"></a>1. 핵심 식습관 변화 5가지</h2><ol>
-<li><p><strong>아침 가볍게라도 꼭 먹기</strong>  </p>
-<ul>
-<li>하루의 혈당 변동, 폭식 방지  </li>
-<li>샐러드+삶은 달걀, 견과류, 무가당 두유 등</li>
+        <h1 id="아이템-12-toString을-항상-재정의하라"><a href="#아이템-12-toString을-항상-재정의하라" class="headerlink" title="아이템 12. toString을 항상 재정의하라"></a>아이템 12. toString을 항상 재정의하라</h1><h3 id="Object-의-기본-toString은-단순히-클래스명-16진수해시코드-형태다"><a href="#Object-의-기본-toString은-단순히-클래스명-16진수해시코드-형태다" class="headerlink" title="- Object 의 기본 toString은 단순히 클래스명@16진수해시코드 형태다."></a>- Object 의 기본 toString은 단순히 클래스명@16진수해시코드 형태다.</h3><ul>
+<li>읽기 쉽고 유용한 정보를 보여주도록 재정의 하자</li>
+<li>phoneNUmber라면 ‘phoneNumber: Henry&#x3D;010-1234-5678’</li>
 </ul>
-</li>
-<li><p><strong>점심·저녁 식사량 ‘거꾸로’ 배분</strong>  </p>
-<ul>
-<li>점심: 평소대로  </li>
-<li>저녁: 평소의 60~70% (탄수화물 줄이기)</li>
+<h3 id="Collection-또는-정보량이-많을경우-Summary-를-보여주는것도-좋다"><a href="#Collection-또는-정보량이-많을경우-Summary-를-보여주는것도-좋다" class="headerlink" title="- Collection 또는 정보량이 많을경우 Summary 를 보여주는것도 좋다"></a>- Collection 또는 정보량이 많을경우 Summary 를 보여주는것도 좋다</h3><ul>
+<li>“맨해튼 전화번호부 (총 2299000개)</li>
 </ul>
-</li>
-<li><p><strong>저녁 7시 이후 고칼로리 간식 완전 금지</strong>  </p>
-<ul>
-<li>과자, 아이스크림, 빵, 음료 등 제외  </li>
-<li>대체: 오이, 방울토마토, 삶은 달걀, 무가당 그릭요거트</li>
+<h3 id="중요한-정보는-충분히-담아라"><a href="#중요한-정보는-충분히-담아라" class="headerlink" title="- 중요한 정보는 충분히 담아라."></a>- 중요한 정보는 충분히 담아라.</h3><ul>
+<li>잘못된 예: “단언실패 : 기대값 {abc, 123}, 결과값 {abc, 123}”</li>
+<li>toString 메세지를 보고 혼란 유발. (클래스타입을 추가하거나, 인스턴스 해시코드를 추가해야하지 않을까)</li>
 </ul>
-</li>
-<li><p><strong>식사 전 채소 먼저 섭취</strong>  </p>
-<ul>
-<li>샐러드 → 단백질 → 탄수화물 순서  </li>
-<li>혈당 급상승 억제, 포만감 ↑</li>
+<h3 id="포멧을-명시하든-아니든-그-의도를-명확히-밝혀라"><a href="#포멧을-명시하든-아니든-그-의도를-명확히-밝혀라" class="headerlink" title="- 포멧을 명시하든 아니든, 그 의도를 명확히 밝혀라."></a>- 포멧을 명시하든 아니든, 그 의도를 명확히 밝혀라.</h3><h3 id="toString이-반환한-값에-포함된-정보를-얻어올-수-있는-API-를-제공하라"><a href="#toString이-반환한-값에-포함된-정보를-얻어올-수-있는-API-를-제공하라" class="headerlink" title="- toString이 반환한 값에 포함된 정보를 얻어올 수 있는 API 를 제공하라"></a>- toString이 반환한 값에 포함된 정보를 얻어올 수 있는 API 를 제공하라</h3><ul>
+<li>toString의 반환값을 파싱해야 값을 얻을수 있는 상황을 만들지 말라</li>
+<li>phoneNumber 라면 getAreaCode, getPrefix, getMemberNUmber 같은 접근자를 제공하자.</li>
 </ul>
-</li>
-<li><p><strong>식사 20분 이상 천천히 하기</strong>  </p>
-<ul>
-<li>포만감 인지 전에 과식 방지  </li>
-<li>TV·휴대폰 없이 식사 집중</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="2-하루-식사-스케줄-예시"><a href="#2-하루-식사-스케줄-예시" class="headerlink" title="2. 하루 식사 스케줄 예시"></a>2. 하루 식사 스케줄 예시</h2><table>
-<thead>
-<tr>
-<th>시간</th>
-<th>내용</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>07:30~08:00</td>
-<td><strong>아침</strong> : 샐러드+삶은 달걀 1개 or 그릭요거트+견과류</td>
-</tr>
-<tr>
-<td>12:00~13:00</td>
-<td><strong>점심</strong> : 회사 식사, 밥 70%만, 국물 적게</td>
-</tr>
-<tr>
-<td>17:30~18:30</td>
-<td><strong>저녁</strong> : 밥·탄수화물 60~70%, 채소+단백질(두부·생선·닭가슴살 등)</td>
-</tr>
-<tr>
-<td>20:00 이후</td>
-<td><strong>간식 금지</strong> (허기 시: 오이, 방울토마토, 삶은 달걀, 무가당 요거트 소량)</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="3-추가-실천-팁"><a href="#3-추가-실천-팁" class="headerlink" title="3. 추가 실천 팁"></a>3. 추가 실천 팁</h2><ul>
-<li>주 1~2일 저녁은 ‘샐러드+단백질’로만 대체</li>
-<li>식단 기록앱 사용(마이핏니스팔, 눔 등)</li>
-<li>하루 1.5~2L 물 섭취</li>
-<li>외식 시 밥 70%만 섭취</li>
-<li>주 1~2회, 좋아하는 음식 허용(스트레스 완화)</li>
-</ul>
-<hr>
-<h2 id="4-실행-순서-요약"><a href="#4-실행-순서-요약" class="headerlink" title="4. 실행 순서 요약"></a>4. 실행 순서 요약</h2><ol>
-<li>아침에 채소&#x2F;단백질 섭취 시작</li>
-<li>저녁은 의도적으로 적게, 특히 탄수화물 줄이기</li>
-<li>저녁 이후 간식 완전 금지</li>
-<li>식사 순서: 샐러드 → 단백질 → 탄수화물</li>
-<li>식사 속도 늦추기</li>
-</ol>
-
+<h3 id="하위-컬랙션이-공유해야할-문자열-표현이-있는-추상클래스라면-toString을-재정의-해줘라"><a href="#하위-컬랙션이-공유해야할-문자열-표현이-있는-추상클래스라면-toString을-재정의-해줘라" class="headerlink" title="- 하위 컬랙션이 공유해야할 문자열 표현이 있는 추상클래스라면 toString을 재정의 해줘라."></a>- 하위 컬랙션이 공유해야할 문자열 표현이 있는 추상클래스라면 toString을 재정의 해줘라.</h3>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://iam-shin.github.io/2024/10/02/%EC%8B%9D%EC%82%AC-%EC%86%94%EB%A3%A8%EC%85%98-1/" data-id="cuidXz5M90fSVWU1ZKKYS3Ov-" data-title="식사 솔루션 1" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://iam-shin.github.io/2026/05/07/item12_toString%EC%9D%84%ED%95%AD%EC%83%81%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/" data-id="cuidCjbUQ8xqPfzbVm28mm20Y" data-title="Effective Java 3Ed. item10." class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Health/" rel="tag">Health</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
 
     </footer>
   </div>
@@ -193,19 +131,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2024/10/02/%EB%82%98%EC%9D%984%EC%A3%BC%ED%94%8C%EB%9E%9C1-%EB%8B%AC%EB%A0%A5%ED%98%95%ED%83%9C/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          4주 플랜 달력
-        
-      </div>
-    </a>
   
-  
-    <a href="/2024/10/02/%EC%9D%B8%EA%B0%84%EC%9D%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2026/05/06/item11_equals%EB%A5%BC%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%A0%A4%EA%B1%B0%EB%93%A0hashCode%EB%8F%84%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">인간은 무엇인가</div>
+      <div class="article-nav-title">Effective Java 3Ed. item11.</div>
     </a>
   
 </nav>
@@ -264,23 +193,23 @@
       <ul>
         
           <li>
-            <a href="/2026/05/02/item66_%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C%EB%A9%94%EC%84%9C%EB%93%9C%EB%8A%94%EC%8B%A0%EC%A4%91%ED%9E%88%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item66.</a>
+            <a href="/2026/05/07/item12_toString%EC%9D%84%ED%95%AD%EC%83%81%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item10.</a>
           </li>
         
           <li>
-            <a href="/2026/05/01/item65_%EB%A6%AC%ED%94%8C%EB%A0%89%EC%85%98%EB%B3%B4%EB%8B%A4%EB%8A%94%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%A5%BC%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item65.</a>
+            <a href="/2026/05/06/item11_equals%EB%A5%BC%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%A0%A4%EA%B1%B0%EB%93%A0hashCode%EB%8F%84%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item11.</a>
           </li>
         
           <li>
-            <a href="/2026/04/30/item64_%EA%B0%9D%EC%B2%B4%EB%8A%94%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%A5%BC%EC%82%AC%EC%9A%A9%ED%95%B4%EC%B0%B8%EC%A1%B0%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item64.</a>
+            <a href="/2026/05/05/item10_equals%EB%8A%94%EC%9D%BC%EB%B0%98%EA%B7%9C%EC%95%BD%EC%9D%84%EC%A7%80%EC%BC%9C%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item10.</a>
           </li>
         
           <li>
-            <a href="/2026/04/29/hello-world/">Hello World</a>
+            <a href="/2026/05/04/item68_%EC%9D%BC%EB%B0%98%EC%A0%81%EC%9C%BC%EB%A1%9C%ED%86%B5%EC%9A%A9%EB%90%98%EB%8A%94%EB%AA%85%EB%AA%85%EA%B7%9C%EC%B9%99%EC%9D%84%EB%94%B0%EB%A5%B4%EB%9D%BC/">Effective Java 3Ed. item68.</a>
           </li>
         
           <li>
-            <a href="/2026/04/29/item63_%EB%AC%B8%EC%9E%90%EC%97%B4%EC%97%B0%EA%B2%B0%EC%9D%80%EB%8A%90%EB%A6%AC%EB%8B%88%EC%A3%BC%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item63.</a>
+            <a href="/2026/05/03/item67_%EC%B5%9C%EC%A0%81%ED%99%94%EB%8A%94%EC%8B%A0%EC%A4%91%ED%9E%88%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item67.</a>
           </li>
         
       </ul>

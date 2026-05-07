@@ -75,6 +75,289 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-item12_toString을항상재정의하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/05/07/item12_toString%EC%9D%84%ED%95%AD%EC%83%81%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/" class="article-date">
+  <time class="dt-published" datetime="2026-05-07T13:10:15.000Z" itemprop="datePublished">2026-05-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2026/05/07/item12_toString%EC%9D%84%ED%95%AD%EC%83%81%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item10.</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="아이템-12-toString을-항상-재정의하라"><a href="#아이템-12-toString을-항상-재정의하라" class="headerlink" title="아이템 12. toString을 항상 재정의하라"></a>아이템 12. toString을 항상 재정의하라</h1><h3 id="Object-의-기본-toString은-단순히-클래스명-16진수해시코드-형태다"><a href="#Object-의-기본-toString은-단순히-클래스명-16진수해시코드-형태다" class="headerlink" title="- Object 의 기본 toString은 단순히 클래스명@16진수해시코드 형태다."></a>- Object 의 기본 toString은 단순히 클래스명@16진수해시코드 형태다.</h3><ul>
+<li>읽기 쉽고 유용한 정보를 보여주도록 재정의 하자</li>
+<li>phoneNUmber라면 ‘phoneNumber: Henry&#x3D;010-1234-5678’</li>
+</ul>
+<h3 id="Collection-또는-정보량이-많을경우-Summary-를-보여주는것도-좋다"><a href="#Collection-또는-정보량이-많을경우-Summary-를-보여주는것도-좋다" class="headerlink" title="- Collection 또는 정보량이 많을경우 Summary 를 보여주는것도 좋다"></a>- Collection 또는 정보량이 많을경우 Summary 를 보여주는것도 좋다</h3><ul>
+<li>“맨해튼 전화번호부 (총 2299000개)</li>
+</ul>
+<h3 id="중요한-정보는-충분히-담아라"><a href="#중요한-정보는-충분히-담아라" class="headerlink" title="- 중요한 정보는 충분히 담아라."></a>- 중요한 정보는 충분히 담아라.</h3><ul>
+<li>잘못된 예: “단언실패 : 기대값 {abc, 123}, 결과값 {abc, 123}”</li>
+<li>toString 메세지를 보고 혼란 유발. (클래스타입을 추가하거나, 인스턴스 해시코드를 추가해야하지 않을까)</li>
+</ul>
+<h3 id="포멧을-명시하든-아니든-그-의도를-명확히-밝혀라"><a href="#포멧을-명시하든-아니든-그-의도를-명확히-밝혀라" class="headerlink" title="- 포멧을 명시하든 아니든, 그 의도를 명확히 밝혀라."></a>- 포멧을 명시하든 아니든, 그 의도를 명확히 밝혀라.</h3><h3 id="toString이-반환한-값에-포함된-정보를-얻어올-수-있는-API-를-제공하라"><a href="#toString이-반환한-값에-포함된-정보를-얻어올-수-있는-API-를-제공하라" class="headerlink" title="- toString이 반환한 값에 포함된 정보를 얻어올 수 있는 API 를 제공하라"></a>- toString이 반환한 값에 포함된 정보를 얻어올 수 있는 API 를 제공하라</h3><ul>
+<li>toString의 반환값을 파싱해야 값을 얻을수 있는 상황을 만들지 말라</li>
+<li>phoneNumber 라면 getAreaCode, getPrefix, getMemberNUmber 같은 접근자를 제공하자.</li>
+</ul>
+<h3 id="하위-컬랙션이-공유해야할-문자열-표현이-있는-추상클래스라면-toString을-재정의-해줘라"><a href="#하위-컬랙션이-공유해야할-문자열-표현이-있는-추상클래스라면-toString을-재정의-해줘라" class="headerlink" title="- 하위 컬랙션이 공유해야할 문자열 표현이 있는 추상클래스라면 toString을 재정의 해줘라."></a>- 하위 컬랙션이 공유해야할 문자열 표현이 있는 추상클래스라면 toString을 재정의 해줘라.</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://iam-shin.github.io/2026/05/07/item12_toString%EC%9D%84%ED%95%AD%EC%83%81%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/" data-id="cuidCjbUQ8xqPfzbVm28mm20Y" data-title="Effective Java 3Ed. item10." class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-item11_equals를재정의하려거든hashCode도재정의하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/05/06/item11_equals%EB%A5%BC%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%A0%A4%EA%B1%B0%EB%93%A0hashCode%EB%8F%84%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/" class="article-date">
+  <time class="dt-published" datetime="2026-05-06T13:10:15.000Z" itemprop="datePublished">2026-05-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2026/05/06/item11_equals%EB%A5%BC%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%A0%A4%EA%B1%B0%EB%93%A0hashCode%EB%8F%84%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item11.</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="아이템-11-equals를-재정의하려거든-hashCode도-재정의하라"><a href="#아이템-11-equals를-재정의하려거든-hashCode도-재정의하라" class="headerlink" title="아이템 11. equals를 재정의하려거든 hashCode도 재정의하라"></a>아이템 11. equals를 재정의하려거든 hashCode도 재정의하라</h1>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://iam-shin.github.io/2026/05/06/item11_equals%EB%A5%BC%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%A0%A4%EA%B1%B0%EB%93%A0hashCode%EB%8F%84%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/" data-id="cuidRulJYnvyRpbxT75hRKgij" data-title="Effective Java 3Ed. item11." class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-item10_equals는일반규약을지켜재정의하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/05/05/item10_equals%EB%8A%94%EC%9D%BC%EB%B0%98%EA%B7%9C%EC%95%BD%EC%9D%84%EC%A7%80%EC%BC%9C%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/" class="article-date">
+  <time class="dt-published" datetime="2026-05-05T13:10:15.000Z" itemprop="datePublished">2026-05-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2026/05/05/item10_equals%EB%8A%94%EC%9D%BC%EB%B0%98%EA%B7%9C%EC%95%BD%EC%9D%84%EC%A7%80%EC%BC%9C%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item10.</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="아이템-10-equals는-일반-규약을-지켜-재정의하라"><a href="#아이템-10-equals는-일반-규약을-지켜-재정의하라" class="headerlink" title="아이템 10. equals는 일반 규약을 지켜 재정의하라"></a>아이템 10. equals는 일반 규약을 지켜 재정의하라</h1><p>이번장은 내용이 많다. 여러번 다시 읽을 필요가 있다.</p>
+<h3 id="equals를-재정의-하지-말아야할-이유"><a href="#equals를-재정의-하지-말아야할-이유" class="headerlink" title="- equals를 재정의 하지 말아야할 이유"></a>- equals를 재정의 하지 말아야할 이유</h3><ul>
+<li>각 인스턴스가 본질적으로 고유하다  </li>
+<li>인스턴스의 ‘논리적 동치성’ 을 검사할 일이 없다. (Object의 기본 equals 만으로도 해결)  </li>
+<li>상위클래스에서 재정의한 equals가 하위클래스에서도 딱 들어맞는다.  </li>
+<li>클래스가 private 이거나, package-private이고 equals 메서드를 호출할 일이 없다.</li>
+</ul>
+<h3 id="그렇다면-equals-를-재정의-해야할-때는"><a href="#그렇다면-equals-를-재정의-해야할-때는" class="headerlink" title="- 그렇다면 equals 를 재정의 해야할 때는?"></a>- 그렇다면 equals 를 재정의 해야할 때는?</h3><ul>
+<li>객체식별성(두 객체가 물리적으로 같은가?)이 아니라, 논리적 동치성을 확인해야 하는데, 상위클래스의 equals가 논리적 동치성을 비교하도록 정의되지 않았을때.</li>
+</ul>
+<h3 id="equals-메서드를-재정의할때-반드시-따라야할-일반규약"><a href="#equals-메서드를-재정의할때-반드시-따라야할-일반규약" class="headerlink" title="- equals 메서드를 재정의할때 반드시 따라야할 일반규약"></a>- equals 메서드를 재정의할때 반드시 따라야할 일반규약</h3><ul>
+<li>반사성(reflexivity) : not null인 reference x에 대해(이하 생략) x.equals(x) &#x3D; true 이다.</li>
+<li>대칭성(symmetry) : x,y에 대해 x.equals(y) &#x3D; true 면 y.equals(x) &#x3D; true 이다.</li>
+<li>추이성(transitivity) : x,y,x에 대해 x.equals(y) &#x3D; true 이고 y.equals(z) &#x3D; true 면 x.equals(z) &#x3D; true 이다. </li>
+<li>일관성(consistency) : x,y에 대해 x.equals(y) 의 결과는 반복 수행되더라도 항상 true 이거나, 항상 false 이다.</li>
+<li>null-아님 : x.equals(null) 은 false 이다.</li>
+</ul>
+<h3 id="양질의-equals-메서드를-구현하는-방법"><a href="#양질의-equals-메서드를-구현하는-방법" class="headerlink" title="- 양질의 equals 메서드를 구현하는 방법"></a>- 양질의 equals 메서드를 구현하는 방법</h3><ol>
+<li>&#x3D;&#x3D; 연산자를 사용해 입력이 자기 자신의 참조인지 확인한다.</li>
+<li>instanceof 연산자로 입력이 올바른 타입인지 확인한다.</li>
+<li>입력을 올바른 타입으로 형변환한다.</li>
+<li>입력객체와 자기 자신의 대응되는 핵심 필드들이 모두 일치하는지 하나씩 검사한다.</li>
+</ol>
+<h3 id="그리고-테스트를-위한-AutoValue-프레임워크가-있다"><a href="#그리고-테스트를-위한-AutoValue-프레임워크가-있다" class="headerlink" title="- 그리고, 테스트를 위한 AutoValue 프레임워크가 있다."></a>- 그리고, 테스트를 위한 AutoValue 프레임워크가 있다.</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://iam-shin.github.io/2026/05/05/item10_equals%EB%8A%94%EC%9D%BC%EB%B0%98%EA%B7%9C%EC%95%BD%EC%9D%84%EC%A7%80%EC%BC%9C%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/" data-id="cuidQFe7EYMFbqLiWqOhAfZ6z" data-title="Effective Java 3Ed. item10." class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-item68_일반적으로통용되는명명규칙을따르라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/05/04/item68_%EC%9D%BC%EB%B0%98%EC%A0%81%EC%9C%BC%EB%A1%9C%ED%86%B5%EC%9A%A9%EB%90%98%EB%8A%94%EB%AA%85%EB%AA%85%EA%B7%9C%EC%B9%99%EC%9D%84%EB%94%B0%EB%A5%B4%EB%9D%BC/" class="article-date">
+  <time class="dt-published" datetime="2026-05-04T13:10:15.000Z" itemprop="datePublished">2026-05-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2026/05/04/item68_%EC%9D%BC%EB%B0%98%EC%A0%81%EC%9C%BC%EB%A1%9C%ED%86%B5%EC%9A%A9%EB%90%98%EB%8A%94%EB%AA%85%EB%AA%85%EA%B7%9C%EC%B9%99%EC%9D%84%EB%94%B0%EB%A5%B4%EB%9D%BC/">Effective Java 3Ed. item68.</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="아이템-68-일반적으로-통용되는-명명-규칙을-따르라"><a href="#아이템-68-일반적으로-통용되는-명명-규칙을-따르라" class="headerlink" title="아이템 68. 일반적으로 통용되는 명명 규칙을 따르라"></a>아이템 68. 일반적으로 통용되는 명명 규칙을 따르라</h1><p>[JLS, 6.1] 에 명명규칙이 잘 정리되어 있다.</p>
+<h3 id="패키지-모듈이름"><a href="#패키지-모듈이름" class="headerlink" title="- 패키지, 모듈이름"></a>- 패키지, 모듈이름</h3><ul>
+<li>조직의 인터넷 도메인이름의 역순</li>
+<li>각 요소는 대체로 8자 이내의 짧은 단어, 약자허용</li>
+</ul>
+<h3 id="클래스-인터페이스"><a href="#클래스-인터페이스" class="headerlink" title="- 클래스, 인터페이스"></a>- 클래스, 인터페이스</h3><ul>
+<li>대문자로 시작, 카멜케이스</li>
+<li>약자 지양 full단어</li>
+<li>객체를 생성할 수 있는 클래스의 이름은 보통 단수명사나 명사구 사용: Thread, PriorityQueue 등</li>
+<li>객체를 생성할 수 없는 클래스는 복수형명사로 : Collectors, Collections 등</li>
+<li>인터페이스는 클래스와 똑같이 짓거나 able , ible 로 끝나는 형용사 : Runnable, Iterable 등</li>
+<li>애너테이션은 규칙없이 다양</li>
+</ul>
+<h3 id="메서드-필드"><a href="#메서드-필드" class="headerlink" title="- 메서드, 필드"></a>- 메서드, 필드</h3><ul>
+<li>클래스 명명규칙과 동일하지만 첫글자는 소문자</li>
+<li>상수필드는 full 대문자, 단어사이는 _ 언더바</li>
+<li>동사나 목적어를 포함한 동사구 사용 : append, drawImage </li>
+<li>boolean 을 리턴하는 메서드는 보통 is , has 로 시작 </li>
+<li>boolean이 아닌경우 명사, 명사구, get속성, set속성 : size, hashCode, getTime, setTime 등</li>
+<li>객체 타입변경시 to목적타입 : toString, toArray 등</li>
+<li>객체의 내용을 다른 뷰로 보여주는 경우 as타입 : asList 등</li>
+<li>객체값을 원시타입으로 변경하는 경우 타입Value 형태로 : intValue, longValue</li>
+<li>정적팩터리 : from, of, valueOf, instance, getInstance, newInstance, getType, newType</li>
+</ul>
+<h3 id="지역변수"><a href="#지역변수" class="headerlink" title="- 지역변수"></a>- 지역변수</h3><ul>
+<li>소문자. 약어 가능</li>
+</ul>
+<h3 id="타입-매개변수"><a href="#타입-매개변수" class="headerlink" title="타입 매개변수"></a>타입 매개변수</h3><ul>
+<li>보통 한문자 대문자로 표현</li>
+<li>T:타입, E:컬랙션의 원소, K,V:맵의 키와 밸류, X:예외, R:메서드의 반환타입, U,V,T1,T2..:그외 임의타입</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://iam-shin.github.io/2026/05/04/item68_%EC%9D%BC%EB%B0%98%EC%A0%81%EC%9C%BC%EB%A1%9C%ED%86%B5%EC%9A%A9%EB%90%98%EB%8A%94%EB%AA%85%EB%AA%85%EA%B7%9C%EC%B9%99%EC%9D%84%EB%94%B0%EB%A5%B4%EB%9D%BC/" data-id="cuid9RSWcWzTQAtA9AGxguDAn" data-title="Effective Java 3Ed. item68." class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-item67_최적화는신중히하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/05/03/item67_%EC%B5%9C%EC%A0%81%ED%99%94%EB%8A%94%EC%8B%A0%EC%A4%91%ED%9E%88%ED%95%98%EB%9D%BC/" class="article-date">
+  <time class="dt-published" datetime="2026-05-03T13:10:15.000Z" itemprop="datePublished">2026-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2026/05/03/item67_%EC%B5%9C%EC%A0%81%ED%99%94%EB%8A%94%EC%8B%A0%EC%A4%91%ED%9E%88%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item67.</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="아이템-67-최적화는-신중히-하라"><a href="#아이템-67-최적화는-신중히-하라" class="headerlink" title="아이템 67. 최적화는 신중히 하라"></a>아이템 67. 최적화는 신중히 하라</h1><h3 id="최적화-격언-세가지"><a href="#최적화-격언-세가지" class="headerlink" title="- 최적화 격언 세가지"></a>- 최적화 격언 세가지</h3><ol>
+<li>그 어떤 핑계보다 효율성 이라는 이름아래 행해진 컴퓨팅 죄악이 더 많다.(심지어 효율을 높이지도 못하면서)</li>
+<li>(전체의 97% 정도인) 자그마한 효율성은 모두 잊자. 섣부른 최적화가 만악의 근원이다 </li>
+<li>최적화를 할때는 다음 두가지 규칙을 따르라.</li>
+</ol>
+<ul>
+<li>첫번째, 하지마라</li>
+<li>두번째, (전문가 한정)아직 하지마라</li>
+</ul>
+<p>  섣부른 최적화는 자칫 견고한 구조설계를 파괴하고도 높은 성능개선을 이루지 못한다는 것.</p>
+<p><u><em>이하 내용의 상세 설명은 이해될때 추가할것.</em></u></p>
+<h3 id="빠른프로그램-보다는-좋은-프로그램을-작성하라"><a href="#빠른프로그램-보다는-좋은-프로그램을-작성하라" class="headerlink" title="- 빠른프로그램 보다는 좋은 프로그램을 작성하라"></a>- 빠른프로그램 보다는 좋은 프로그램을 작성하라</h3><h3 id="성능을-제한하는-설계를-피하라"><a href="#성능을-제한하는-설계를-피하라" class="headerlink" title="- 성능을 제한하는 설계를 피하라"></a>- 성능을 제한하는 설계를 피하라</h3><ul>
+<li>특히 변경이 어려운 요소들. 컴포넌트간&#x2F;시스템간 외부소통 프로토콜. API, 네트워크, 영구 저장데이터포멧 등</li>
+</ul>
+<h3 id="API를-설계할때-성능에-주는-영향을-고려하라"><a href="#API를-설계할때-성능에-주는-영향을-고려하라" class="headerlink" title="- API를 설계할때 성능에 주는 영향을 고려하라"></a>- API를 설계할때 성능에 주는 영향을 고려하라</h3><h3 id="성능을-위하여-API를-왜곡하지-마라"><a href="#성능을-위하여-API를-왜곡하지-마라" class="headerlink" title="- 성능을 위하여 API를 왜곡하지 마라"></a>- 성능을 위하여 API를 왜곡하지 마라</h3><h3 id="각각의-최적화-시도-전후로-성능을-측정하라"><a href="#각각의-최적화-시도-전후로-성능을-측정하라" class="headerlink" title="- 각각의 최적화 시도 전후로 성능을 측정하라"></a>- 각각의 최적화 시도 전후로 성능을 측정하라</h3><h3 id="알고리즘부터-재검토하라"><a href="#알고리즘부터-재검토하라" class="headerlink" title="- 알고리즘부터 재검토하라"></a>- 알고리즘부터 재검토하라</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://iam-shin.github.io/2026/05/03/item67_%EC%B5%9C%EC%A0%81%ED%99%94%EB%8A%94%EC%8B%A0%EC%A4%91%ED%9E%88%ED%95%98%EB%9D%BC/" data-id="cuidEtxibeyaTXBL2EOQAGHNF" data-title="Effective Java 3Ed. item67." class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-item66_네이티브메서드는신중히사용하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2026/05/02/item66_%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C%EB%A9%94%EC%84%9C%EB%93%9C%EB%8A%94%EC%8B%A0%EC%A4%91%ED%9E%88%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/" class="article-date">
@@ -343,286 +626,11 @@
 
 
   
-    <article id="post-item62_다른타입이적절하다면문자열사용을피하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/04/28/item62_%EB%8B%A4%EB%A5%B8%ED%83%80%EC%9E%85%EC%9D%B4%EC%A0%81%EC%A0%88%ED%95%98%EB%8B%A4%EB%A9%B4%EB%AC%B8%EC%9E%90%EC%97%B4%EC%82%AC%EC%9A%A9%EC%9D%84%ED%94%BC%ED%95%98%EB%9D%BC/" class="article-date">
-  <time class="dt-published" datetime="2026-04-28T05:10:15.000Z" itemprop="datePublished">2026-04-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/04/28/item62_%EB%8B%A4%EB%A5%B8%ED%83%80%EC%9E%85%EC%9D%B4%EC%A0%81%EC%A0%88%ED%95%98%EB%8B%A4%EB%A9%B4%EB%AC%B8%EC%9E%90%EC%97%B4%EC%82%AC%EC%9A%A9%EC%9D%84%ED%94%BC%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item62.</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="아이템-62-다른-타입이-적절하다면-문자열-사용을-피하라"><a href="#아이템-62-다른-타입이-적절하다면-문자열-사용을-피하라" class="headerlink" title="아이템 62. 다른 타입이 적절하다면 문자열 사용을 피하라"></a>아이템 62. 다른 타입이 적절하다면 문자열 사용을 피하라</h1><h3 id="문자열을-다른값-타입을-대신하는데-사용하지-말라"><a href="#문자열을-다른값-타입을-대신하는데-사용하지-말라" class="headerlink" title="- 문자열을 다른값 타입을 대신하는데 사용하지 말라."></a>- 문자열을 다른값 타입을 대신하는데 사용하지 말라.</h3><ul>
-<li>문자열은 입력받는 데이터가 문자열 일때만 사용하라.</li>
-<li>적당한 타입이 없다면 새로 작성하라. enum 또는 여러타입 멤버변수를 갖는 전용 클래스 작성.</li>
-</ul>
-<h3 id="문자열은-권한을-표현하기에-적합하지-않다"><a href="#문자열은-권한을-표현하기에-적합하지-않다" class="headerlink" title="- 문자열은 권한을 표현하기에 적합하지 않다."></a>- 문자열은 권한을 표현하기에 적합하지 않다.</h3><ul>
-<li>이 부분부터 이해하지 못했다. [??]</li>
-<li>쓰레드 지역변수 기능 설계. [??]</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://iam-shin.github.io/2026/04/28/item62_%EB%8B%A4%EB%A5%B8%ED%83%80%EC%9E%85%EC%9D%B4%EC%A0%81%EC%A0%88%ED%95%98%EB%8B%A4%EB%A9%B4%EB%AC%B8%EC%9E%90%EC%97%B4%EC%82%AC%EC%9A%A9%EC%9D%84%ED%94%BC%ED%95%98%EB%9D%BC/" data-id="cuid_-Jj7j9vXzW8D4qHRyrMB" data-title="Effective Java 3Ed. item62." class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-item61_박싱된기본타입보다는기본타입을사용하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/04/27/item61_%EB%B0%95%EC%8B%B1%EB%90%9C%EA%B8%B0%EB%B3%B8%ED%83%80%EC%9E%85%EB%B3%B4%EB%8B%A4%EB%8A%94%EA%B8%B0%EB%B3%B8%ED%83%80%EC%9E%85%EC%9D%84%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/" class="article-date">
-  <time class="dt-published" datetime="2026-04-27T05:10:15.000Z" itemprop="datePublished">2026-04-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/04/27/item61_%EB%B0%95%EC%8B%B1%EB%90%9C%EA%B8%B0%EB%B3%B8%ED%83%80%EC%9E%85%EB%B3%B4%EB%8B%A4%EB%8A%94%EA%B8%B0%EB%B3%B8%ED%83%80%EC%9E%85%EC%9D%84%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item61.</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="아이템-61-박싱된-기본-타입보다는-기본-타입을-사용하라"><a href="#아이템-61-박싱된-기본-타입보다는-기본-타입을-사용하라" class="headerlink" title="아이템 61. 박싱된 기본 타입보다는 기본 타입을 사용하라"></a>아이템 61. 박싱된 기본 타입보다는 기본 타입을 사용하라</h1><h3 id="기본타입-Primitive-type-에-대응되는-Reference-type-이-Boxing된-기본타입-래퍼클래스"><a href="#기본타입-Primitive-type-에-대응되는-Reference-type-이-Boxing된-기본타입-래퍼클래스" class="headerlink" title="- 기본타입 Primitive type 에 대응되는 Reference type 이 Boxing된 기본타입.(래퍼클래스)"></a>- 기본타입 Primitive type 에 대응되는 Reference type 이 Boxing된 기본타입.(래퍼클래스)</h3><ul>
-<li>int -&gt; Integer, double -&gt; Double, boolean -&gt; Boolean</li>
-</ul>
-<h3 id="주된-차이점-3가지"><a href="#주된-차이점-3가지" class="headerlink" title="- 주된 차이점 3가지"></a>- 주된 차이점 3가지</h3><ul>
-<li><p>기본타입은 값만 있으나, 박싱된 타입은 값과 identity가 있다.   <code>코드61-1</code><br>I &lt; J 값 비교시 정상작동, I &#x3D;&#x3D; J 값 비교시 false  </p>
-</li>
-<li><p>기본타입은 언제나 값이 있다. 박싱된 기본타임은 null 을 가질 수 있다.  <code>코드61-3</code><br>초기화 안된 박싱타입을 기본타입과 연산시 언박싱 되면서 NullPointerException 발생.  </p>
-</li>
-<li><p>기본타입이 박싱된 타입보다 메모리 면에서 효율적이다.  <code>코드61-4</code><br>for 문에 기본타입과 박싱 타입 혼용시 언박싱이 계속 발생하며 느려짐</p>
-</li>
-</ul>
-<h3 id="박싱된-기본타입은-언제-사용하나"><a href="#박싱된-기본타입은-언제-사용하나" class="headerlink" title="박싱된 기본타입은 언제 사용하나"></a>박싱된 기본타입은 언제 사용하나</h3><ul>
-<li>컬렉션의 원소, 키, 값 으로 사용 &lt;제너릭&gt;</li>
-<li>리플렉션을 통해 메서드 호출시. <code>item65</code>  [??]</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://iam-shin.github.io/2026/04/27/item61_%EB%B0%95%EC%8B%B1%EB%90%9C%EA%B8%B0%EB%B3%B8%ED%83%80%EC%9E%85%EB%B3%B4%EB%8B%A4%EB%8A%94%EA%B8%B0%EB%B3%B8%ED%83%80%EC%9E%85%EC%9D%84%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/" data-id="cuidi-kRo7e_pdo4lK6OYv0h1" data-title="Effective Java 3Ed. item61." class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-item60_정확한답이필요하다면float와double은피하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/04/26/item60_%EC%A0%95%ED%99%95%ED%95%9C%EB%8B%B5%EC%9D%B4%ED%95%84%EC%9A%94%ED%95%98%EB%8B%A4%EB%A9%B4float%EC%99%80double%EC%9D%80%ED%94%BC%ED%95%98%EB%9D%BC/" class="article-date">
-  <time class="dt-published" datetime="2026-04-26T05:10:15.000Z" itemprop="datePublished">2026-04-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/04/26/item60_%EC%A0%95%ED%99%95%ED%95%9C%EB%8B%B5%EC%9D%B4%ED%95%84%EC%9A%94%ED%95%98%EB%8B%A4%EB%A9%B4float%EC%99%80double%EC%9D%80%ED%94%BC%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item60.</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="아이템-60-정확한-답이-필요하다면-float와-double은-피하라"><a href="#아이템-60-정확한-답이-필요하다면-float와-double은-피하라" class="headerlink" title="아이템 60. 정확한 답이 필요하다면 float와 double은 피하라"></a>아이템 60. 정확한 답이 필요하다면 float와 double은 피하라</h1><h3 id="float-double의-특징"><a href="#float-double의-특징" class="headerlink" title="- float, double의 특징"></a>- float, double의 특징</h3><ul>
-<li>과학과 공학 계산용으로 설계</li>
-<li>이진 부동소수점 연산에 사용</li>
-<li>넓은 범위의 수를 빠르게 정밀한 근사치로 계산하도록 설계</li>
-<li>따라서, 정확한 결과가 필요할 때에는 사용하면 안된다 (의외네)</li>
-<li>특히, 금융관련 계산에서 사용하지 말것.</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(1.03 - 0.42);</span><br><span class="line">&gt; 0.6100000000000001</span><br><span class="line"></span><br><span class="line">System.out.println(1.00 -9 * 0.10);</span><br><span class="line">&gt; 0.09999999999999998</span><br></pre></td></tr></table></figure>
-
-<h3 id="대안은-BigDecimal-int-혹은-long-이다"><a href="#대안은-BigDecimal-int-혹은-long-이다" class="headerlink" title="- 대안은 BigDecimal, int 혹은 long 이다."></a>- 대안은 BigDecimal, int 혹은 long 이다.</h3><ul>
-<li>작은 수엔 int(9자리), long(18자리) 사용. 큰수는 BigDecimal(18자리 이상)을 사용하라.</li>
-<li>BigDecimal 이 제공하는 8가지 반올림 모드가 있어 완벽히 제어 [??]</li>
-</ul>
-<h3 id="그러나-BigDecimal의-단점-두가지"><a href="#그러나-BigDecimal의-단점-두가지" class="headerlink" title="- 그러나, BigDecimal의 단점 두가지"></a>- 그러나, BigDecimal의 단점 두가지</h3><ul>
-<li>기본타입보다 사용이 불편하다</li>
-<li>느리다</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://iam-shin.github.io/2026/04/26/item60_%EC%A0%95%ED%99%95%ED%95%9C%EB%8B%B5%EC%9D%B4%ED%95%84%EC%9A%94%ED%95%98%EB%8B%A4%EB%A9%B4float%EC%99%80double%EC%9D%80%ED%94%BC%ED%95%98%EB%9D%BC/" data-id="cuid30S2FVk9VcEZ1TNTFOrqb" data-title="Effective Java 3Ed. item60." class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-item59_라이브러리를익히고사용하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/04/25/item59_%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC%EB%A5%BC%EC%9D%B5%ED%9E%88%EA%B3%A0%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/" class="article-date">
-  <time class="dt-published" datetime="2026-04-25T05:10:15.000Z" itemprop="datePublished">2026-04-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/04/25/item59_%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC%EB%A5%BC%EC%9D%B5%ED%9E%88%EA%B3%A0%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item59.</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="아이템-59-라이브러리를-익히고-사용하라"><a href="#아이템-59-라이브러리를-익히고-사용하라" class="headerlink" title="아이템 59. 라이브러리를 익히고 사용하라"></a>아이템 59. 라이브러리를 익히고 사용하라</h1><h3 id="예시에서는-Random-클래스를-활용한-난수-생성-메소드를-구현하고-그것을-사용하는데-있어-몇가지-문제가-발생함을-경고한다"><a href="#예시에서는-Random-클래스를-활용한-난수-생성-메소드를-구현하고-그것을-사용하는데-있어-몇가지-문제가-발생함을-경고한다" class="headerlink" title="- 예시에서는 Random 클래스를 활용한 난수 생성 메소드를 구현하고 그것을 사용하는데 있어, 몇가지 문제가 발생함을 경고한다."></a>- 예시에서는 Random 클래스를 활용한 난수 생성 메소드를 구현하고 그것을 사용하는데 있어, 몇가지 문제가 발생함을 경고한다.</h3><ul>
-<li>같은 수열이 반복되거나, </li>
-<li>몇몇 숫자가 자주 등장하거나, </li>
-<li>확률상 수의 분포가 고르지 않거나 이다.</li>
-</ul>
-<h3 id="단순히-Random-함수-사용을-경고하는게-아니라-가급적-많은-문제를-선도적으로-해결한-라이브러리를-사용할-것을-권장함"><a href="#단순히-Random-함수-사용을-경고하는게-아니라-가급적-많은-문제를-선도적으로-해결한-라이브러리를-사용할-것을-권장함" class="headerlink" title="단순히 Random() 함수 사용을 경고하는게 아니라, 가급적 많은 문제를 선도적으로 해결한 라이브러리를 사용할 것을 권장함."></a>단순히 Random() 함수 사용을 경고하는게 아니라, 가급적 많은 문제를 선도적으로 해결한 라이브러리를 사용할 것을 권장함.</h3><ul>
-<li>ThreadLocalRandom 을 사용하여, 속도도 빠르고 더 랜덤한 값을 얻는다.</li>
-</ul>
-<h3 id="아래의-이유로-라이브러리-사용을-권장한다"><a href="#아래의-이유로-라이브러리-사용을-권장한다" class="headerlink" title="- 아래의 이유로 라이브러리 사용을 권장한다."></a>- 아래의 이유로 라이브러리 사용을 권장한다.</h3><ul>
-<li>시간을 허비하지 말자. 잘 만들어진 라이브라리를 잘 찾아서 사용하고, 기능개발에 집중해라. </li>
-<li>라이브러리는 지속적으로 성능이 개선된다. </li>
-<li>심지어 기능이 점점 많아지기도 한다.</li>
-<li>내 코드가 다른 이들에게 더 낮익고 익숙한 코드가 된다.</li>
-</ul>
-<h3 id="최소한-아래의-JAVA의-패키지들은-익숙해져라"><a href="#최소한-아래의-JAVA의-패키지들은-익숙해져라" class="headerlink" title="- 최소한 아래의 JAVA의 패키지들은 익숙해져라"></a>- 최소한 아래의 JAVA의 패키지들은 익숙해져라</h3><ul>
-<li>java.lang</li>
-<li>java.util</li>
-<li>java.io</li>
-<li>java.util.concurrent <code>item80</code>, <code>item81</code></li>
-</ul>
-<h3 id="java-고유-라이브러리에-익숙해지고-없다면-third-party-라이브러리에도-관심-가져라-Guava-등등"><a href="#java-고유-라이브러리에-익숙해지고-없다면-third-party-라이브러리에도-관심-가져라-Guava-등등" class="headerlink" title="- java 고유 라이브러리에 익숙해지고, 없다면 third-party 라이브러리에도 관심 가져라 Guava 등등.."></a>- java 고유 라이브러리에 익숙해지고, 없다면 third-party 라이브러리에도 관심 가져라 <code>Guava</code> 등등..</h3>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://iam-shin.github.io/2026/04/25/item59_%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC%EB%A5%BC%EC%9D%B5%ED%9E%88%EA%B3%A0%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/" data-id="cuidFfEE73yJhXgm6e-FMnyi7" data-title="Effective Java 3Ed. item59." class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-item58_전통적인for문보다는for-each문을사용하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/04/24/item58_%EC%A0%84%ED%86%B5%EC%A0%81%EC%9D%B8for%EB%AC%B8%EB%B3%B4%EB%8B%A4%EB%8A%94for-each%EB%AC%B8%EC%9D%84%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/" class="article-date">
-  <time class="dt-published" datetime="2026-04-24T05:10:15.000Z" itemprop="datePublished">2026-04-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/04/24/item58_%EC%A0%84%ED%86%B5%EC%A0%81%EC%9D%B8for%EB%AC%B8%EB%B3%B4%EB%8B%A4%EB%8A%94for-each%EB%AC%B8%EC%9D%84%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item58.</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="아이템-58-전통적인-for문-보다는-for-each문을-사용하라"><a href="#아이템-58-전통적인-for문-보다는-for-each문을-사용하라" class="headerlink" title="아이템 58. 전통적인 for문 보다는 for-each문을 사용하라"></a>아이템 58. 전통적인 for문 보다는 for-each문을 사용하라</h1><h3 id="for-each-사용권장"><a href="#for-each-사용권장" class="headerlink" title="- for-each 사용권장"></a>- for-each 사용권장</h3><ul>
-<li>전통적인 for문은 반복자와 인덱스로 인해 코드가 지저분하고, 잘못 사용할 가능성이 많아짐.</li>
-<li>for 보다는 for-each 문 사용을 권장.</li>
-</ul>
-<h3 id="코드58-4-코드58-5-주사위-2개의-중복-for-문"><a href="#코드58-4-코드58-5-주사위-2개의-중복-for-문" class="headerlink" title="- 코드58-4, 코드58-5 주사위 2개의 중복 for 문"></a>- <code>코드58-4</code>, <code>코드58-5</code> 주사위 2개의 중복 for 문</h3><ul>
-<li>주사위 2개 굴려서 나올 모든 경우의 수 도출시 i.next() 를 어디서 하느냐에 따라 실수의 여지 발생</li>
-<li>1:1 ~ 6:6 . 6가지만 도출되는 실수 유발.</li>
-<li>j for 문 실행 직전에 i.next() 실행해야함. 지저분한 코드가 됨.</li>
-<li>여기서 for-each 를 사용하면 깔끔해짐 <code>코드58-7</code></li>
-</ul>
-<h3 id="가급적-컬랙션을-구현할때는-for-each를-사용할-수-있도록-Iterable을-구현해라"><a href="#가급적-컬랙션을-구현할때는-for-each를-사용할-수-있도록-Iterable을-구현해라" class="headerlink" title="- 가급적 컬랙션을 구현할때는 for-each를 사용할 수 있도록 Iterable을 구현해라."></a>- 가급적 컬랙션을 구현할때는 for-each를 사용할 수 있도록 Iterable을 구현해라.</h3><h3 id="그럼에도-불구하고-for-를-사용할-수-밖에-없는-경우가-있다"><a href="#그럼에도-불구하고-for-를-사용할-수-밖에-없는-경우가-있다" class="headerlink" title="- 그럼에도 불구하고, for 를 사용할 수 밖에 없는 경우가 있다."></a>- 그럼에도 불구하고, for 를 사용할 수 밖에 없는 경우가 있다.</h3><ul>
-<li>Iterator.remove() 를 호출해서 제거해야 하는 경우</li>
-<li>순회하면서 원소의 값의 일부&#x2F;전체 를 교체하는 경우</li>
-<li>여러 컬렉션을 병렬로 순회하는 경우</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://iam-shin.github.io/2026/04/24/item58_%EC%A0%84%ED%86%B5%EC%A0%81%EC%9D%B8for%EB%AC%B8%EB%B3%B4%EB%8B%A4%EB%8A%94for-each%EB%AC%B8%EC%9D%84%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/" data-id="cuidjDSsbPd7IneL1NQJ45K4M" data-title="Effective Java 3Ed. item58." class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -675,23 +683,23 @@
       <ul>
         
           <li>
-            <a href="/2026/05/02/item66_%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C%EB%A9%94%EC%84%9C%EB%93%9C%EB%8A%94%EC%8B%A0%EC%A4%91%ED%9E%88%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item66.</a>
+            <a href="/2026/05/07/item12_toString%EC%9D%84%ED%95%AD%EC%83%81%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item10.</a>
           </li>
         
           <li>
-            <a href="/2026/05/01/item65_%EB%A6%AC%ED%94%8C%EB%A0%89%EC%85%98%EB%B3%B4%EB%8B%A4%EB%8A%94%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%A5%BC%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item65.</a>
+            <a href="/2026/05/06/item11_equals%EB%A5%BC%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%A0%A4%EA%B1%B0%EB%93%A0hashCode%EB%8F%84%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item11.</a>
           </li>
         
           <li>
-            <a href="/2026/04/30/item64_%EA%B0%9D%EC%B2%B4%EB%8A%94%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%A5%BC%EC%82%AC%EC%9A%A9%ED%95%B4%EC%B0%B8%EC%A1%B0%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item64.</a>
+            <a href="/2026/05/05/item10_equals%EB%8A%94%EC%9D%BC%EB%B0%98%EA%B7%9C%EC%95%BD%EC%9D%84%EC%A7%80%EC%BC%9C%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item10.</a>
           </li>
         
           <li>
-            <a href="/2026/04/29/hello-world/">Hello World</a>
+            <a href="/2026/05/04/item68_%EC%9D%BC%EB%B0%98%EC%A0%81%EC%9C%BC%EB%A1%9C%ED%86%B5%EC%9A%A9%EB%90%98%EB%8A%94%EB%AA%85%EB%AA%85%EA%B7%9C%EC%B9%99%EC%9D%84%EB%94%B0%EB%A5%B4%EB%9D%BC/">Effective Java 3Ed. item68.</a>
           </li>
         
           <li>
-            <a href="/2026/04/29/item63_%EB%AC%B8%EC%9E%90%EC%97%B4%EC%97%B0%EA%B2%B0%EC%9D%80%EB%8A%90%EB%A6%AC%EB%8B%88%EC%A3%BC%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item63.</a>
+            <a href="/2026/05/03/item67_%EC%B5%9C%EC%A0%81%ED%99%94%EB%8A%94%EC%8B%A0%EC%A4%91%ED%9E%88%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item67.</a>
           </li>
         
       </ul>

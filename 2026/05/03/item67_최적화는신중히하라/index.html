@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Effective Java 3Ed. item67. | 나는 신(Shin)이다</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="아이템 67. 최적화는 신중히 하라- 최적화 격언 세가지 그 어떤 핑계보다 효율성 이라는 이름아래 행해진 컴퓨팅 죄악이 더 많다.(심지어 효율을 높이지도 못하면서) (전체의 97% 정도인) 자그마한 효율성은 모두 잊자. 섣부른 최적화가 만악의 근원이다  최적화를 할때는 다음 두가지 규칙을 따르라.   첫번째, 하지마라 두번째, (전문가 한정)아직 하지마라">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective Java 3Ed. item67.">
+<meta property="og:url" content="https://iam-shin.github.io/2026/05/03/item67_%EC%B5%9C%EC%A0%81%ED%99%94%EB%8A%94%EC%8B%A0%EC%A4%91%ED%9E%88%ED%95%98%EB%9D%BC/index.html">
+<meta property="og:site_name" content="나는 신(Shin)이다">
+<meta property="og:description" content="아이템 67. 최적화는 신중히 하라- 최적화 격언 세가지 그 어떤 핑계보다 효율성 이라는 이름아래 행해진 컴퓨팅 죄악이 더 많다.(심지어 효율을 높이지도 못하면서) (전체의 97% 정도인) 자그마한 효율성은 모두 잊자. 섣부른 최적화가 만악의 근원이다  최적화를 할때는 다음 두가지 규칙을 따르라.   첫번째, 하지마라 두번째, (전문가 한정)아직 하지마라">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-05-03T13:10:15.000Z">
+<meta property="article:modified_time" content="2026-05-07T14:15:54.057Z">
+<meta property="article:author" content="實踐老將">
+<meta property="article:tag" content="Effective-Java-3Ed">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="나는 신(Shin)이다" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">나는 신(Shin)이다</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">닥치고 기록 -實踐老將-</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://iam-shin.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-item67_최적화는신중히하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/05/03/item67_%EC%B5%9C%EC%A0%81%ED%99%94%EB%8A%94%EC%8B%A0%EC%A4%91%ED%9E%88%ED%95%98%EB%9D%BC/" class="article-date">
+  <time class="dt-published" datetime="2026-05-03T13:10:15.000Z" itemprop="datePublished">2026-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Effective Java 3Ed. item67.
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="아이템-67-최적화는-신중히-하라"><a href="#아이템-67-최적화는-신중히-하라" class="headerlink" title="아이템 67. 최적화는 신중히 하라"></a>아이템 67. 최적화는 신중히 하라</h1><h3 id="최적화-격언-세가지"><a href="#최적화-격언-세가지" class="headerlink" title="- 최적화 격언 세가지"></a>- 최적화 격언 세가지</h3><ol>
+<li>그 어떤 핑계보다 효율성 이라는 이름아래 행해진 컴퓨팅 죄악이 더 많다.(심지어 효율을 높이지도 못하면서)</li>
+<li>(전체의 97% 정도인) 자그마한 효율성은 모두 잊자. 섣부른 최적화가 만악의 근원이다 </li>
+<li>최적화를 할때는 다음 두가지 규칙을 따르라.</li>
+</ol>
+<ul>
+<li>첫번째, 하지마라</li>
+<li>두번째, (전문가 한정)아직 하지마라</li>
+</ul>
+<p>  섣부른 최적화는 자칫 견고한 구조설계를 파괴하고도 높은 성능개선을 이루지 못한다는 것.</p>
+<p><u><em>이하 내용의 상세 설명은 이해될때 추가할것.</em></u></p>
+<h3 id="빠른프로그램-보다는-좋은-프로그램을-작성하라"><a href="#빠른프로그램-보다는-좋은-프로그램을-작성하라" class="headerlink" title="- 빠른프로그램 보다는 좋은 프로그램을 작성하라"></a>- 빠른프로그램 보다는 좋은 프로그램을 작성하라</h3><h3 id="성능을-제한하는-설계를-피하라"><a href="#성능을-제한하는-설계를-피하라" class="headerlink" title="- 성능을 제한하는 설계를 피하라"></a>- 성능을 제한하는 설계를 피하라</h3><ul>
+<li>특히 변경이 어려운 요소들. 컴포넌트간&#x2F;시스템간 외부소통 프로토콜. API, 네트워크, 영구 저장데이터포멧 등</li>
+</ul>
+<h3 id="API를-설계할때-성능에-주는-영향을-고려하라"><a href="#API를-설계할때-성능에-주는-영향을-고려하라" class="headerlink" title="- API를 설계할때 성능에 주는 영향을 고려하라"></a>- API를 설계할때 성능에 주는 영향을 고려하라</h3><h3 id="성능을-위하여-API를-왜곡하지-마라"><a href="#성능을-위하여-API를-왜곡하지-마라" class="headerlink" title="- 성능을 위하여 API를 왜곡하지 마라"></a>- 성능을 위하여 API를 왜곡하지 마라</h3><h3 id="각각의-최적화-시도-전후로-성능을-측정하라"><a href="#각각의-최적화-시도-전후로-성능을-측정하라" class="headerlink" title="- 각각의 최적화 시도 전후로 성능을 측정하라"></a>- 각각의 최적화 시도 전후로 성능을 측정하라</h3><h3 id="알고리즘부터-재검토하라"><a href="#알고리즘부터-재검토하라" class="headerlink" title="- 알고리즘부터 재검토하라"></a>- 알고리즘부터 재검토하라</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://iam-shin.github.io/2026/05/03/item67_%EC%B5%9C%EC%A0%81%ED%99%94%EB%8A%94%EC%8B%A0%EC%A4%91%ED%9E%88%ED%95%98%EB%9D%BC/" data-id="cuidEtxibeyaTXBL2EOQAGHNF" data-title="Effective Java 3Ed. item67." class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2026/05/04/item68_%EC%9D%BC%EB%B0%98%EC%A0%81%EC%9C%BC%EB%A1%9C%ED%86%B5%EC%9A%A9%EB%90%98%EB%8A%94%EB%AA%85%EB%AA%85%EA%B7%9C%EC%B9%99%EC%9D%84%EB%94%B0%EB%A5%B4%EB%9D%BC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Effective Java 3Ed. item68.
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/05/02/item66_%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C%EB%A9%94%EC%84%9C%EB%93%9C%EB%8A%94%EC%8B%A0%EC%A4%91%ED%9E%88%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Effective Java 3Ed. item66.</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Health/">Health</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/infra/">infra</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Health/" rel="tag">Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSG/" rel="tag">SSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ambari/" rel="tag">ambari</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigtop/" rel="tag">bigtop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openvpn/" rel="tag">openvpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sandbox/" rel="tag">sandbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/" rel="tag">virtualbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vm/" rel="tag">vm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/" rel="tag">vpn</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Effective-Java-3Ed/" style="font-size: 20px;">Effective-Java-3Ed</a> <a href="/tags/Health/" style="font-size: 17.5px;">Health</a> <a href="/tags/SSG/" style="font-size: 10px;">SSG</a> <a href="/tags/ambari/" style="font-size: 10px;">ambari</a> <a href="/tags/bigtop/" style="font-size: 12.5px;">bigtop</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hadoop/" style="font-size: 12.5px;">hadoop</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/openvpn/" style="font-size: 10px;">openvpn</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/sandbox/" style="font-size: 10px;">sandbox</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/virtualbox/" style="font-size: 12.5px;">virtualbox</a> <a href="/tags/vm/" style="font-size: 12.5px;">vm</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">May 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">April 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">March 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/05/07/item12_toString%EC%9D%84%ED%95%AD%EC%83%81%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item10.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/06/item11_equals%EB%A5%BC%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%A0%A4%EA%B1%B0%EB%93%A0hashCode%EB%8F%84%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item11.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/05/item10_equals%EB%8A%94%EC%9D%BC%EB%B0%98%EA%B7%9C%EC%95%BD%EC%9D%84%EC%A7%80%EC%BC%9C%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item10.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/04/item68_%EC%9D%BC%EB%B0%98%EC%A0%81%EC%9C%BC%EB%A1%9C%ED%86%B5%EC%9A%A9%EB%90%98%EB%8A%94%EB%AA%85%EB%AA%85%EA%B7%9C%EC%B9%99%EC%9D%84%EB%94%B0%EB%A5%B4%EB%9D%BC/">Effective Java 3Ed. item68.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/03/item67_%EC%B5%9C%EC%A0%81%ED%99%94%EB%8A%94%EC%8B%A0%EC%A4%91%ED%9E%88%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item67.</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 實踐老將<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
