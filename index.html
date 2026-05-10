@@ -75,416 +75,6 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-item16_public클래스에서는public필드가아닌접근자메서드를사용하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/05/11/item16_public%ED%81%B4%EB%9E%98%EC%8A%A4%EC%97%90%EC%84%9C%EB%8A%94public%ED%95%84%EB%93%9C%EA%B0%80%EC%95%84%EB%8B%8C%EC%A0%91%EA%B7%BC%EC%9E%90%EB%A9%94%EC%84%9C%EB%93%9C%EB%A5%BC%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/" class="article-date">
-  <time class="dt-published" datetime="2026-05-11T13:10:15.000Z" itemprop="datePublished">2026-05-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/05/11/item16_public%ED%81%B4%EB%9E%98%EC%8A%A4%EC%97%90%EC%84%9C%EB%8A%94public%ED%95%84%EB%93%9C%EA%B0%80%EC%95%84%EB%8B%8C%EC%A0%91%EA%B7%BC%EC%9E%90%EB%A9%94%EC%84%9C%EB%93%9C%EB%A5%BC%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item16.</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="아이템-16-public-클래스에서는-public-필드가-아닌-접근자-메서드를-사용하라"><a href="#아이템-16-public-클래스에서는-public-필드가-아닌-접근자-메서드를-사용하라" class="headerlink" title="아이템 16. public 클래스에서는 public 필드가 아닌 접근자 메서드를 사용하라"></a>아이템 16. public 클래스에서는 public 필드가 아닌 접근자 메서드를 사용하라</h1><h3 id="1-퇴보한-클래스의-예"><a href="#1-퇴보한-클래스의-예" class="headerlink" title="1. 퇴보한 클래스의 예"></a>1. 퇴보한 클래스의 예</h3><p>가끔 아래처럼 인스턴스 필드만 모아두는 것 외에 아무 목적이 없는 클래스를 작성하려 할 때가 있습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 이처럼 작성하면 안 된다!</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> x;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>이 클래스는 데이터 필드에 직접 접근할 수 있으니 <strong>캡슐화의 이점을 전혀 제공하지 못합니다.</strong></p>
-<hr>
-<h3 id="2-public-필드가-나쁜-이유"><a href="#2-public-필드가-나쁜-이유" class="headerlink" title="2. public 필드가 나쁜 이유"></a>2. public 필드가 나쁜 이유</h3><p>public 필드를 직접 노출하면 다음과 같은 문제가 생깁니다:</p>
-<ul>
-<li>API를 바꾸지 않고는 <strong>내부 표현을 바꿀 수 없다</strong> (유연성 상실).</li>
-<li><strong>불변식을 보장할 수 없다</strong> — 클라이언트가 필드를 마음대로 바꿀 수 있다.</li>
-<li>필드에 접근할 때 <strong>부수 작업(로깅, 동기화 등)을 수행할 수 없다</strong>.</li>
-</ul>
-<hr>
-<h3 id="3-올바른-방법-private-필드-접근자-메서드"><a href="#3-올바른-방법-private-필드-접근자-메서드" class="headerlink" title="3. 올바른 방법: private 필드 + 접근자 메서드"></a>3. 올바른 방법: private 필드 + 접근자 메서드</h3><p>public 클래스라면 필드를 모두 <code>private</code>으로 바꾸고, <code>public</code> 접근자(getter)와 변경자(setter) 메서드를 제공해야 합니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 접근자와 변경자(mutator) 메서드를 활용해 데이터를 캡슐화한다.</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">double</span> x;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">double</span> y;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Point</span><span class="params">(<span class="type">double</span> x, <span class="type">double</span> y)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.x = x;</span><br><span class="line">        <span class="built_in">this</span>.y = y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> <span class="title function_">getX</span><span class="params">()</span> &#123; <span class="keyword">return</span> x; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> <span class="title function_">getY</span><span class="params">()</span> &#123; <span class="keyword">return</span> y; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setX</span><span class="params">(<span class="type">double</span> x)</span> &#123; <span class="built_in">this</span>.x = x; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setY</span><span class="params">(<span class="type">double</span> y)</span> &#123; <span class="built_in">this</span>.y = y; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>이렇게 하면:</p>
-<ul>
-<li>내부 표현을 언제든 바꿀 수 있다 (클라이언트는 메서드만 알면 됨).</li>
-<li>setter에서 유효성 검사 등 부수 작업을 추가할 수 있다.</li>
-<li>불변식을 유지할 수 있다.</li>
-</ul>
-<blockquote>
-<p><strong>public 클래스가 필드를 공개하면, 그 필드를 사용하는 클라이언트가 생기고,</strong><br><strong>그 후에는 내부 표현을 바꾸기가 매우 어려워집니다.</strong></p>
-</blockquote>
-<hr>
-<h3 id="4-예외-package-private-또는-private-중첩-클래스"><a href="#4-예외-package-private-또는-private-중첩-클래스" class="headerlink" title="4. 예외: package-private 또는 private 중첩 클래스"></a>4. 예외: package-private 또는 private 중첩 클래스</h3><p><code>package-private</code> 클래스 혹은 <code>private</code> 중첩 클래스라면 데이터 필드를 직접 노출해도 문제없습니다.</p>
-<ul>
-<li>패키지 외부 코드는 어차피 이 클래스에 접근할 수 없으므로, 표현을 바꿔도 패키지 안에서만 수정하면 됩니다.</li>
-<li><code>private</code> 중첩 클래스라면 그것을 감싼 클래스 안에서만 수정하면 됩니다.</li>
-<li>접근자 메서드를 강제할 때보다 오히려 코드가 더 간결하고 읽기 좋을 수 있습니다.</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TopLevelClass</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// private 중첩 클래스는 필드 직접 노출 OK</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">        <span class="type">int</span> value;</span><br><span class="line">        Node next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="5-불변-필드라면-덜-나쁘다-하지만-여전히-좋지-않다"><a href="#5-불변-필드라면-덜-나쁘다-하지만-여전히-좋지-않다" class="headerlink" title="5. 불변 필드라면 덜 나쁘다 (하지만 여전히 좋지 않다)"></a>5. 불변 필드라면 덜 나쁘다 (하지만 여전히 좋지 않다)</h3><p>public 필드가 불변(final)이라면, 직접 노출하더라도 그나마 덜 해롭습니다.<br>클라이언트가 값을 바꿀 수는 없으니 불변식은 보장됩니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 불변 필드를 직접 노출 — 여전히 권장하지 않는다</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Time</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="type">int</span> hour;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="type">int</span> minute;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Time</span><span class="params">(<span class="type">int</span> hour, <span class="type">int</span> minute)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (hour &lt; <span class="number">0</span> || hour &gt;= <span class="number">24</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;...&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (minute &lt; <span class="number">0</span> || minute &gt;= <span class="number">60</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;...&quot;</span>);</span><br><span class="line">        <span class="built_in">this</span>.hour = hour;</span><br><span class="line">        <span class="built_in">this</span>.minute = minute;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>그러나 이 경우에도:</p>
-<ul>
-<li>API를 바꾸지 않고는 내부 표현을 바꿀 수 없습니다.</li>
-<li>필드 접근 시 부수 작업을 추가할 수 없습니다.</li>
-</ul>
-<p>따라서 <strong>불변이라도 public 필드를 노출하는 것은 권장하지 않습니다.</strong></p>
-<hr>
-<h3 id="6-자바-플랫폼-라이브러리의-잘못된-예"><a href="#6-자바-플랫폼-라이브러리의-잘못된-예" class="headerlink" title="6. 자바 플랫폼 라이브러리의 잘못된 예"></a>6. 자바 플랫폼 라이브러리의 잘못된 예</h3><p><code>java.awt</code> 패키지의 <code>Point</code>와 <code>Dimension</code> 클래스는 public 필드를 직접 노출한 대표적인 반례입니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// java.awt.Point — 실제 JDK 코드 (권장하지 않는 방식)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> x;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>이미 수많은 코드가 이 필드에 직접 접근하고 있어서, 지금 와서 고칠 수가 없습니다.<br>특히 <code>Dimension</code>은 가변 필드를 노출한 탓에 <strong>성능 문제</strong>가 지금도 해결되지 않은 상태입니다.  </p>
-<blockquote>
-<p>이 클래스들은 “따라 하지 말아야 할 사례”로 유명합니다.</p>
-</blockquote>
-<hr>
-<h3 id="7-핵심-정리"><a href="#7-핵심-정리" class="headerlink" title="7. 핵심 정리"></a>7. 핵심 정리</h3><ul>
-<li><strong>public 클래스</strong>는 절대 가변 필드를 직접 노출하지 마라.</li>
-<li>불변 필드라면 그나마 덜 해롭지만, 그래도 직접 노출하는 것은 권장하지 않는다.</li>
-<li><strong>package-private 클래스나 private 중첩 클래스</strong>는 필드를 직접 노출해도 된다.</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://iam-shin.github.io/2026/05/11/item16_public%ED%81%B4%EB%9E%98%EC%8A%A4%EC%97%90%EC%84%9C%EB%8A%94public%ED%95%84%EB%93%9C%EA%B0%80%EC%95%84%EB%8B%8C%EC%A0%91%EA%B7%BC%EC%9E%90%EB%A9%94%EC%84%9C%EB%93%9C%EB%A5%BC%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/" data-id="cuidvVuwTQxCfY4Z3K_7oK1HT" data-title="Effective Java 3Ed. item16." class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-item15_클래스와멤버의접근권한을최소화하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/05/10/item15_%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80%EB%A9%A4%EB%B2%84%EC%9D%98%EC%A0%91%EA%B7%BC%EA%B6%8C%ED%95%9C%EC%9D%84%EC%B5%9C%EC%86%8C%ED%99%94%ED%95%98%EB%9D%BC/" class="article-date">
-  <time class="dt-published" datetime="2026-05-10T13:10:15.000Z" itemprop="datePublished">2026-05-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/05/10/item15_%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80%EB%A9%A4%EB%B2%84%EC%9D%98%EC%A0%91%EA%B7%BC%EA%B6%8C%ED%95%9C%EC%9D%84%EC%B5%9C%EC%86%8C%ED%99%94%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item15.</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="아이템-15-클래스와-멤버의-접근-권한을-최소화하라"><a href="#아이템-15-클래스와-멤버의-접근-권한을-최소화하라" class="headerlink" title="아이템 15. 클래스와 멤버의 접근 권한을 최소화하라"></a>아이템 15. 클래스와 멤버의 접근 권한을 최소화하라</h1><h3 id="1-핵심-원칙-정보-은닉-캡슐화"><a href="#1-핵심-원칙-정보-은닉-캡슐화" class="headerlink" title="1. 핵심 원칙: 정보 은닉 (캡슐화)"></a>1. 핵심 원칙: 정보 은닉 (캡슐화)</h3><p>잘 설계된 컴포넌트는 <strong>모든 내부 구현을 완벽히 숨기고</strong>, 외부와는 오직 API를 통해서만 소통합니다.<br>이를 <strong>정보 은닉(information hiding)</strong> 또는 **캡슐화(encapsulation)**라고 합니다.</p>
-<p>정보 은닉이 중요한 이유:</p>
-<ul>
-<li>시스템 개발 속도 향상 — 여러 컴포넌트를 병렬로 개발할 수 있다.</li>
-<li>시스템 관리 비용 절감 — 컴포넌트를 빠르게 파악하고, 교체 부담이 줄어든다.</li>
-<li>성능 최적화에 도움 — 다른 컴포넌트에 영향 없이 특정 컴포넌트만 최적화할 수 있다.</li>
-<li>소프트웨어 재사용성 증가 — 독립적으로 동작하는 컴포넌트는 낯선 환경에서도 유용하다.</li>
-<li>큰 시스템 개발의 위험 감소 — 개별 컴포넌트 단위로 검증 가능하다.</li>
-</ul>
-<blockquote>
-<p><strong>원칙:</strong> 모든 클래스와 멤버의 접근성을 가능한 한 좁혀라.</p>
-</blockquote>
-<hr>
-<h3 id="2-자바의-접근-제어-메커니즘"><a href="#2-자바의-접근-제어-메커니즘" class="headerlink" title="2. 자바의 접근 제어 메커니즘"></a>2. 자바의 접근 제어 메커니즘</h3><p>자바는 클래스, 인터페이스, 멤버의 접근성을 **접근 제한자(access modifier)**로 제어합니다.</p>
-<p>접근 제한자는 <strong><code>private</code></strong>, <strong><code>package-private</code>(기본값)</strong>, <strong><code>protected</code></strong>, <strong><code>public</code></strong> 네 가지입니다.</p>
-<table>
-<thead>
-<tr>
-<th>접근 제한자</th>
-<th>같은 클래스</th>
-<th>같은 패키지</th>
-<th>하위 클래스</th>
-<th>어디서나</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>private</code></td>
-<td>O</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-</tr>
-<tr>
-<td><code>package-private</code> (기본값)</td>
-<td>O</td>
-<td>O</td>
-<td>X</td>
-<td>X</td>
-</tr>
-<tr>
-<td><code>protected</code></td>
-<td>O</td>
-<td>O</td>
-<td>O</td>
-<td>X</td>
-</tr>
-<tr>
-<td><code>public</code></td>
-<td>O</td>
-<td>O</td>
-<td>O</td>
-<td>O</td>
-</tr>
-</tbody></table>
-<hr>
-<h3 id="3-클래스-수준의-접근-제한"><a href="#3-클래스-수준의-접근-제한" class="headerlink" title="3. 클래스 수준의 접근 제한"></a>3. 클래스 수준의 접근 제한</h3><p>톱레벨(top-level) 클래스와 인터페이스는 <code>public</code> 또는 <code>package-private</code> 두 가지만 가능합니다.</p>
-<h4 id="package-private으로-선언하면-좋은-경우"><a href="#package-private으로-선언하면-좋은-경우" class="headerlink" title="package-private으로 선언하면 좋은 경우"></a>package-private으로 선언하면 좋은 경우</h4><p>패키지 외부에서 쓸 일이 없다면, <code>package-private</code>으로 선언하세요.<br>그러면 API가 아닌 <strong>내부 구현</strong>이 되므로, 언제든 수정·교체·삭제할 수 있습니다.<br>반면 <code>public</code>으로 선언하면 하위 호환을 영원히 유지해야 합니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 나쁜 예: 패키지 외부에서 쓰지도 않는데 public으로 선언</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Helper</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 좋은 예: 패키지 내부에서만 쓰이는 클래스는 package-private</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Helper</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="private-static-중첩-클래스-활용"><a href="#private-static-중첩-클래스-활용" class="headerlink" title="private static 중첩 클래스 활용"></a>private static 중첩 클래스 활용</h4><p>한 클래스에서만 쓰이는 톱레벨 클래스라면, <strong>사용하는 클래스 안에 private static 중첩 클래스</strong>로 선언하세요.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Calculator</span> &#123;</span><br><span class="line">    <span class="comment">// Calculator 안에서만 쓰이는 Helper</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Helper</span> &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="4-멤버-필드-메서드-중첩-클래스-수준의-접근-제한"><a href="#4-멤버-필드-메서드-중첩-클래스-수준의-접근-제한" class="headerlink" title="4. 멤버(필드, 메서드, 중첩 클래스) 수준의 접근 제한"></a>4. 멤버(필드, 메서드, 중첩 클래스) 수준의 접근 제한</h3><h4 id="기본-원칙"><a href="#기본-원칙" class="headerlink" title="기본 원칙"></a>기본 원칙</h4><ul>
-<li>먼저 클래스의 <strong>공개 API를 신중히 설계</strong>하고,</li>
-<li>그 외 모든 멤버는 <code>private</code>으로 선언한다.</li>
-<li>같은 패키지 내 다른 클래스에서 꼭 필요한 경우에만 <code>package-private</code>으로 풀어준다.</li>
-<li><code>protected</code>와 <code>public</code>은 공개 API가 되므로 <strong>영원히 지원해야 한다.</strong></li>
-</ul>
-<blockquote>
-<p><code>private</code>과 <code>package-private</code>은 내부 구현이라 공개 API에 영향을 주지 않습니다.<br>단, <code>Serializable</code>을 구현한 클래스는 의도치 않게 노출될 수 있습니다.</p>
-</blockquote>
-<h4 id="리스코프-치환-원칙과-접근-수준"><a href="#리스코프-치환-원칙과-접근-수준" class="headerlink" title="리스코프 치환 원칙과 접근 수준"></a>리스코프 치환 원칙과 접근 수준</h4><p>상위 클래스 메서드를 재정의할 때, <strong>접근 수준을 더 좁게 만들 수 없습니다.</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">speak</span><span class="params">()</span> &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span> <span class="keyword">extends</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="comment">// 컴파일 에러! public을 private으로 좁힐 수 없다.</span></span><br><span class="line">    <span class="comment">// private void speak() &#123; &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// OK: 같거나 더 넓은 접근 수준은 허용됨</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">speak</span><span class="params">()</span> &#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>인터페이스를 구현하는 클래스의 메서드는 반드시 <code>public</code>이어야 합니다.<br>(인터페이스 메서드는 기본적으로 <code>public</code>이기 때문)</p>
-<hr>
-<h3 id="5-public-클래스의-인스턴스-필드"><a href="#5-public-클래스의-인스턴스-필드" class="headerlink" title="5. public 클래스의 인스턴스 필드"></a>5. public 클래스의 인스턴스 필드</h3><p><strong>public 클래스의 인스턴스 필드는 가급적 public이어서는 안 됩니다.</strong></p>
-<p><code>public</code> 가변 필드를 갖게 되면:</p>
-<ul>
-<li>필드에 저장될 값을 제한할 수 없다 (불변식 보장 불가).</li>
-<li>필드 변경 시 다른 작업을 수행할 수 없다 (스레드 안전 확보 불가).</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 나쁜 예: public 가변 필드</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Counter</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> count; <span class="comment">// 외부에서 마음대로 변경 가능!</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 좋은 예: private 필드 + 접근자 메서드</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Counter</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> count;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getCount</span><span class="params">()</span> &#123; <span class="keyword">return</span> count; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">increment</span><span class="params">()</span> &#123; count++; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="6-public-static-final-필드의-주의사항"><a href="#6-public-static-final-필드의-주의사항" class="headerlink" title="6. public static final 필드의 주의사항"></a>6. public static final 필드의 주의사항</h3><p>상수라면 <code>public static final</code> 필드는 허용됩니다.<br>단, 반드시 <strong>기본 타입 값이나 불변 객체를 가리켜야 합니다.</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// OK: 불변 객체 상수</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">LABEL</span> <span class="operator">=</span> <span class="string">&quot;Hello&quot;</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MAX_VALUE</span> <span class="operator">=</span> <span class="number">100</span>;</span><br></pre></td></tr></table></figure>
-
-<h4 id="배열은-절대-public-static-final로-두지-마라"><a href="#배열은-절대-public-static-final로-두지-마라" class="headerlink" title="배열은 절대 public static final로 두지 마라"></a>배열은 절대 public static final로 두지 마라</h4><p>길이가 0이 아닌 배열은 언제나 가변입니다.<br><code>public static final</code>로 선언해도 배열의 <strong>내용</strong>은 외부에서 바꿀 수 있습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 심각한 보안 취약점!</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] VALUES = &#123; ... &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 외부에서 배열 내용을 마음대로 변경할 수 있다</span></span><br><span class="line">SomeClass.VALUES[<span class="number">0</span>] = anotherThing;</span><br></pre></td></tr></table></figure>
-
-<p><strong>해결 방법 1: 불변 리스트로 감싸기</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] PRIVATE_VALUES = &#123; ... &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> List&lt;Thing&gt; VALUES =</span><br><span class="line">    Collections.unmodifiableList(Arrays.asList(PRIVATE_VALUES));</span><br></pre></td></tr></table></figure>
-
-<p><strong>해결 방법 2: 방어적 복사 반환</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] PRIVATE_VALUES = &#123; ... &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] values() &#123;</span><br><span class="line">    <span class="keyword">return</span> PRIVATE_VALUES.clone();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>어느 방법이 더 좋은지는 상황에 따라 다릅니다.<br>클라이언트가 어떻게 사용하는지, 성능이 중요한지를 고려하세요.</p>
-</blockquote>
-<hr>
-<h3 id="7-Java-9의-모듈-시스템-참고"><a href="#7-Java-9의-모듈-시스템-참고" class="headerlink" title="7. Java 9의 모듈 시스템 (참고)"></a>7. Java 9의 모듈 시스템 (참고)</h3><p>Java 9부터 <strong>모듈(module)</strong> 개념이 추가되었습니다.<br>모듈은 패키지의 묶음이며, 자신이 공개할 패키지를 <code>module-info.java</code>에 명시적으로 선언합니다.</p>
-<ul>
-<li><code>public</code> 클래스라도 해당 패키지가 모듈에서 공개되지 않으면 외부에서 접근 불가.</li>
-<li>모듈 내부 패키지끼리는 공유할 수 있지만, 외부 모듈에는 숨길 수 있다.</li>
-</ul>
-<p>단, 모듈 시스템의 이 추가 접근 수준은 <strong>모듈 경로에 배치된 경우에만</strong> 적용됩니다.<br>일반 클래스패스에 놓이면 모듈 선언이 무시됩니다.</p>
-<hr>
-<h3 id="8-핵심-정리"><a href="#8-핵심-정리" class="headerlink" title="8. 핵심 정리"></a>8. 핵심 정리</h3><ul>
-<li>접근성은 항상 최소화하라. 의도치 않게 API를 공개하지 않도록 주의하라.</li>
-<li><code>public</code> 클래스는 상수(public static final) 외에는 <strong>공개 필드를 가져서는 안 된다.</strong></li>
-<li><code>public static final</code> 필드가 참조하는 객체는 반드시 <strong>불변</strong>이어야 한다.</li>
-<li>배열은 <code>public static final</code>로 두어서는 안 된다. 불변 리스트나 방어적 복사를 활용하라.</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://iam-shin.github.io/2026/05/10/item15_%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80%EB%A9%A4%EB%B2%84%EC%9D%98%EC%A0%91%EA%B7%BC%EA%B6%8C%ED%95%9C%EC%9D%84%EC%B5%9C%EC%86%8C%ED%99%94%ED%95%98%EB%9D%BC/" data-id="cuidhfBXvE0qa1SyDSgbEfkHa" data-title="Effective Java 3Ed. item15." class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-item14_Comparable을구현할지고려하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2026/05/09/item14_Comparable%EC%9D%84%EA%B5%AC%ED%98%84%ED%95%A0%EC%A7%80%EA%B3%A0%EB%A0%A4%ED%95%98%EB%9D%BC/" class="article-date">
-  <time class="dt-published" datetime="2026-05-09T13:10:15.000Z" itemprop="datePublished">2026-05-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2026/05/09/item14_Comparable%EC%9D%84%EA%B5%AC%ED%98%84%ED%95%A0%EC%A7%80%EA%B3%A0%EB%A0%A4%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item14.</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="아이템-14-Comparable을-구현할지-고려하라"><a href="#아이템-14-Comparable을-구현할지-고려하라" class="headerlink" title="아이템 14. Comparable을 구현할지 고려하라"></a>아이템 14. Comparable을 구현할지 고려하라</h1><h3 id="책을-다시-읽고-다시-이해해라"><a href="#책을-다시-읽고-다시-이해해라" class="headerlink" title="책을 다시 읽고 다시 이해해라 !!"></a>책을 다시 읽고 다시 이해해라 !!</h3><ul>
-<li>아래 내용은 Claude가 요약한 내용.</li>
-</ul>
-<h3 id="1-Comparable-인터페이스란"><a href="#1-Comparable-인터페이스란" class="headerlink" title="1. Comparable 인터페이스란?"></a>1. Comparable 인터페이스란?</h3><p><code>Comparable</code> 인터페이스는 <code>compareTo</code> 메서드 하나만 가진 인터페이스입니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Comparable</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">compareTo</span><span class="params">(T t)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>equals</code>와 달리, <code>compareTo</code>는 <strong>순서 비교</strong>를 합니다. 즉, “나는 저 객체보다 크냐, 같냐, 작냐”를 판단합니다.</p>
-<hr>
-<h3 id="2-왜-구현해야-하나"><a href="#2-왜-구현해야-하나" class="headerlink" title="2. 왜 구현해야 하나?"></a>2. 왜 구현해야 하나?</h3><p><code>Comparable</code>을 구현하면 그 클래스의 인스턴스에 **자연적인 순서(natural order)**가 생깁니다.<br>자바 플랫폼의 거의 모든 값 클래스(<code>String</code>, <code>Integer</code>, <code>BigDecimal</code> 등)와 열거 타입이 이미 구현하고 있습니다.</p>
-<p>구현하면 이런 것들이 <strong>자동으로</strong> 됩니다:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(myArray);          <span class="comment">// 정렬</span></span><br><span class="line">Collections.sort(myList);      <span class="comment">// 리스트 정렬</span></span><br><span class="line">TreeSet&lt;MyClass&gt; set = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;();  <span class="comment">// 정렬된 컬렉션 사용</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>순서가 있는 값 클래스를 만들 때는 반드시 <code>Comparable</code>을 구현하세요.</p>
-</blockquote>
-<hr>
-<h3 id="3-compareTo의-일반-규약"><a href="#3-compareTo의-일반-규약" class="headerlink" title="3. compareTo의 일반 규약"></a>3. compareTo의 일반 규약</h3><p><code>compareTo</code>는 세 가지 규약을 지켜야 합니다.<br>(<code>sgn()</code>은 부호 함수 — 음수면 -1, 0이면 0, 양수면 1)</p>
-<h4 id="규약-1-대칭성"><a href="#규약-1-대칭성" class="headerlink" title="규약 1. 대칭성"></a>규약 1. 대칭성</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sgn(x.compareTo(y)) == -sgn(y.compareTo(x))</span><br></pre></td></tr></table></figure>
-<ul>
-<li>x가 y보다 크면, y는 x보다 작아야 한다.</li>
-<li>x가 y에게 예외를 던지면, y도 x에게 예외를 던져야 한다.</li>
-</ul>
-<h4 id="규약-2-추이성"><a href="#규약-2-추이성" class="headerlink" title="규약 2. 추이성"></a>규약 2. 추이성</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.compareTo(y) &gt; 0  &amp;&amp;  y.compareTo(z) &gt; 0  →  x.compareTo(z) &gt; 0</span><br></pre></td></tr></table></figure>
-<ul>
-<li>x &gt; y이고 y &gt; z이면, x &gt; z여야 한다.</li>
-</ul>
-<h4 id="규약-3-일관성"><a href="#규약-3-일관성" class="headerlink" title="규약 3. 일관성"></a>규약 3. 일관성</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.compareTo(y) == 0  →  sgn(x.compareTo(z)) == sgn(y.compareTo(z))</span><br></pre></td></tr></table></figure>
-<ul>
-<li>x와 y가 같다고 판단되면, 다른 객체 z와의 비교 결과도 같아야 한다.</li>
-</ul>
-<h4 id="권고사항-강제-아님"><a href="#권고사항-강제-아님" class="headerlink" title="권고사항 (강제 아님)"></a>권고사항 (강제 아님)</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(x.compareTo(y) == 0) == x.equals(y)</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>compareTo</code>가 0을 반환하면 <code>equals</code>도 <code>true</code>를 반환하는 것이 좋습니다.</li>
-<li>지키지 않으면 동작은 하지만, <strong>컬렉션에서 이상하게 동작</strong>할 수 있습니다.</li>
-</ul>
-<h4 id="compareTo와-equals-불일치-예시-BigDecimal"><a href="#compareTo와-equals-불일치-예시-BigDecimal" class="headerlink" title="compareTo와 equals 불일치 예시 (BigDecimal)"></a>compareTo와 equals 불일치 예시 (<code>BigDecimal</code>)</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">BigDecimal</span> <span class="variable">a</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;1.0&quot;</span>);</span><br><span class="line"><span class="type">BigDecimal</span> <span class="variable">b</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;1.00&quot;</span>);</span><br><span class="line"></span><br><span class="line">a.equals(b);       <span class="comment">// false (다른 객체로 판단)</span></span><br><span class="line">a.compareTo(b);    <span class="comment">// 0    (같은 값으로 판단)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// HashSet: equals 기준 → &#123;1.0, 1.00&#125; 두 원소</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;(List.of(a, b)).size();  <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// TreeSet: compareTo 기준 → &#123;1.0&#125; 한 원소</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;(List.of(a, b)).size();  <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="4-compareTo-구현-방법"><a href="#4-compareTo-구현-방법" class="headerlink" title="4. compareTo 구현 방법"></a>4. compareTo 구현 방법</h3><h3 id="기본-원칙"><a href="#기본-원칙" class="headerlink" title="기본 원칙"></a>기본 원칙</h3><table>
-<thead>
-<tr>
-<th>상황</th>
-<th>반환값</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>this &lt; other</td>
-<td>음수</td>
-</tr>
-<tr>
-<td>this &#x3D;&#x3D; other</td>
-<td>0</td>
-</tr>
-<tr>
-<td>this &gt; other</td>
-<td>양수</td>
-</tr>
-</tbody></table>
-<h3 id="핵심-같은-관계-연산자를-쓰지-마라"><a href="#핵심-같은-관계-연산자를-쓰지-마라" class="headerlink" title="핵심: &lt;, &gt;같은 관계 연산자를 쓰지 마라"></a>핵심: <code>&lt;</code>, <code>&gt;</code>같은 관계 연산자를 쓰지 마라</h3><p>예전 코드처럼 직접 비교하면 <strong>정수 오버플로우</strong> 버그가 생길 수 있습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 나쁜 예 (오버플로우 위험!)</span></span><br><span class="line"><span class="keyword">return</span> <span class="built_in">this</span>.value - other.value;</span><br></pre></td></tr></table></figure>
-
-<h3 id="올바른-방법-1-박싱-타입의-정적-compare-사용"><a href="#올바른-방법-1-박싱-타입의-정적-compare-사용" class="headerlink" title="올바른 방법 1: 박싱 타입의 정적 compare 사용"></a>올바른 방법 1: 박싱 타입의 정적 compare 사용</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 좋은 예</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compareTo</span><span class="params">(PhoneNumber pn)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> Short.compare(areaCode, pn.areaCode);      <span class="comment">// 첫 번째 핵심 필드</span></span><br><span class="line">    <span class="keyword">if</span> (result == <span class="number">0</span>) &#123;</span><br><span class="line">        result = Short.compare(prefix, pn.prefix);           <span class="comment">// 두 번째 핵심 필드</span></span><br><span class="line">        <span class="keyword">if</span> (result == <span class="number">0</span>) &#123;</span><br><span class="line">            result = Short.compare(lineNum, pn.lineNum);     <span class="comment">// 세 번째 핵심 필드</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><strong>중요도 순서대로</strong> 비교한다.</li>
-<li>앞 필드가 이미 다르면 바로 반환한다.</li>
-</ul>
-<h3 id="올바른-방법-2-Comparator-생성-메서드-활용-Java-8"><a href="#올바른-방법-2-Comparator-생성-메서드-활용-Java-8" class="headerlink" title="올바른 방법 2: Comparator 생성 메서드 활용 (Java 8+)"></a>올바른 방법 2: Comparator 생성 메서드 활용 (Java 8+)</h3><p>Java 8부터는 <code>Comparator</code> 인터페이스의 <strong>메서드 체이닝</strong>으로 우아하게 작성할 수 있습니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Comparator&lt;PhoneNumber&gt; COMPARATOR =</span><br><span class="line">    Comparator.comparingInt((PhoneNumber pn) -&gt; pn.areaCode)</span><br><span class="line">              .thenComparingInt(pn -&gt; pn.prefix)</span><br><span class="line">              .thenComparingInt(pn -&gt; pn.lineNum);</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compareTo</span><span class="params">(PhoneNumber pn)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> COMPARATOR.compare(<span class="built_in">this</span>, pn);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>코드가 간결하고 읽기 쉽습니다.</li>
-<li>단, 성능은 약 10% 정도 느릴 수 있습니다.</li>
-</ul>
-<h4 id="비교자-생성-메서드-종류"><a href="#비교자-생성-메서드-종류" class="headerlink" title="비교자 생성 메서드 종류"></a>비교자 생성 메서드 종류</h4><table>
-<thead>
-<tr>
-<th>메서드</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>comparingInt</code></td>
-<td>int 기준 비교</td>
-</tr>
-<tr>
-<td><code>comparingLong</code></td>
-<td>long 기준 비교</td>
-</tr>
-<tr>
-<td><code>comparingDouble</code></td>
-<td>double 기준 비교</td>
-</tr>
-<tr>
-<td><code>comparing</code></td>
-<td>객체 기준 비교</td>
-</tr>
-<tr>
-<td><code>thenComparingInt</code></td>
-<td>추가 int 기준 비교</td>
-</tr>
-<tr>
-<td><code>thenComparing</code></td>
-<td>추가 객체 기준 비교</td>
-</tr>
-</tbody></table>
-<hr>
-<h3 id="5-extends-vs-implements의-규약-문제"><a href="#5-extends-vs-implements의-규약-문제" class="headerlink" title="5. extends vs implements의 규약 문제"></a>5. extends vs implements의 규약 문제</h3><p><code>compareTo</code> 규약도 <code>equals</code>처럼 <strong>상속과 함께 쓰면 문제</strong>가 생깁니다.</p>
-<p>새 필드를 추가한 서브클래스에서 규약을 지키면서 <code>compareTo</code>를 구현하는 것은 불가능합니다.<br>해결책은 **컴포지션(조합)**을 사용하는 것입니다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 나쁜 방법: 상속</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ColorPoint</span> <span class="keyword">extends</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Color color;</span><br><span class="line">    <span class="comment">// compareTo 규약 깨짐</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 좋은 방법: 컴포지션</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ColorPoint</span> <span class="keyword">implements</span> <span class="title class_">Comparable</span>&lt;ColorPoint&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Point point;  <span class="comment">// 상속 대신 포함</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Color color;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compareTo</span><span class="params">(ColorPoint cp)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> point.compareTo(cp.point);</span><br><span class="line">        <span class="keyword">if</span> (result == <span class="number">0</span>) result = color.compareTo(cp.color);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="6-핵심-정리"><a href="#6-핵심-정리" class="headerlink" title="6. 핵심 정리"></a>6. 핵심 정리</h3><ul>
-<li>순서가 있는 값 클래스라면 <strong>반드시 <code>Comparable</code>을 구현</strong>하자.</li>
-<li><code>compareTo</code>에서 필드 비교 시 <strong><code>&lt;</code>, <code>&gt;</code> 연산자 대신</strong> <code>Integer.compare()</code> 같은 정적 메서드나 <code>Comparator</code> 생성 메서드를 사용하자.</li>
-<li><code>compareTo</code>와 <code>equals</code>가 일관되게 동작하도록 노력하자. (특히 <code>TreeSet</code>, <code>TreeMap</code> 등에서 중요)</li>
-<li>다중 필드 비교 시에는 <strong>가장 중요한 필드부터</strong> 비교하자.</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://iam-shin.github.io/2026/05/09/item14_Comparable%EC%9D%84%EA%B5%AC%ED%98%84%ED%95%A0%EC%A7%80%EA%B3%A0%EB%A0%A4%ED%95%98%EB%9D%BC/" data-id="cuidDbcUKJGKuEcf6Pkurwnlo" data-title="Effective Java 3Ed. item14." class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
     <article id="post-item12_toString을항상재정의하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2026/05/07/item12_toString%EC%9D%84%ED%95%AD%EC%83%81%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/" class="article-date">
@@ -888,6 +478,154 @@
 
 
   
+    <article id="post-item64_객체는인터페이스를사용해참조하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/04/30/item64_%EA%B0%9D%EC%B2%B4%EB%8A%94%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%A5%BC%EC%82%AC%EC%9A%A9%ED%95%B4%EC%B0%B8%EC%A1%B0%ED%95%98%EB%9D%BC/" class="article-date">
+  <time class="dt-published" datetime="2026-04-30T05:10:15.000Z" itemprop="datePublished">2026-04-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2026/04/30/item64_%EA%B0%9D%EC%B2%B4%EB%8A%94%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%A5%BC%EC%82%AC%EC%9A%A9%ED%95%B4%EC%B0%B8%EC%A1%B0%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item64.</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="아이템-64-객체는-인터페이스를-사용해-참조하라"><a href="#아이템-64-객체는-인터페이스를-사용해-참조하라" class="headerlink" title="아이템 64. 객체는 인터페이스를 사용해 참조하라"></a>아이템 64. 객체는 인터페이스를 사용해 참조하라</h1><h3 id="구현-클래스-타입이-아닌-인터페이스-타입으로-변수를-선언하라"><a href="#구현-클래스-타입이-아닌-인터페이스-타입으로-변수를-선언하라" class="headerlink" title="- 구현 클래스 타입이 아닌 인터페이스 타입으로 변수를 선언하라."></a>- 구현 클래스 타입이 아닌 인터페이스 타입으로 변수를 선언하라.</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 나쁜예</span></span><br><span class="line">ArrayList&lt;String&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 좋은예</span></span><br><span class="line">List&lt;String&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"><span class="comment">// 교체시 - 의존코드를 수정할 필요 없다.</span></span><br><span class="line">List&lt;String&gt; list = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;&gt;();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>다형성에 기반한 교체 유연성 도모</li>
+</ul>
+<h3 id="구현-클래스타입으로-선언하면-그-클래스가-가진-불필요한-메서드-까지-노출됨"><a href="#구현-클래스타입으로-선언하면-그-클래스가-가진-불필요한-메서드-까지-노출됨" class="headerlink" title="- 구현 클래스타입으로 선언하면, 그 클래스가 가진 불필요한 메서드 까지 노출됨."></a>- 구현 클래스타입으로 선언하면, 그 클래스가 가진 불필요한 메서드 까지 노출됨.</h3><ul>
+<li>추후 인터페이스 타입으로 변경하려고 해도, 의존 코드를 다시 검토해야함.</li>
+</ul>
+<h3 id="예외-인터페이스가-없는-클래스"><a href="#예외-인터페이스가-없는-클래스" class="headerlink" title="- 예외. 인터페이스가 없는 클래스"></a>- 예외. 인터페이스가 없는 클래스</h3><ul>
+<li>값 클래스: String, BigInteger</li>
+<li>인터페이스 없는 클래스 기반 프레임워크: 그래도, 구현클래스 보다는 추상클래스로 선언할것. java.io.OutputStream</li>
+<li>인터페이스에 없는 메서드가 필요한 경우: 구현클래스의 고유기능이 필요한 경우.</li>
+<li>요점. 가급적 덜 구체화된 클래스를 사용하여 선언하라.</li>
+</ul>
+<h3 id="의존성-주입의-시너지"><a href="#의존성-주입의-시너지" class="headerlink" title="- 의존성 주입의 시너지"></a>- 의존성 주입의 시너지</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PaymentService</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> PaymentGateway geteway;  <span class="comment">// 인터페이스</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 테스트시 MockPaymentGateway 주입</span></span><br><span class="line">    <span class="comment">// 운영시  StripePaymentGateway 주입</span></span><br><span class="line">    <span class="comment">// -&gt; 설정으로 변환 가능하고, 코드 변경 없음.</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">PaymentService</span><span class="params">(PaymentGateway geteway)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.geteway = gateway;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://iam-shin.github.io/2026/04/30/item64_%EA%B0%9D%EC%B2%B4%EB%8A%94%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%A5%BC%EC%82%AC%EC%9A%A9%ED%95%B4%EC%B0%B8%EC%A1%B0%ED%95%98%EB%9D%BC/" data-id="cuideyb9jZff0Gf9ENIiOzCoM" data-title="Effective Java 3Ed. item64." class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/04/29/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2026-04-29T09:03:54.709Z" itemprop="datePublished">2026-04-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2026/04/29/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://iam-shin.github.io/2026/04/29/hello-world/" data-id="cuidf2AcwH-yGKzE6Q7vr1oMl" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-item63_문자열연결은느리니주의하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/04/29/item63_%EB%AC%B8%EC%9E%90%EC%97%B4%EC%97%B0%EA%B2%B0%EC%9D%80%EB%8A%90%EB%A6%AC%EB%8B%88%EC%A3%BC%EC%9D%98%ED%95%98%EB%9D%BC/" class="article-date">
+  <time class="dt-published" datetime="2026-04-29T05:10:15.000Z" itemprop="datePublished">2026-04-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2026/04/29/item63_%EB%AC%B8%EC%9E%90%EC%97%B4%EC%97%B0%EA%B2%B0%EC%9D%80%EB%8A%90%EB%A6%AC%EB%8B%88%EC%A3%BC%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item63.</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="아이템-63-문자열-연결은-느리니-주의하라"><a href="#아이템-63-문자열-연결은-느리니-주의하라" class="headerlink" title="아이템 63. 문자열 연결은 느리니 주의하라"></a>아이템 63. 문자열 연결은 느리니 주의하라</h1><h3 id="문자열을-로-연결하는-시간은-n-2에-비례한다"><a href="#문자열을-로-연결하는-시간은-n-2에-비례한다" class="headerlink" title="- 문자열을 + 로 연결하는 시간은 n^2에 비례한다."></a>- 문자열을 + 로 연결하는 시간은 n^2에 비례한다.</h3><ul>
+<li>문자열은 불변이라서 두 문자열을 연결할경우 양쪽을 각각 복사하는 과정에서 성능 저하.</li>
+</ul>
+<h3 id="많은-문자의-연결은-StringBuilder-를-사용하라"><a href="#많은-문자의-연결은-StringBuilder-를-사용하라" class="headerlink" title="- 많은 문자의 연결은 StringBuilder 를 사용하라."></a>- 많은 문자의 연결은 StringBuilder 를 사용하라.</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://iam-shin.github.io/2026/04/29/item63_%EB%AC%B8%EC%9E%90%EC%97%B4%EC%97%B0%EA%B2%B0%EC%9D%80%EB%8A%90%EB%A6%AC%EB%8B%88%EC%A3%BC%EC%9D%98%ED%95%98%EB%9D%BC/" data-id="cuidZn0J2wCdsHPWfYbyRaWGl" data-title="Effective Java 3Ed. item63." class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
 
 
   <nav id="page-nav">
@@ -945,23 +683,23 @@
       <ul>
         
           <li>
-            <a href="/2026/05/11/item16_public%ED%81%B4%EB%9E%98%EC%8A%A4%EC%97%90%EC%84%9C%EB%8A%94public%ED%95%84%EB%93%9C%EA%B0%80%EC%95%84%EB%8B%8C%EC%A0%91%EA%B7%BC%EC%9E%90%EB%A9%94%EC%84%9C%EB%93%9C%EB%A5%BC%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item16.</a>
-          </li>
-        
-          <li>
-            <a href="/2026/05/10/item15_%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80%EB%A9%A4%EB%B2%84%EC%9D%98%EC%A0%91%EA%B7%BC%EA%B6%8C%ED%95%9C%EC%9D%84%EC%B5%9C%EC%86%8C%ED%99%94%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item15.</a>
-          </li>
-        
-          <li>
-            <a href="/2026/05/09/item14_Comparable%EC%9D%84%EA%B5%AC%ED%98%84%ED%95%A0%EC%A7%80%EA%B3%A0%EB%A0%A4%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item14.</a>
-          </li>
-        
-          <li>
             <a href="/2026/05/07/item12_toString%EC%9D%84%ED%95%AD%EC%83%81%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item12.</a>
           </li>
         
           <li>
             <a href="/2026/05/06/item11_equals%EB%A5%BC%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%A0%A4%EA%B1%B0%EB%93%A0hashCode%EB%8F%84%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item11.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/05/item10_equals%EB%8A%94%EC%9D%BC%EB%B0%98%EA%B7%9C%EC%95%BD%EC%9D%84%EC%A7%80%EC%BC%9C%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item10.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/04/item68_%EC%9D%BC%EB%B0%98%EC%A0%81%EC%9C%BC%EB%A1%9C%ED%86%B5%EC%9A%A9%EB%90%98%EB%8A%94%EB%AA%85%EB%AA%85%EA%B7%9C%EC%B9%99%EC%9D%84%EB%94%B0%EB%A5%B4%EB%9D%BC/">Effective Java 3Ed. item68.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/03/item67_%EC%B5%9C%EC%A0%81%ED%99%94%EB%8A%94%EC%8B%A0%EC%A4%91%ED%9E%88%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item67.</a>
           </li>
         
       </ul>
