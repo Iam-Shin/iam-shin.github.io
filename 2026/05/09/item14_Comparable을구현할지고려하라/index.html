@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Effective Java 3Ed. item14. | 나는 신(Shin)이다</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="아이템 14. Comparable을 구현할지 고려하라책을 다시 읽고 다시 이해해라 !! 아래 내용은 Claude가 요약한 내용.  1. Comparable 인터페이스란?Comparable 인터페이스는 compareTo 메서드 하나만 가진 인터페이스입니다. 123public interface Comparable&lt;T&gt; &#123;    int com">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective Java 3Ed. item14.">
+<meta property="og:url" content="https://iam-shin.github.io/2026/05/09/item14_Comparable%EC%9D%84%EA%B5%AC%ED%98%84%ED%95%A0%EC%A7%80%EA%B3%A0%EB%A0%A4%ED%95%98%EB%9D%BC/index.html">
+<meta property="og:site_name" content="나는 신(Shin)이다">
+<meta property="og:description" content="아이템 14. Comparable을 구현할지 고려하라책을 다시 읽고 다시 이해해라 !! 아래 내용은 Claude가 요약한 내용.  1. Comparable 인터페이스란?Comparable 인터페이스는 compareTo 메서드 하나만 가진 인터페이스입니다. 123public interface Comparable&lt;T&gt; &#123;    int com">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-05-09T13:10:15.000Z">
+<meta property="article:modified_time" content="2026-05-10T08:40:43.045Z">
+<meta property="article:author" content="實踐老將">
+<meta property="article:tag" content="Effective-Java-3Ed">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="나는 신(Shin)이다" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">나는 신(Shin)이다</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">닥치고 기록 -實踐老將-</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://iam-shin.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-item14_Comparable을구현할지고려하라" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/05/09/item14_Comparable%EC%9D%84%EA%B5%AC%ED%98%84%ED%95%A0%EC%A7%80%EA%B3%A0%EB%A0%A4%ED%95%98%EB%9D%BC/" class="article-date">
+  <time class="dt-published" datetime="2026-05-09T13:10:15.000Z" itemprop="datePublished">2026-05-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Effective Java 3Ed. item14.
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="아이템-14-Comparable을-구현할지-고려하라"><a href="#아이템-14-Comparable을-구현할지-고려하라" class="headerlink" title="아이템 14. Comparable을 구현할지 고려하라"></a>아이템 14. Comparable을 구현할지 고려하라</h1><h3 id="책을-다시-읽고-다시-이해해라"><a href="#책을-다시-읽고-다시-이해해라" class="headerlink" title="책을 다시 읽고 다시 이해해라 !!"></a>책을 다시 읽고 다시 이해해라 !!</h3><ul>
+<li>아래 내용은 Claude가 요약한 내용.</li>
+</ul>
+<h3 id="1-Comparable-인터페이스란"><a href="#1-Comparable-인터페이스란" class="headerlink" title="1. Comparable 인터페이스란?"></a>1. Comparable 인터페이스란?</h3><p><code>Comparable</code> 인터페이스는 <code>compareTo</code> 메서드 하나만 가진 인터페이스입니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Comparable</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">compareTo</span><span class="params">(T t)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>equals</code>와 달리, <code>compareTo</code>는 <strong>순서 비교</strong>를 합니다. 즉, “나는 저 객체보다 크냐, 같냐, 작냐”를 판단합니다.</p>
+<hr>
+<h3 id="2-왜-구현해야-하나"><a href="#2-왜-구현해야-하나" class="headerlink" title="2. 왜 구현해야 하나?"></a>2. 왜 구현해야 하나?</h3><p><code>Comparable</code>을 구현하면 그 클래스의 인스턴스에 **자연적인 순서(natural order)**가 생깁니다.<br>자바 플랫폼의 거의 모든 값 클래스(<code>String</code>, <code>Integer</code>, <code>BigDecimal</code> 등)와 열거 타입이 이미 구현하고 있습니다.</p>
+<p>구현하면 이런 것들이 <strong>자동으로</strong> 됩니다:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Arrays.sort(myArray);          <span class="comment">// 정렬</span></span><br><span class="line">Collections.sort(myList);      <span class="comment">// 리스트 정렬</span></span><br><span class="line">TreeSet&lt;MyClass&gt; set = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;();  <span class="comment">// 정렬된 컬렉션 사용</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>순서가 있는 값 클래스를 만들 때는 반드시 <code>Comparable</code>을 구현하세요.</p>
+</blockquote>
+<hr>
+<h3 id="3-compareTo의-일반-규약"><a href="#3-compareTo의-일반-규약" class="headerlink" title="3. compareTo의 일반 규약"></a>3. compareTo의 일반 규약</h3><p><code>compareTo</code>는 세 가지 규약을 지켜야 합니다.<br>(<code>sgn()</code>은 부호 함수 — 음수면 -1, 0이면 0, 양수면 1)</p>
+<h4 id="규약-1-대칭성"><a href="#규약-1-대칭성" class="headerlink" title="규약 1. 대칭성"></a>규약 1. 대칭성</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sgn(x.compareTo(y)) == -sgn(y.compareTo(x))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>x가 y보다 크면, y는 x보다 작아야 한다.</li>
+<li>x가 y에게 예외를 던지면, y도 x에게 예외를 던져야 한다.</li>
+</ul>
+<h4 id="규약-2-추이성"><a href="#규약-2-추이성" class="headerlink" title="규약 2. 추이성"></a>규약 2. 추이성</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.compareTo(y) &gt; 0  &amp;&amp;  y.compareTo(z) &gt; 0  →  x.compareTo(z) &gt; 0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>x &gt; y이고 y &gt; z이면, x &gt; z여야 한다.</li>
+</ul>
+<h4 id="규약-3-일관성"><a href="#규약-3-일관성" class="headerlink" title="규약 3. 일관성"></a>규약 3. 일관성</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.compareTo(y) == 0  →  sgn(x.compareTo(z)) == sgn(y.compareTo(z))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>x와 y가 같다고 판단되면, 다른 객체 z와의 비교 결과도 같아야 한다.</li>
+</ul>
+<h4 id="권고사항-강제-아님"><a href="#권고사항-강제-아님" class="headerlink" title="권고사항 (강제 아님)"></a>권고사항 (강제 아님)</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(x.compareTo(y) == 0) == x.equals(y)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>compareTo</code>가 0을 반환하면 <code>equals</code>도 <code>true</code>를 반환하는 것이 좋습니다.</li>
+<li>지키지 않으면 동작은 하지만, <strong>컬렉션에서 이상하게 동작</strong>할 수 있습니다.</li>
+</ul>
+<h4 id="compareTo와-equals-불일치-예시-BigDecimal"><a href="#compareTo와-equals-불일치-예시-BigDecimal" class="headerlink" title="compareTo와 equals 불일치 예시 (BigDecimal)"></a>compareTo와 equals 불일치 예시 (<code>BigDecimal</code>)</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">BigDecimal</span> <span class="variable">a</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;1.0&quot;</span>);</span><br><span class="line"><span class="type">BigDecimal</span> <span class="variable">b</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="string">&quot;1.00&quot;</span>);</span><br><span class="line"></span><br><span class="line">a.equals(b);       <span class="comment">// false (다른 객체로 판단)</span></span><br><span class="line">a.compareTo(b);    <span class="comment">// 0    (같은 값으로 판단)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// HashSet: equals 기준 → &#123;1.0, 1.00&#125; 두 원소</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;(List.of(a, b)).size();  <span class="comment">// 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// TreeSet: compareTo 기준 → &#123;1.0&#125; 한 원소</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;(List.of(a, b)).size();  <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4-compareTo-구현-방법"><a href="#4-compareTo-구현-방법" class="headerlink" title="4. compareTo 구현 방법"></a>4. compareTo 구현 방법</h3><h3 id="기본-원칙"><a href="#기본-원칙" class="headerlink" title="기본 원칙"></a>기본 원칙</h3><table>
+<thead>
+<tr>
+<th>상황</th>
+<th>반환값</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>this &lt; other</td>
+<td>음수</td>
+</tr>
+<tr>
+<td>this &#x3D;&#x3D; other</td>
+<td>0</td>
+</tr>
+<tr>
+<td>this &gt; other</td>
+<td>양수</td>
+</tr>
+</tbody></table>
+<h3 id="핵심-같은-관계-연산자를-쓰지-마라"><a href="#핵심-같은-관계-연산자를-쓰지-마라" class="headerlink" title="핵심: &lt;, &gt;같은 관계 연산자를 쓰지 마라"></a>핵심: <code>&lt;</code>, <code>&gt;</code>같은 관계 연산자를 쓰지 마라</h3><p>예전 코드처럼 직접 비교하면 <strong>정수 오버플로우</strong> 버그가 생길 수 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 나쁜 예 (오버플로우 위험!)</span></span><br><span class="line"><span class="keyword">return</span> <span class="built_in">this</span>.value - other.value;</span><br></pre></td></tr></table></figure>
+
+<h3 id="올바른-방법-1-박싱-타입의-정적-compare-사용"><a href="#올바른-방법-1-박싱-타입의-정적-compare-사용" class="headerlink" title="올바른 방법 1: 박싱 타입의 정적 compare 사용"></a>올바른 방법 1: 박싱 타입의 정적 compare 사용</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 좋은 예</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compareTo</span><span class="params">(PhoneNumber pn)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> Short.compare(areaCode, pn.areaCode);      <span class="comment">// 첫 번째 핵심 필드</span></span><br><span class="line">    <span class="keyword">if</span> (result == <span class="number">0</span>) &#123;</span><br><span class="line">        result = Short.compare(prefix, pn.prefix);           <span class="comment">// 두 번째 핵심 필드</span></span><br><span class="line">        <span class="keyword">if</span> (result == <span class="number">0</span>) &#123;</span><br><span class="line">            result = Short.compare(lineNum, pn.lineNum);     <span class="comment">// 세 번째 핵심 필드</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>중요도 순서대로</strong> 비교한다.</li>
+<li>앞 필드가 이미 다르면 바로 반환한다.</li>
+</ul>
+<h3 id="올바른-방법-2-Comparator-생성-메서드-활용-Java-8"><a href="#올바른-방법-2-Comparator-생성-메서드-활용-Java-8" class="headerlink" title="올바른 방법 2: Comparator 생성 메서드 활용 (Java 8+)"></a>올바른 방법 2: Comparator 생성 메서드 활용 (Java 8+)</h3><p>Java 8부터는 <code>Comparator</code> 인터페이스의 <strong>메서드 체이닝</strong>으로 우아하게 작성할 수 있습니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Comparator&lt;PhoneNumber&gt; COMPARATOR =</span><br><span class="line">    Comparator.comparingInt((PhoneNumber pn) -&gt; pn.areaCode)</span><br><span class="line">              .thenComparingInt(pn -&gt; pn.prefix)</span><br><span class="line">              .thenComparingInt(pn -&gt; pn.lineNum);</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compareTo</span><span class="params">(PhoneNumber pn)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> COMPARATOR.compare(<span class="built_in">this</span>, pn);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>코드가 간결하고 읽기 쉽습니다.</li>
+<li>단, 성능은 약 10% 정도 느릴 수 있습니다.</li>
+</ul>
+<h4 id="비교자-생성-메서드-종류"><a href="#비교자-생성-메서드-종류" class="headerlink" title="비교자 생성 메서드 종류"></a>비교자 생성 메서드 종류</h4><table>
+<thead>
+<tr>
+<th>메서드</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>comparingInt</code></td>
+<td>int 기준 비교</td>
+</tr>
+<tr>
+<td><code>comparingLong</code></td>
+<td>long 기준 비교</td>
+</tr>
+<tr>
+<td><code>comparingDouble</code></td>
+<td>double 기준 비교</td>
+</tr>
+<tr>
+<td><code>comparing</code></td>
+<td>객체 기준 비교</td>
+</tr>
+<tr>
+<td><code>thenComparingInt</code></td>
+<td>추가 int 기준 비교</td>
+</tr>
+<tr>
+<td><code>thenComparing</code></td>
+<td>추가 객체 기준 비교</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="5-extends-vs-implements의-규약-문제"><a href="#5-extends-vs-implements의-규약-문제" class="headerlink" title="5. extends vs implements의 규약 문제"></a>5. extends vs implements의 규약 문제</h3><p><code>compareTo</code> 규약도 <code>equals</code>처럼 <strong>상속과 함께 쓰면 문제</strong>가 생깁니다.</p>
+<p>새 필드를 추가한 서브클래스에서 규약을 지키면서 <code>compareTo</code>를 구현하는 것은 불가능합니다.<br>해결책은 **컴포지션(조합)**을 사용하는 것입니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 나쁜 방법: 상속</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ColorPoint</span> <span class="keyword">extends</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Color color;</span><br><span class="line">    <span class="comment">// compareTo 규약 깨짐</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 좋은 방법: 컴포지션</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ColorPoint</span> <span class="keyword">implements</span> <span class="title class_">Comparable</span>&lt;ColorPoint&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Point point;  <span class="comment">// 상속 대신 포함</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Color color;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compareTo</span><span class="params">(ColorPoint cp)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> point.compareTo(cp.point);</span><br><span class="line">        <span class="keyword">if</span> (result == <span class="number">0</span>) result = color.compareTo(cp.color);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="6-핵심-정리"><a href="#6-핵심-정리" class="headerlink" title="6. 핵심 정리"></a>6. 핵심 정리</h3><ul>
+<li>순서가 있는 값 클래스라면 <strong>반드시 <code>Comparable</code>을 구현</strong>하자.</li>
+<li><code>compareTo</code>에서 필드 비교 시 <strong><code>&lt;</code>, <code>&gt;</code> 연산자 대신</strong> <code>Integer.compare()</code> 같은 정적 메서드나 <code>Comparator</code> 생성 메서드를 사용하자.</li>
+<li><code>compareTo</code>와 <code>equals</code>가 일관되게 동작하도록 노력하자. (특히 <code>TreeSet</code>, <code>TreeMap</code> 등에서 중요)</li>
+<li>다중 필드 비교 시에는 <strong>가장 중요한 필드부터</strong> 비교하자.</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://iam-shin.github.io/2026/05/09/item14_Comparable%EC%9D%84%EA%B5%AC%ED%98%84%ED%95%A0%EC%A7%80%EA%B3%A0%EB%A0%A4%ED%95%98%EB%9D%BC/" data-id="cuidDbcUKJGKuEcf6Pkurwnlo" data-title="Effective Java 3Ed. item14." class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2026/05/10/item15_%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80%EB%A9%A4%EB%B2%84%EC%9D%98%EC%A0%91%EA%B7%BC%EA%B6%8C%ED%95%9C%EC%9D%84%EC%B5%9C%EC%86%8C%ED%99%94%ED%95%98%EB%9D%BC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Effective Java 3Ed. item15.
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/05/07/item12_toString%EC%9D%84%ED%95%AD%EC%83%81%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Effective Java 3Ed. item12.</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Health/">Health</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/infra/">infra</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Health/" rel="tag">Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSG/" rel="tag">SSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ambari/" rel="tag">ambari</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigtop/" rel="tag">bigtop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openvpn/" rel="tag">openvpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sandbox/" rel="tag">sandbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/" rel="tag">virtualbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vm/" rel="tag">vm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/" rel="tag">vpn</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Effective-Java-3Ed/" style="font-size: 20px;">Effective-Java-3Ed</a> <a href="/tags/Health/" style="font-size: 17.5px;">Health</a> <a href="/tags/SSG/" style="font-size: 10px;">SSG</a> <a href="/tags/ambari/" style="font-size: 10px;">ambari</a> <a href="/tags/bigtop/" style="font-size: 12.5px;">bigtop</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hadoop/" style="font-size: 12.5px;">hadoop</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/openvpn/" style="font-size: 10px;">openvpn</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/sandbox/" style="font-size: 10px;">sandbox</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/virtualbox/" style="font-size: 12.5px;">virtualbox</a> <a href="/tags/vm/" style="font-size: 12.5px;">vm</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">May 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">April 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">March 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/05/11/item16_public%ED%81%B4%EB%9E%98%EC%8A%A4%EC%97%90%EC%84%9C%EB%8A%94public%ED%95%84%EB%93%9C%EA%B0%80%EC%95%84%EB%8B%8C%EC%A0%91%EA%B7%BC%EC%9E%90%EB%A9%94%EC%84%9C%EB%93%9C%EB%A5%BC%EC%82%AC%EC%9A%A9%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item16.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/10/item15_%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80%EB%A9%A4%EB%B2%84%EC%9D%98%EC%A0%91%EA%B7%BC%EA%B6%8C%ED%95%9C%EC%9D%84%EC%B5%9C%EC%86%8C%ED%99%94%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item15.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/09/item14_Comparable%EC%9D%84%EA%B5%AC%ED%98%84%ED%95%A0%EC%A7%80%EA%B3%A0%EB%A0%A4%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item14.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/07/item12_toString%EC%9D%84%ED%95%AD%EC%83%81%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item12.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/06/item11_equals%EB%A5%BC%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%A0%A4%EA%B1%B0%EB%93%A0hashCode%EB%8F%84%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item11.</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 實踐老將<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
