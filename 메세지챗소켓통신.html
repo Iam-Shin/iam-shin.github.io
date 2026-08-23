@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>나는 신(Shin)이다</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455sequenceDiagram    participant C as Chat.jsx (Client)    participant SIO as Socket.IO Server (index">
+<meta property="og:type" content="website">
+<meta property="og:title" content="나는 신(Shin)이다">
+<meta property="og:url" content="https://iam-shin.github.io/%EB%A9%94%EC%84%B8%EC%A7%80%EC%B1%97%EC%86%8C%EC%BC%93%ED%86%B5%EC%8B%A0.html">
+<meta property="og:site_name" content="나는 신(Shin)이다">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455sequenceDiagram    participant C as Chat.jsx (Client)    participant SIO as Socket.IO Server (index">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-08-23T05:12:14.430Z">
+<meta property="article:modified_time" content="2026-08-23T05:12:14.430Z">
+<meta property="article:author" content="實踐老將">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="나는 신(Shin)이다" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">나는 신(Shin)이다</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">닥치고 기록 -實踐老將-</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://iam-shin.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/%EB%A9%94%EC%84%B8%EC%A7%80%EC%B1%97%EC%86%8C%EC%BC%93%ED%86%B5%EC%8B%A0.html" class="article-date">
+  <time class="dt-published" datetime="2026-08-23T05:12:14.430Z" itemprop="datePublished">2026-08-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant C as Chat.jsx (Client)</span><br><span class="line">    participant SIO as Socket.IO Server (index.js)</span><br><span class="line">    participant MW as authenticateSocket (auth.js)</span><br><span class="line">    participant H as Connection Handler (socket.js)</span><br><span class="line">    participant DB as userService (DB)</span><br><span class="line"></span><br><span class="line">    Note over C: User already logged in&lt;br/&gt;JWT token stored in localStorage</span><br><span class="line"></span><br><span class="line">    C-&gt;&gt;SIO: io(&#x27;/&#x27;, &#123; auth: &#123; token: &quot;eyJhbGci...&quot; &#125; &#125;)&lt;br/&gt;[HTTP Upgrade / WebSocket Handshake]</span><br><span class="line"></span><br><span class="line">    Note over SIO: io.use(authenticateSocket)&lt;br/&gt;middleware intercepts ALL connections</span><br><span class="line"></span><br><span class="line">    SIO-&gt;&gt;MW: forward socket object&lt;br/&gt;socket.handshake.auth.token</span><br><span class="line"></span><br><span class="line">    MW-&gt;&gt;MW: jwt.verify(token, JWT_SECRET)&lt;br/&gt;decode → &#123; username: &quot;alice&quot; &#125;</span><br><span class="line"></span><br><span class="line">    alt token missing</span><br><span class="line">        MW--&gt;&gt;C: next(new Error(&quot;Authentication token required&quot;))</span><br><span class="line">        Note over C: socket.on(&#x27;error&#x27;) fires</span><br><span class="line">    else jwt.verify fails</span><br><span class="line">        MW--&gt;&gt;C: next(new Error(&quot;Invalid token&quot;))</span><br><span class="line">        Note over C: socket.on(&#x27;error&#x27;) fires</span><br><span class="line">    else token valid</span><br><span class="line">        MW-&gt;&gt;DB: userService.getUser(&quot;alice&quot;)</span><br><span class="line">        DB--&gt;&gt;MW: user object (or null)</span><br><span class="line"></span><br><span class="line">        alt user not found</span><br><span class="line">            MW--&gt;&gt;C: next(new Error(&quot;User not found&quot;))</span><br><span class="line">            Note over C: socket.on(&#x27;error&#x27;) fires</span><br><span class="line">        else user exists</span><br><span class="line">            MW-&gt;&gt;MW: socket.username = &quot;alice&quot;</span><br><span class="line">            MW-&gt;&gt;H: next() → connection established</span><br><span class="line"></span><br><span class="line">            H-&gt;&gt;C: connection event (socket ready)</span><br><span class="line">            Note over C: setSocket(newSocket)&lt;br/&gt;socket saved in React state</span><br><span class="line"></span><br><span class="line">            Note over C,H: ── Bidirectional channel open ──</span><br><span class="line"></span><br><span class="line">            C-&gt;&gt;H: socket.emit(&#x27;message&#x27;, &#123; content: &quot;Hello&quot; &#125;)</span><br><span class="line">            H-&gt;&gt;DB: messageService.addMessage(&quot;alice&quot;, &quot;Hello&quot;)</span><br><span class="line">            DB--&gt;&gt;H: saved message object</span><br><span class="line">            H-&gt;&gt;C: io.emit(&#x27;message&#x27;, message) [broadcast to ALL clients]</span><br><span class="line">            Note over C: setMessages(prev =&gt; [...prev, message])</span><br><span class="line"></span><br><span class="line">            C-&gt;&gt;H: socket.emit(&#x27;deleteMessage&#x27;, &#123; messageId: 5 &#125;)</span><br><span class="line">            H-&gt;&gt;DB: messageService.deleteMessage(5)</span><br><span class="line">            DB--&gt;&gt;H: deleted (true/false)</span><br><span class="line">            H-&gt;&gt;C: io.emit(&#x27;messageDeleted&#x27;, &#123; messageId: 5 &#125;) [broadcast]</span><br><span class="line"></span><br><span class="line">            C-&gt;&gt;H: socket.close() [on logout]</span><br><span class="line">            H-&gt;&gt;C: disconnect event</span><br><span class="line">            Note over H: console.log(&#x27;User disconnected&#x27;)</span><br><span class="line">        end</span><br><span class="line">    end</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://iam-shin.github.io/%EB%A9%94%EC%84%B8%EC%A7%80%EC%B1%97%EC%86%8C%EC%BC%93%ED%86%B5%EC%8B%A0.html" data-id="cuid8LSkNJ_-gDApt5fNHGK_L" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Database/">Database</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Health/">Health</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/infra/">infra</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/military/">military</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMRO/" rel="tag">CMRO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Effective-Java-3Ed/" rel="tag">Effective-Java-3Ed</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Health/" rel="tag">Health</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSG/" rel="tag">SSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ambari/" rel="tag">ambari</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bigtop/" rel="tag">bigtop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/military/" rel="tag">military</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openvpn/" rel="tag">openvpn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sandbox/" rel="tag">sandbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ubuntu/" rel="tag">ubuntu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/virtualbox/" rel="tag">virtualbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vm/" rel="tag">vm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpn/" rel="tag">vpn</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CMRO/" style="font-size: 10px;">CMRO</a> <a href="/tags/Effective-Java-3Ed/" style="font-size: 20px;">Effective-Java-3Ed</a> <a href="/tags/Health/" style="font-size: 17.5px;">Health</a> <a href="/tags/SSG/" style="font-size: 10px;">SSG</a> <a href="/tags/ambari/" style="font-size: 10px;">ambari</a> <a href="/tags/bigtop/" style="font-size: 12.5px;">bigtop</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/hadoop/" style="font-size: 12.5px;">hadoop</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/military/" style="font-size: 10px;">military</a> <a href="/tags/openvpn/" style="font-size: 10px;">openvpn</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/sandbox/" style="font-size: 10px;">sandbox</a> <a href="/tags/ubuntu/" style="font-size: 10px;">ubuntu</a> <a href="/tags/virtualbox/" style="font-size: 12.5px;">virtualbox</a> <a href="/tags/vm/" style="font-size: 12.5px;">vm</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/08/">August 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">May 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/04/">April 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">March 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">September 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/08/23/9%EC%82%AC%EB%8B%A8%ED%8A%B9%EC%A7%95/">구사단 이야기</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/07/EJ3/item12_toString%EC%9D%84%ED%95%AD%EC%83%81%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item12.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/06/EJ3/item11_equals%EB%A5%BC%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%A0%A4%EA%B1%B0%EB%93%A0hashCode%EB%8F%84%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item11.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/05/EJ3/item10_equals%EB%8A%94%EC%9D%BC%EB%B0%98%EA%B7%9C%EC%95%BD%EC%9D%84%EC%A7%80%EC%BC%9C%EC%9E%AC%EC%A0%95%EC%9D%98%ED%95%98%EB%9D%BC/">Effective Java 3Ed. item10.</a>
+          </li>
+        
+          <li>
+            <a href="/2026/05/04/EJ3/item68_%EC%9D%BC%EB%B0%98%EC%A0%81%EC%9C%BC%EB%A1%9C%ED%86%B5%EC%9A%A9%EB%90%98%EB%8A%94%EB%AA%85%EB%AA%85%EA%B7%9C%EC%B9%99%EC%9D%84%EB%94%B0%EB%A5%B4%EB%9D%BC/">Effective Java 3Ed. item68.</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 實踐老將<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
